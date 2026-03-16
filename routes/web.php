@@ -2,26 +2,66 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/login', 'login')->name('login');
-Route::view('/register', 'register')->name('register');
+Route::get('/', function () {
+    return view('home');
+});
 
-// // Main pages
-// Route::view('/home', 'home')->name('home');
-// Route::view('/activity', 'activity')->name('activity');
+Route::get('/login', function () {
+    return view('login');
+});
 
-// // My Activities section
-// Route::view('/my-activities', 'my-activities')->name('my-activities');
-// Route::view('/proposed-activities', 'proposed-activities')->name('proposed-activities');
-// Route::view('/upload-activity', 'upload-activity')->name('upload-activity');
+Route::get('/upload-activity', function () {
+    return view('upload-activity');
+});
 
-// // Detail pages
-// Route::view('/see-details', 'see-details')->name('see-details');
-// Route::view('/options', 'options')->name('options');
-// Route::view('/participants', 'participants')->name('participants');
-// Route::view('/register-activity', 'register-activity')->name('register-activity');
+Route::get('/activity', function () {
+    return view('activity');
+});
 
-// // Profiles
-// Route::view('/profile', 'profile')->name('profile');
-// Route::view('/profile-user', 'profile-user')->name('profile-user');
+Route::get('/be-a-seeker', function () {
+    return view('be-a-seeker');
+});
 
-require __DIR__.'/settings.php';
+Route::get('/done-activity', function () {
+    return view('done-activity');
+});
+
+Route::get('/my-activities', function () {
+    return view('my-activities');
+});
+
+Route::get('/options', function () {
+    return view('options');
+});
+
+Route::get('/participants', function () {
+    return view('participants');
+});
+
+Route::get('/profile-user', function () {
+    return view('profile-user');
+});
+
+Route::get('/profile', function () {
+    return view('profile');
+});
+
+Route::get('/proposed-activities', function () {
+    return view('proposed-activities');
+});
+
+Route::get('/register-activity', function () {
+    return view('register-activity');
+});
+
+Route::get('/register', function () {
+    return view('register');
+});
+
+Route::get('/see-details-done', function () {
+    return view('see-details-done');
+});
+
+Route::get('/see-details', function () {
+    return view('see-details');
+});

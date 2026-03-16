@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LesVol - Log In</title>
+<title>LesVol - Done Activities</title>
 <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
 <body>
@@ -11,7 +11,8 @@
 <nav>
   <a class="nav-brand" href="/">LesVol</a>
   <div class="nav-links">
-    <a href="/register">Sign Up</a>
+    <a href="/">Home</a>
+    <a href="/my-activities">My Activities</a>
     
     <div class="dropdown-wrapper">
       <div class="nav-avatar" onclick="toggleDropdown('nav-dropdown')" id="avatar-trigger">
@@ -21,8 +22,29 @@
       </div>
 
       <div class="dropdown-menu" id="nav-dropdown" style="right: 0; left: auto; background: var(--red); min-width: 180px; padding: 10px 0;">
+        
+        <div id="state-logged-in">
+          <a href="/profile" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            View Profile
+          </a>
+          
+          <a href="/be-a-seeker" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            Be a Seeker!
+          </a>
+          
+          <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            Log Out 
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+            </svg>
+          </a>
+          
+          <a href="#" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">
+            Delete Account
+          </a>
+        </div>
 
-        <div id="state-logged-out">
+        <div id="state-logged-out" style="display: none;">
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;">
             Log In 
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h4M10 17l5-5-5-5M13 12H3"/></svg>
@@ -35,29 +57,23 @@
   </div>
 </nav>
 
-<div class="auth-container">
-  <div class="auth-card" style="max-width:520px;">
-    <div class="auth-title">Log in</div>
-    <div class="auth-subtitle">back to make a change</div>
-
-    <div class="form-group">
-      <label>Email</label>
-      <input class="form-input" type="email" placeholder="Type Email Here" id="email">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input class="form-input" type="password" placeholder="Type Password Here" id="password">
-    </div>
-
-    <div id="error-msg" style="color:#dc2626; font-size:13px; margin-bottom:10px; display:none;">Email atau password salah.</div>
-
-    <div style="text-align:center; margin-top:24px;">
-      <button class="btn btn-primary btn-lg" style="padding:14px 60px;" onclick="doLogin()">Log in</button>
-    </div>
-    <div style="text-align:center; margin-top:16px; font-size:13px; color:var(--gray);">
-      Don't have an account? <a href="/register" style="color:var(--red-btn); font-weight:600;">Sign Up</a>
+<div style="flex:1; padding: 24px 32px;">
+  <div class="page-title-row">
+    <div class="dropdown-wrapper">
+      <div style="display:flex; align-items:center; gap:8px; cursor:pointer;" onclick="toggleDropdown('my-dropdown')">
+        <span class="page-title">Done Activities</span>
+        <span style="color:var(--red); font-size:20px;">▼</span>
+      </div>
+      <div class="dropdown-menu" id="my-dropdown">
+        <a class="dropdown-item" href="/my-activities">Joined Activities</a>
+        <a class="dropdown-item" href="/proposed-activities">Proposed Activities</a>
+        <span class="dropdown-item active">Done Activities</span>
+        <a class="dropdown-item" href="/upload-activity">Upload Activity</a>
+      </div>
     </div>
   </div>
+
+  <div class="activities-grid" id="done-grid"></div>
 </div>
 
 <footer>
@@ -83,7 +99,8 @@
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 </footer>
 
-<script src = "{{asset('js/home.js')}}"></script>
+<script src="{{asset('js/done_activity.js')}}">
+</script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
 </body>
 </html>

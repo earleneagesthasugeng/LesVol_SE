@@ -1,92 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Register – LesVol</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="{{ asset('css/register.css') }}"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LesVol - Register</title>
+<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
 <body>
 
-  <!-- MAIN -->
-  <main>
-    <div class="card">
-      <h1 class="card-title">Become a Volunteer!</h1>
-      <p class="card-sub">One step a way to make real change.</p>
-
-      <div class="field full">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" placeholder="Name"/>
+<nav>
+  <a class="nav-brand" href="/">LesVol</a>
+  <div class="nav-links">
+    <a href="/login">Login</a>
+    
+    <div class="dropdown-wrapper">
+      <div class="nav-avatar" onclick="toggleDropdown('nav-dropdown')" id="avatar-trigger">
+        <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
       </div>
 
-      <div class="field-row">
-        <div class="field">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" placeholder="Email Address"/>
+      <div class="dropdown-menu" id="nav-dropdown" style="right: 0; left: auto; background: var(--red); min-width: 180px; padding: 10px 0;">
+        <div id="state-logged-out">
+          <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;">
+            Log In 
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h4M10 17l5-5-5-5M13 12H3"/></svg>
+          </a>
+          <a href="/register" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">Sign Up</a>
         </div>
-        <div class="field">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" placeholder="Phone Number"/>
-        </div>
-      </div>
 
-      <div class="field-row three">
-        <div class="field">
-          <label for="dob">Date of Birth</label>
-          <input type="text" id="dob" name="dob" placeholder="Date of Birth"/>
-        </div>
-        <div class="field">
-          <label for="occupation">Occupation</label>
-          <input type="text" id="occupation" name="occupation" placeholder="Occupation"/>
-        </div>
-        <div class="field">
-          <label for="city">City</label>
-          <input type="text" id="city" name="city" placeholder="City"/>
-        </div>
-      </div>
-
-      <div class="field full">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Type Password Here"/>
-      </div>
-
-      <div class="field full">
-        <label for="confirm_password">Confirm Password</label>
-        <input type="password" id="confirm_password" name="confirm_password" placeholder="Type Password Here"/>
-      </div>
-
-      <button class="btn-register">Create Account</button>
-
-      <p class="login-text">Already have an account? <a href="{{ route('login') }}" class="login-link">log in here</a></p>
-    </div>
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-left">
-      <h2>Les Know Us More</h2>
-      <div class="footer-contact">
-        <div class="footer-contact-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
-          </svg>
-          +6212 6767 6767
-        </div>
-        <div class="footer-contact-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <path d="M2 7l10 7 10-7"/>
-          </svg>
-          emailus@mail.com
-        </div>
       </div>
     </div>
-    <div class="footer-right">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-    </div>
-  </footer>
+  </div>
+</nav>
 
-  <script src="{{ asset('js/register.js') }}"></script>
+<div class="auth-container" style="padding: 32px 24px; align-items:flex-start;">
+  <div class="auth-card" style="max-width: 680px; padding: 40px;">
+    <div class="auth-title">Become a Volunteer!</div>
+    <div class="auth-subtitle">One step a way to make real change.</div>
+
+    <div class="form-group">
+      <label>Volunter Type</label>
+      <input class="form-input" type="text" placeholder="Type">
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Name</label><input class="form-input" type="text" placeholder="Name"></div>
+      <div class="form-group"><label>Nickname</label><input class="form-input" type="text" placeholder="Nickname"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Email Adresss</label><input class="form-input" type="email" placeholder="Email Adresss"></div>
+      <div class="form-group"><label>Phone Number</label><input class="form-input" type="tel" placeholder="Phone Number"></div>
+    </div>
+    <div class="form-row-3">
+      <div class="form-group"><label>Date of Birth</label><input class="form-input" type="text" placeholder="Date of Birth"></div>
+      <div class="form-group"><label>Occupation</label><input class="form-input" type="text" placeholder="Occupation"></div>
+      <div class="form-group"><label>Place of Birth</label><input class="form-input" type="text" placeholder="Name"></div>
+    </div>
+    <div class="form-group">
+      <label>Why do you want to volunteer?</label>
+      <textarea class="form-input" placeholder="State your reason"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Have you participated in volunteer activies?</label>
+      <textarea class="form-input" placeholder="If yes, please describe you experience!"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input class="form-input" type="password" placeholder="Type Password Here">
+    </div>
+    <div class="form-group">
+      <label>Confirm Password</label>
+      <input class="form-input" type="password" placeholder="Type Password Here">
+    </div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="terms">
+      <label for="terms">I agree to LesVol's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+    </div>
+    <button class="btn btn-primary btn-full" style="margin-top:8px;" onclick="window.location.href='/login'">Create Account</button>
+
+    <div style="text-align:center; margin-top:16px; font-size:13px; color:var(--gray);">
+      Already have an account? <a href="/login" style="color:var(--red-btn); font-weight:600;">Log in</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>
+    <h3>Les Know Us More</h3>
+    <div class="footer-contact">
+      <span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.27-2.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        +6212 6767 6767
+      </span>
+
+      <span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        emailus@mail.com
+      </span>
+    </div>
+  </div>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+</footer>
+
 </body>
+<script src="{{asset('js/dropdown_login.js')}}"></script>
 </html>
