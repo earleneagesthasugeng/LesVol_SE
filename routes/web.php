@@ -65,3 +65,5 @@ Route::get('/see-details-done', function () {
 Route::get('/see-details', function () {
     return view('see-details');
 });
+
+require __DIR__.'/settings.php';
