@@ -69,8 +69,6 @@
           @enderror
         </div>
 
-
-        <div class="form-row">
           <div class="form-group">
             <label for="name">Name</label>
             <input id="name" name="name" class="form-input @error('name') is-invalid @enderror" type="text"
@@ -79,15 +77,6 @@
             <span class="error-message" style="color: var(--red-btn); font-size: 12px;">{{ $message }}</span>
             @enderror
           </div>
-          <div class="form-group">
-            <label for="nickname">Nickname</label>
-            <input id="nickname" name="nickname" class="form-input @error('nickname') is-invalid @enderror" type="text"
-              placeholder="Nickname" value="{{ old('nickname') }}">
-            @error('nickname')
-            <span class="error-message" style="color: var(--red-btn); font-size: 12px;">{{ $message }}</span>
-            @enderror
-          </div>
-        </div>
 
 
         <div class="form-row">
@@ -113,7 +102,7 @@
         <div class="form-row-3">
           <div class="form-group">
             <label for="dob">Date of Birth</label>
-            <input id="dob" name="dob" class="form-input @error('dob') is-invalid @enderror" type="text"
+            <input id="dob" name="dob" class="form-input @error('dob') is-invalid @enderror" type="date"
               placeholder="Date of Birth" value="{{ old('dob') }}">
             @error('dob')
             <span class="error-message" style="color: var(--red-btn); font-size: 12px;">{{ $message }}</span>
@@ -136,27 +125,6 @@
             @enderror
           </div>
         </div>
-
-
-        <div class="form-group">
-          <label for="reason">Why do you want to volunteer?</label>
-          <textarea id="reason" name="reason" class="form-input @error('reason') is-invalid @enderror"
-            placeholder="State your reason">{{ old('reason') }}</textarea>
-          @error('reason')
-          <span class="error-message" style="color: var(--red-btn); font-size: 12px;">{{ $message }}</span>
-          @enderror
-        </div>
-
-
-        <div class="form-group">
-          <label for="experience">Have you participated in volunteer activities?</label>
-          <textarea id="experience" name="experience" class="form-input @error('experience') is-invalid @enderror"
-            placeholder="If yes, please describe your experience!">{{ old('experience') }}</textarea>
-          @error('experience')
-          <span class="error-message" style="color: var(--red-btn); font-size: 12px;">{{ $message }}</span>
-          @enderror
-        </div>
-
 
         <div class="form-row">
           <div class="form-group">

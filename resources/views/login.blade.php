@@ -8,11 +8,12 @@
 </head>
 <body>
 
+
 <nav>
   <a class="nav-brand" href="/">LesVol</a>
   <div class="nav-links">
     <a href="/register">Sign Up</a>
-    
+   
     <div class="dropdown-wrapper">
       <div class="nav-avatar" onclick="toggleDropdown('nav-dropdown')" id="avatar-trigger">
         <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
@@ -20,45 +21,58 @@
         </svg>
       </div>
 
+
       <div class="dropdown-menu" id="nav-dropdown" style="right: 0; left: auto; background: var(--red); min-width: 180px; padding: 10px 0;">
+
 
         <div id="state-logged-out">
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;">
-            Log In 
+            Log In
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h4M10 17l5-5-5-5M13 12H3"/></svg>
           </a>
           <a href="/register" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">Sign Up</a>
         </div>
+
 
       </div>
     </div>
   </div>
 </nav>
 
+
 <div class="auth-container">
   <div class="auth-card" style="max-width:520px;">
     <div class="auth-title">Log in</div>
     <div class="auth-subtitle">back to make a change</div>
 
-    <div class="form-group">
-      <label>Email</label>
-      <input class="form-input" type="email" placeholder="Type Email Here" id="email">
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input class="form-input" type="password" placeholder="Type Password Here" id="password">
-    </div>
 
-    <div id="error-msg" style="color:#dc2626; font-size:13px; margin-bottom:10px; display:none;">Email atau password salah.</div>
+    <form method="POST" action="/user-login">
+      @csrf
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-input" type="email" name="email" placeholder="Type Email Here" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input class="form-input" type="password" name="password" placeholder="Type Password Here" id="password" required>
+      </div>
 
-    <div style="text-align:center; margin-top:24px;">
-      <button class="btn btn-primary btn-lg" style="padding:14px 60px;" onclick="doLogin()">Log in</button>
-    </div>
+
+      @if(session('error'))
+        <div id="error-msg" style="color:#dc2626; font-size:13px; margin-bottom:10px;">{{ session('error') }}</div>
+      @endif
+
+
+      <div style="text-align:center; margin-top:24px;">
+        <button type="submit" class="btn btn-primary btn-lg" style="padding:14px 60px;">Log in</button>
+      </div>
+    </form>
     <div style="text-align:center; margin-top:16px; font-size:13px; color:var(--gray);">
       Don't have an account? <a href="/register" style="color:var(--red-btn); font-weight:600;">Sign Up</a>
     </div>
   </div>
 </div>
+
 
 <footer>
   <div>
@@ -71,6 +85,7 @@
         +6212 6767 6767
       </span>
 
+
       <span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -82,6 +97,7 @@
   </div>
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 </footer>
+
 
 <script src = "{{asset('js/home.js')}}"></script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>

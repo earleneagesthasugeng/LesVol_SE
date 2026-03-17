@@ -6,9 +6,33 @@ use Illuminate\Http\Request;
 
 class register_controller extends Controller
 {
-    public function register(Request $request){
-       dd();
+   public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|string|max:20',
+            'dob' => 'required|date',
+            'occupation' => 'required|string|max:255',
+            'pob' => 'required|string|max:255',
+            'password' => 'required|string|min:8|confirmed',
+            'terms' => 'required|accepted',
+            'volunteer_type' => 'required'
+        ]);
+
+
+        \App\Models\User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'date_of_birth' => $validated['dob'],
+            'occupation' => $validated['occupation'],
+            'place_of_birth' => $validated['pob'],
+            'password' => $validated['password'],
+            'volunteer_type' => $validated['volunteer_type']
+        ]);
+
+
+        return redirect('/')->with('success', 'Account created successfully!');
     }
-
-
 }
