@@ -31,7 +31,7 @@ for (let i = 0; i < 9; i++) {
                 ${calendarSVG} dd/mm/yy
             </div>
             <div class="activity-card-actions">
-                <a class="btn-see-more" href="see-details-done.html">Details ▶</a>
+                <a class="btn-see-more" href="/see-details-done">Details ▶</a>
             </div>
         </div>
     </div>`;

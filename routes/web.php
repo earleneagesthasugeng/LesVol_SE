@@ -1,13 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\register_controller;
+use App\Http\Controllers\login_controller;
 
 Route::get('/', function () {
-    return view('home');
+    return view('login');
 });
 
-Route::get('/login', function () {
-    return view('login');
+Route::get('/home', function () {
+    return view('home');
 });
 
 Route::get('/upload-activity', function () {
@@ -65,5 +67,9 @@ Route::get('/see-details-done', function () {
 Route::get('/see-details', function () {
     return view('see-details');
 });
+
+// BACKEND
+Route::post('/user-register', [register_controller::class,'register']);
+Route::post('/user-login', [login_controller::class,'login']);
 
 require __DIR__.'/settings.php';
