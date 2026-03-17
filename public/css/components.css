@@ -241,5 +241,5 @@
   display: block; 
   color: var(--text); 
 }
-.dropdown-item:hover { background: #f3f4f6; color: #8B1A1A; }
+.dropdown-item:hover { background: var(--red);}
 .dropdown-item.active { font-weight: 700; color: var(--red); }
