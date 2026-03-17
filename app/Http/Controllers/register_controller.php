@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 
 class register_controller extends Controller
 {
-    public function register(){
-        
+    public function register(Request $request){
+       dd();
     }
+
+
 }

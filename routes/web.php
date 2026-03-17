@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\register_controller;
 
 Route::get('/', function () {
     return view('home');
@@ -65,5 +66,8 @@ Route::get('/see-details-done', function () {
 Route::get('/see-details', function () {
     return view('see-details');
 });
+
+// BACKEND
+Route::post('/user-register', [register_controller::class,'register']);
 
 require __DIR__.'/settings.php';

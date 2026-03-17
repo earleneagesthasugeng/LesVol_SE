@@ -55,7 +55,7 @@
       <div class="auth-subtitle">One step a way to make real change.</div>
 
 
-      <form method="POST" action="">
+      <form method="POST" action="/user-register">
         @csrf
 
 
