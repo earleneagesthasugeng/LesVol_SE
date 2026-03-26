@@ -67,8 +67,8 @@
   <div class="profile-photo"></div>
 </div>
 <div class="profile-card">
-  <div class="profile-name">John Doe</div>
-  <div class="profile-role">Volunteer, Jakarta</div>
+  <div class="profile-name">{{$user->name}}</div>
+  <div class="profile-role">{{$user->volunteer_type}}, {{$user->domicile}}</div>
   <p class="profile-bio">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
   </p>

@@ -7,6 +7,7 @@ document.addEventListener('click', function(e) {
     }
 });
 
+
 function openModal(id) { document.getElementById(id).classList.add('open'); }
   function closeModal(id) { document.getElementById(id).classList.remove('open'); }
   document.querySelectorAll('.modal-overlay').forEach(el => {
@@ -18,7 +19,18 @@ function openModal(id) { document.getElementById(id).classList.add('open'); }
     const reader = new FileReader();
     reader.onload = function(ev) {
       const box = document.querySelector('.upload-img-box');
-      box.innerHTML = `<img src="${ev.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">`;
+      let img = box.querySelector('img');
+      if (!img) {
+          img = document.createElement('img');
+          img.style.width = '100%';
+          img.style.height = '100%';
+          img.style.objectFit = 'cover';
+          img.style.borderRadius = '14px';
+          const span = box.querySelector('span');
+          if (span) span.style.display = 'none';
+          box.appendChild(img);
+      }
+      img.src = ev.target.result;
     };
     reader.readAsDataURL(file);
   }
@@ -29,3 +41,6 @@ function openModal(id) { document.getElementById(id).classList.add('open'); }
       alert(`Proposal "${file.name}" berhasil dipilih!`);
     }
   }
+
+
+

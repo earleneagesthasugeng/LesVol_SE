@@ -8,12 +8,13 @@
 </head>
 <body>
 
+
 <nav>
   <a class="nav-brand" href="/">LesVol</a>
   <div class="nav-links">
     <a href="/">Home</a>
     <a href="/my-activities">My Activities</a>
-    
+   
     <div class="dropdown-wrapper">
       <div class="nav-avatar" onclick="toggleDropdown('nav-dropdown')" id="avatar-trigger">
         <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
@@ -21,41 +22,45 @@
         </svg>
       </div>
 
+
       <div class="dropdown-menu" id="nav-dropdown" style="right: 0; left: auto; background: var(--red); min-width: 180px; padding: 10px 0;">
-        
+       
         <div id="state-logged-in">
           <a href="/profile" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             View Profile
           </a>
-          
+         
           <a href="/be-a-seeker" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             Be a Seeker!
           </a>
-          
+         
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-            Log Out 
+            Log Out
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
             </svg>
           </a>
-          
+         
           <a href="#" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">
             Delete Account
           </a>
         </div>
 
+
         <div id="state-logged-out" style="display: none;">
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;">
-            Log In 
+            Log In
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h4M10 17l5-5-5-5M13 12H3"/></svg>
           </a>
           <a href="/register" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">Sign Up</a>
         </div>
 
+
       </div>
     </div>
   </div>
 </nav>
+
 
 <div style="padding: 32px;">
   <div class="page-title-row">
@@ -73,43 +78,95 @@
     </div>
   </div>
 
+
   <div class="activities-grid" id="proposed-grid"></div>
 </div>
 
-<div style="padding:32px;">
-  <div class="upload-form">
-    <div class="upload-layout">
-      <div>
-        <div class="upload-img-box" onclick="document.getElementById('img-input').click()">
-          <span>Upload Images Here</span>
-          <input type="file" id="img-input" accept="image/*" style="display:none;" onchange="previewImage(event)">
+
+<form action="{{ route('activity.upload') }}" method="POST" enctype="multipart/form-data">
+  @csrf
+  @if ($errors->any())
+    <div style="background: #fee2e2; border: 1px solid #ef4444; color: #b91c1c; padding: 15px; border-radius: 8px; margin: 20px 32px;">
+      <ul style="margin: 0; padding-left: 20px;">
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
+  <div style="padding:32px;">
+    <div class="upload-form">
+      <div class="upload-layout">
+        <div>
+          <input type="file" id="img-input" name="image" accept="image/*" style="display:none;" onchange="previewImage(event)">
+          <div class="upload-img-box" onclick="document.getElementById('img-input').click()">
+            <span>Upload Images Here</span>
+          </div>
         </div>
-      </div>
-      <div>
-        <div class="form-group">
-          <label>Activity Name</label>
-          <input class="form-input" type="text" placeholder="Type Activity Name Here">
-        </div>
-        <div class="form-group">
-          <label>Location</label>
-          <input class="form-input" type="text" placeholder="Select Location">
-        </div>
-        <div class="form-group">
-          <label>Activity Date</label>
-          <input class="form-input" type="date">
-        </div>
-        <div class="form-group">
-          <label>Description</label>
-          <textarea class="form-input" style="min-height:160px;" placeholder="Describe your activity"></textarea>
-        </div>
-        <div class="upload-actions">
-          <button class="btn btn-outline" onclick="openModal('modal-upload-proposal')" style="flex:1; border-radius:8px;">Upload Proposal Here</button>
-          <button class="btn btn-dark" style="border-radius:8px; padding:12px 24px;" onclick="window.location.href='proposed-activities.html'">Submit Activity</button>
+        <div>
+          <div class="form-group">
+            <label>Activity Name</label>
+            <input class="form-input" type="text" name="activity_name" placeholder="Type Activity Name Here" required>
+          </div>
+          <div class="form-group">
+            <label>Location</label>
+            <input class="form-input" type="text" name="location" placeholder="Select Location" required>
+          </div>
+          <div style="display: flex; gap: 20px;">
+            <div class="form-group" style="flex: 1;">
+              <label>Activity Date</label>
+              <input class="form-input" type="date" name="activity_date" required>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label>Activity Time</label>
+              <input class="form-input" type="time" name="activity_time" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Slot</label>
+            <input class="form-input" type="number" name="slot" placeholder="Number of volunteers needed" required>
+          </div>
+          <div style="display: flex; gap: 20px;">
+            <div class="form-group" style="flex: 1;">
+              <label>Open Registration Date</label>
+              <input class="form-input" type="date" name="open_reg_date" required>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label>Close Registration Date</label>
+              <input class="form-input" type="date" name="close_reg_date" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Requirements</label>
+            <textarea class="form-input" name="requirements" style="min-height:80px;" placeholder="What are the requirements?"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-input" name="description" style="min-height:120px;" placeholder="Describe your activity"></textarea>
+          </div>
+
+
+          <div class="upload-actions">
+            <button type="submit" class="btn btn-dark" style="border-radius:8px; padding:12px 24px;">Submit Activity</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+
+
+  <div class="modal-overlay" id="modal-upload-proposal">
+    <div class="modal" style="text-align:center; max-width:440px;">
+      <button type="button" class="modal-close" onclick="closeModal('modal-upload-proposal')">✕</button>
+      <h3 style="font-family:'DM Serif Display',serif; font-size:20px; margin-bottom:20px;">Upload Proposal</h3>
+      <div style="font-size:64px; color:#ccc; margin-bottom:12px; line-height:1;">⬆</div>
+      <p style="font-size:13px; color:var(--gray); margin-bottom:24px;">Select a file to upload (PDF, max 10MB)</p>
+      <input type="file" id="proposal-input" name="proposal" accept=".pdf" style="display:none;" onchange="handleProposal(event)">
+      <button type="button" class="btn btn-dark" style="border-radius:12px; padding:12px 40px;" onclick="document.getElementById('proposal-input').click()">Upload</button>
+    </div>
+  </div>
+</form>
+
 
 <footer>
   <div>
@@ -121,6 +178,7 @@
         </svg>
         +6212 6767 6767
       </span>
+
 
       <span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -134,19 +192,14 @@
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 </footer>
 
-<div class="modal-overlay" id="modal-upload-proposal">
-  <div class="modal" style="text-align:center; max-width:440px;">
-    <button class="modal-close" onclick="closeModal('modal-upload-proposal')">✕</button>
-    <h3 style="font-family:'DM Serif Display',serif; font-size:20px; margin-bottom:20px;">Upload Proposal</h3>
-    <div style="font-size:64px; color:#ccc; margin-bottom:12px; line-height:1;">⬆</div>
-    <p style="font-size:13px; color:var(--gray); margin-bottom:24px;">Select a file to upload (PDF, max 10MB)</p>
-    <input type="file" id="proposal-input" accept=".pdf" style="display:none;" onchange="handleProposal(event)">
-    <button class="btn btn-dark" style="border-radius:12px; padding:12px 40px;" onclick="document.getElementById('proposal-input').click()">Upload</button>
-  </div>
-</div>
 
 <script src="{{asset('js/upload_activity.js')}}">
 </script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
 </body>
 </html>
+
+
+
+
+

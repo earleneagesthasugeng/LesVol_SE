@@ -25,9 +25,11 @@ class User extends Authenticatable
         'password',
         'date_of_birth',
         'occupation',
-        'place_of_birth',
+        'domicile',
         'phone',
-        'volunteer_type'
+        'volunteer_type',
+        'bio',
+        'profile_picture_path'
     ];
 
     /**

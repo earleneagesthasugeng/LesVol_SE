@@ -14,7 +14,7 @@ class register_controller extends Controller
             'phone' => 'required|string|max:20',
             'dob' => 'required|date',
             'occupation' => 'required|string|max:255',
-            'pob' => 'required|string|max:255',
+            'domicile' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed',
             'terms' => 'required|accepted',
             'volunteer_type' => 'required'
@@ -27,7 +27,7 @@ class register_controller extends Controller
             'phone' => $validated['phone'],
             'date_of_birth' => $validated['dob'],
             'occupation' => $validated['occupation'],
-            'place_of_birth' => $validated['pob'],
+            'domicile' => $validated['domicile'],
             'password' => $validated['password'],
             'volunteer_type' => $validated['volunteer_type']
         ]);

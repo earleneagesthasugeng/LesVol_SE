@@ -117,10 +117,10 @@
             @enderror
           </div>
           <div class="form-group">
-            <label for="pob">Place of Birth</label>
-            <input id="pob" name="pob" class="form-input @error('pob') is-invalid @enderror" type="text"
-              placeholder="Place of Birth" value="{{ old('pob') }}">
-            @error('pob')
+            <label for="pob">Domicile</label>
+            <input id="domicile" name="domicile" class="form-input @error('domicile') is-invalid @enderror" type="text"
+              placeholder="Domicile" value="{{ old('domicile') }}">
+            @error('domicile')
             <span class="error-message" style="color: var(--red-btn); font-size: 12px;">{{ $message }}</span>
             @enderror
           </div>

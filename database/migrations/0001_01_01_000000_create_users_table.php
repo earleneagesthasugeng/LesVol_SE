@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('volunteer_type');
-            $table->string('place_of_birth');
+            $table->string('domicile');
             $table->string('occupation');
             $table->string('email')->unique();
             $table->string('password');
@@ -24,6 +24,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->string('bio')->nullable();
+            $table->string('profile_picture_path')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

@@ -8,12 +8,13 @@
 </head>
 <body>
 
+
 <nav>
   <a class="nav-brand" href="/">LesVol</a>
   <div class="nav-links">
     <a href="/">Home</a>
     <a href="/my-activities">My Activities</a>
-    
+   
     <div class="dropdown-wrapper">
       <div class="nav-avatar" onclick="toggleDropdown('nav-dropdown')" id="avatar-trigger">
         <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
@@ -21,41 +22,45 @@
         </svg>
       </div>
 
+
       <div class="dropdown-menu" id="nav-dropdown" style="right: 0; left: auto; background: var(--red); min-width: 180px; padding: 10px 0;">
-        
+       
         <div id="state-logged-in">
           <a href="/profile" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             View Profile
           </a>
-          
+         
           <a href="/be-a-seeker" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             Be a Seeker!
           </a>
-          
+         
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-            Log Out 
+            Log Out
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
             </svg>
           </a>
-          
+         
           <a href="#" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">
             Delete Account
           </a>
         </div>
 
+
         <div id="state-logged-out" style="display: none;">
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;">
-            Log In 
+            Log In
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h4M10 17l5-5-5-5M13 12H3"/></svg>
           </a>
           <a href="/register" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">Sign Up</a>
         </div>
 
+
       </div>
     </div>
   </div>
 </nav>
+
 
 <div style="flex:1; padding: 24px 32px;">
   <div class="page-title-row">
@@ -73,8 +78,10 @@
     </div>
   </div>
 
+
   <div class="activities-grid" id="proposed-grid"></div>
 </div>
+
 
 <footer>
   <div>
@@ -86,6 +93,7 @@
         </svg>
         +6212 6767 6767
       </span>
+
 
       <span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -99,7 +107,30 @@
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 </footer>
 
+@if(session('success'))
+<div class="modal-overlay open" id="modal-register-success">
+    <div class="modal" style="text-align:center; max-width:420px; padding:40px 32px;">
+      <div
+        style="width:80px; height:80px; border-radius:50%; border:5px solid #22c55e; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:#22c55e; font-size:36px;">
+        ✓</div>
+      <p style="color:#4b5563; font-size:15px;">{{ session('success') }}</p>
+      <a href="/"
+        style="display:inline-block; margin-top:20px; color:var(--red-btn); font-weight:600; font-size:14px;">Seek all
+        the activities →</a>
+    </div>
+  </div>
+@endif
+
 <script src="{{asset('js/proposed_activities.js')}}"></script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
+<script>
+    function openModal(id) { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+</script>
 </body>
 </html>
+
+
+
+
+
