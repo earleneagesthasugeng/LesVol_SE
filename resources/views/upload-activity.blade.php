@@ -10,9 +10,9 @@
 
 
 <nav>
-  <a class="nav-brand" href="/">LesVol</a>
+  <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
-    <a href="/">Home</a>
+    <a href="/home">Home</a>
     <a href="/my-activities">My Activities</a>
    
     <div class="dropdown-wrapper">
@@ -62,7 +62,7 @@
 </nav>
 
 
-<div style="padding: 32px;">
+<div style="flex:1; padding: 5px 32px; margin-top: 20px;">
   <div class="page-title-row">
     <div class="dropdown-wrapper">
       <div style="display:flex; align-items:center; gap:8px; cursor:pointer;" onclick="toggleDropdown('my-dropdown')">
@@ -94,7 +94,7 @@
       </ul>
     </div>
   @endif
-  <div style="padding:32px;">
+  <div style="padding:0px 32px; margin-bottom: 30px">
     <div class="upload-form">
       <div class="upload-layout">
         <div>
@@ -166,7 +166,6 @@
     </div>
   </div>
 </form>
-
 
 <footer>
   <div>

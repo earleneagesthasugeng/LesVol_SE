@@ -9,9 +9,9 @@
 <body>
 
 <nav>
-  <a class="nav-brand" href="/">LesVol</a>
+  <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
-    <a href="/">Home</a>
+    <a href="/home">Home</a>
     <a href="/my-activities">My Activities</a>
     
     <div class="dropdown-wrapper">
@@ -58,12 +58,12 @@
 </nav>
 
 <div style="flex:1; padding: 32px; max-width:900px; margin-left: 25%; width:100%;">
-  <a class="back-btn" href="/" style="margin-bottom:20px; display:inline-flex;">
+  <a class="back-btn" href="/home" style="margin-bottom:20px; display:inline-flex;">
     <div class="back-icon">◀</div> Back
   </a>
   <div style="background:white; border-radius:20px; box-shadow:var(--card-shadow); padding:36px; width:100%; max-width:700px;">
     <div class="auth-title">Register</div>
-    <div class="auth-subtitle">start making a change !</div>
+    <div class="auth-subtitle">Start making a change!</div>
 
     <div class="reg-activity-img"></div>
     <div class="reg-activity-name">nama aktivitas</div>
@@ -139,9 +139,14 @@
 <div class="modal-overlay" id="modal-register-success">
   <div class="modal" style="text-align:center; max-width:420px; padding:40px 32px;">
     <button class="modal-close" onclick="closeModal('modal-register-success')">✕</button>
-    <div style="width:80px; height:80px; border-radius:50%; border:5px solid #22c55e; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:#22c55e; font-size:36px;">✓</div>
-    <p style="color:#4b5563; font-size:15px;">You are successfully registered!</p>
-    <a href="/my-activities" style="display:inline-block; margin-top:20px; color:var(--red-btn); font-weight:600; font-size:14px;">Go to My Activities →</a>
+    <h2 class="popup-title">Success!</h2>
+    <div style="width:80px; height:80px; border-radius:50%; border:5px solid #22c55e; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; margin-top: 15px; color:#22c55e; font-size:36px;">✓</div>
+    <p class="popup-subtitle">You are successfully registered!</p>
+    <div style="margin-top: 24px;">
+      <a href="/my-activities" class="btn btn-primary btn-lg" style="width: 100%; text-align: center; text-decoration: none;">
+          Go to My Activities →
+      </a>
+    </div>
   </div>
 </div>
 

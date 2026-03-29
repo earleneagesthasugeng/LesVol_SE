@@ -14,7 +14,7 @@
 
 
   <nav>
-    <a class="nav-brand" href="/">LesVol</a>
+    <a class="nav-brand" href="/home">LesVol</a>
     <div class="nav-links">
       <a href="/login">Login</a>
 

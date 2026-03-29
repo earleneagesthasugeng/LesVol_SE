@@ -15,9 +15,9 @@
 
 
   <nav>
-    <a class="nav-brand" href="/">LesVol</a>
+    <a class="nav-brand" href="/home">LesVol</a>
     <div class="nav-links">
-      <a href="/">Home</a>
+      <a href="/home">Home</a>
       <a href="/my-activities">My Activities</a>
 
 
@@ -174,26 +174,24 @@
   <div class="modal-overlay" id="modal-register-success">
     <div class="modal" style="text-align:center; max-width:420px; padding:40px 32px;">
       <button class="modal-close" onclick="closeModal('modal-register-success')">✕</button>
+      <h2 class="popup-title">Success!</h2>
       <div
-        style="width:80px; height:80px; border-radius:50%; border:5px solid #22c55e; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:#22c55e; font-size:36px;">
+        style="width:80px; height:80px; border-radius:50%; border:5px solid #22c55e; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; margin-top: 15px color:#22c55e; font-size:36px;">
         ✓</div>
-      <p style="color:#4b5563; font-size:15px;">You have successfully become a Seeker!</p>
-      <a href="/"
-        style="display:inline-block; margin-top:20px; color:var(--red-btn); font-weight:600; font-size:14px;">Start uploading your activities</a>
+      <p class="popup-subtitle">You have successfully become a Seeker!</p>
+      <a href="/home" class="btn btn-primary btn-lg" style="width: 100%; text-align: center; text-decoration: none;">Start uploading your activities</a>
     </div>
   </div>
 
 
-  <script src="{{ asset('js/dropdown_login.js')}}">
-  </script>
-  <script src="{{ asset('js/be-a-seeker.js')}}"></script>
-  <script>
-    function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-  </script>
+<script src="{{ asset('js/dropdown_login.js')}}">
+</script>
+<script src="{{ asset('js/be-a-seeker.js')}}"></script>
+<script>
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+</script>
 </body>
-
-
 </html>
 
 

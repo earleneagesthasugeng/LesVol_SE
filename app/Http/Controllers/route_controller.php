@@ -107,6 +107,25 @@ class route_controller extends Controller
         return view('see-details');
     }
 
+    public function editProfilePage()
+    {
+        return view('edit-profile');
+    }
+
+    public function editPortfolioPage()
+    {
+        return view('edit-portfolio');
+    }
+
+    public function viewPortfolioPage()
+    {
+        return view('view-portfolio');
+    }
+
+    public function myPortfolioPage()
+    {
+        return view('my-portfolio');
+    }
 
 }
 

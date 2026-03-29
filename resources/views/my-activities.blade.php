@@ -9,9 +9,9 @@
 <body>
 
 <nav>
-  <a class="nav-brand" href="/">LesVol</a>
+  <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
-    <a href="/">Home</a>
+    <a href="/home">Home</a>
     <a href="/my-activities">My Activities</a>
     
     <div class="dropdown-wrapper">

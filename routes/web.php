@@ -25,6 +25,10 @@ Route::get('/proposed-activities', [route_controller::class, 'proposedActivities
 Route::get('/register-activity', [route_controller::class, 'registerActivityPage']);
 Route::get('/see-details-done', [route_controller::class, 'seeDetailsDonePage']);
 Route::get('/see-details', [route_controller::class, 'seeDetailsPage']);
+Route::get('/edit-profile', [route_controller::class, 'editProfilePage']);
+Route::get('/edit-portfolio', [route_controller::class, 'editPortfolioPage']);
+Route::get('/view-portfolio', [route_controller::class, 'viewPortfolioPage']);
+Route::get('/my-portfolio', [route_controller::class, 'myPortfolioPage']);
 
 
 
@@ -34,6 +38,7 @@ Route::post('/user-register', [register_controller::class, 'register']);
 Route::post('/user-login', [login_controller::class, 'login']);
 Route::post('/register-seeker', [seeker_controller::class, 'registerSeeker'])->name('seeker.register');
 Route::post('/upload-activity', [activity_controller::class, 'uploadActivity'])->name('activity.upload');
+Route::post('/update-profile', [route_controller::class, 'updateProfile'])->name('profile.update');
 
 
 require __DIR__ . '/settings.php';

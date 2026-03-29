@@ -243,3 +243,105 @@
 }
 .dropdown-item:hover { background: var(--red); }
 .dropdown-item.active { font-weight: 700; color: var(--red); }
+
+.portfolio-header-box {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    max-width: 900px;
+    margin: 0 auto 30px;
+}
+
+.portfolio-main-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--text);
+}
+
+.portfolio-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.portfolio-card {
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    display: flex;
+    gap: 24px;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    border: 1px solid #f0f0f0;
+}
+
+.portfolio-img-placeholder {
+    width: 240px;
+    height: 140px;
+    background: #b0b0b0;
+    border-radius: 16px;
+    flex-shrink: 0;
+}
+
+.portfolio-details {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.portfolio-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.portfolio-meta {
+    color: var(--gray);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.portfolio-contribution {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #4b5563;
+}
+
+.portfolio-actions-wrapper {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.three-dots-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #1a1a1a;
+    padding: 5px;
+}
+
+.portfolio-dropdown {
+    right: 0;
+    left: auto;
+    top: 35px;
+    min-width: 180px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    background: white;
+}
+
+.add-portfolio-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.flex-row {
+    display: flex;
+    align-items: center;
+}

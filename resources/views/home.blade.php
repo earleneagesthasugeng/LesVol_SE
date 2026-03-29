@@ -9,9 +9,9 @@
 <body>
 
 <nav>
-  <a class="nav-brand" href="/">LesVol</a>
+  <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
-    <a href="/">Home</a>
+    <a href="/home">Home</a>
     <a href="/my-activities">My Activities</a>
     
     <div class="dropdown-wrapper">
@@ -68,7 +68,7 @@
         <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
             <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
         </svg> dd/mm/yy</div>
-      <a class="btn-see-more" href="/activity" style="margin-top:10px; display:inline-flex; width:auto;">see more ▶</a>
+      <a class="btn-see-more" href="/activity" style="margin-top:10px; display:inline-flex; width:auto;">See More ▶</a>
       <div class="hero-dots" style="margin-top:12px;">
         <div class="hero-dot active"></div>
         <div class="hero-dot"></div>

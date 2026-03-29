@@ -9,9 +9,9 @@
 <body>
 
 <nav>
-  <a class="nav-brand" href="/">LesVol</a>
+  <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
-    <a href="/">Home</a>
+    <a href="/home">Home</a>
     <a href="/my-activities">My Activities</a>
     
     <div class="dropdown-wrapper">
@@ -70,12 +70,13 @@
         <div>
           <div class="detail-title">Nama Aktivitas</div>
           <div class="detail-author">
-            <div class="author-avatar">
-              <svg width="18" height="18" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            </div>
-            <div>
-              <div style="font-weight:700; font-size:14px;">Nama Pembuat</div>
-              <div class="stars">★★★★☆ <span style="color:#666; font-size:12px;">4.5 (9,6 rb)</span></div>
+            <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
+              <div class="author-avatar">
+                <svg width="18" height="18" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              </div>
+              <div>
+                <div style="font-weight:700; font-size:14px;">Nama Pembuat</div>
+              </div>
             </div>
           </div>
         </div>

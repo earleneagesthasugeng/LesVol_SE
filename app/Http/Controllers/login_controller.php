@@ -15,7 +15,7 @@ class login_controller extends Controller
         
         $user = \App\Models\User::where('email', '=', $validated['email'])->first();
         if($user == NULL||$user->password!==$validated['password']){
-            return back()->with('error','Error! data is invalid!');
+            return back()->with('error','Error! Data is invalid!');
         }
 
         $request->session()->put('user',$user);

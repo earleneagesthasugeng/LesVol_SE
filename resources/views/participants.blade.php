@@ -9,9 +9,9 @@
 <body>
 
 <nav>
-  <a class="nav-brand" href="/">LesVol</a>
+  <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
-    <a href="/">Home</a>
+    <a href="/home">Home</a>
     <a href="/my-activities">My Activities</a>
     
     <div class="dropdown-wrapper">
@@ -116,7 +116,7 @@
     list.innerHTML = '';
     names.filter(n => n.toLowerCase().includes(filter.toLowerCase())).forEach(name => {
       list.innerHTML += `
-        <a class="participant-item" href="profile-user.html">
+        <a class="participant-item" href="/profile-user">
           <div class="participant-avatar"></div>
           <span class="participant-name">${name}</span>
           <svg width="14" height="14" fill="#8B1A1A" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>

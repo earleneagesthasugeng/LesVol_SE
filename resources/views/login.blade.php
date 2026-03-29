@@ -10,7 +10,7 @@
 
 
 <nav>
-  <a class="nav-brand" href="/">LesVol</a>
+  <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
     <a href="/register">Sign Up</a>
    
@@ -42,8 +42,8 @@
 
 <div class="auth-container">
   <div class="auth-card" style="max-width:520px;">
-    <div class="auth-title">Log in</div>
-    <div class="auth-subtitle">back to make a change</div>
+    <div class="auth-title">Welcome Back, Volunteer!</div>
+    <div class="auth-subtitle">Let's go back to make a change.</div>
 
 
     <form method="POST" action="/user-login">

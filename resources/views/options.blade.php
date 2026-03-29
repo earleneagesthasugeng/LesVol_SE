@@ -9,9 +9,9 @@
 <body>
 
 <nav>
-  <a class="nav-brand" href="/">LesVol</a>
+  <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
-    <a href="/">Home</a>
+    <a href="/home">Home</a>
     <a href="/my-activities">My Activities</a>
     
     <div class="dropdown-wrapper">
@@ -70,31 +70,33 @@
         <div>
           <div class="detail-title">Nama Aktivitas</div>
           <div class="detail-author">
-            <div class="author-avatar">
-              <svg width="18" height="18" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            </div>
-            <div>
-              <div style="font-weight:700; font-size:14px;">Nama Pembuat</div>
-              <div class="stars">★★★★☆ <span style="color:#666; font-size:12px;">4.5 (9,6 rb)</span></div>
+            <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
+              <div class="author-avatar">
+                <svg width="18" height="18" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              </div>
+              <div>
+                <div style="font-weight:700; font-size:14px;">Nama Pembuat</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="participants-count" style="display: flex; align-items: center; gap: 6px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-          <circle cx="9" cy="7" r="4"></circle>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-        </svg>
-        67/100
-        <a href="/participants" style="display: flex; align-items: center; margin-left: 8px;" title="View participants">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
+        <div style="margin-top: 50px; display: block; align-items: center; gap: 10;">
+        <div class="participants-count" style="display: flex; align-items: center; gap: 6px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
           </svg>
-        </a>
+          67/100
+          <a href="/participants" style="display: flex; align-items: center; margin-left: 8px;" title="View participants">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </a>
+        </div>
+      </div>
       </div>
       <hr class="detail-divider">
 
