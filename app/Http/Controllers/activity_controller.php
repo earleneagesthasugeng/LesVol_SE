@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Activity;
+use App\Models\Seeker;
 
 class activity_controller extends Controller
 {
@@ -28,6 +29,8 @@ class activity_controller extends Controller
             $imagePath = $request->file('image')->store('activities', 'public');
         }
 
+        $currentUserId = $request->session()->get('user')->id;
+        $currentSeekerId = Seeker::firstWhere('user_id', '=', $currentUserId)->id;
 
         Activity::create([
             'activity_name' => $validated['activity_name'],
@@ -40,9 +43,18 @@ class activity_controller extends Controller
             'close_reg_date' => $validated['close_reg_date'],
             'image_path' => $imagePath,
             'slot' => $validated['slot'],
+            'seeker_id' => $currentSeekerId,
         ]);
-
 
         return redirect('/proposed-activities')->with('success', 'Activity uploaded successfully!');
     }
+
+     public function deleteActivity($id)
+            {
+                $activity = Activity::findOrFail($id);
+                $activity->delete();
+                return redirect('/proposed-activities')->with('success', 'Activity deleted successfully!');
+            }
+
 }
+

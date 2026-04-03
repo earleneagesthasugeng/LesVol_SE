@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date("close_reg_date");
             $table->string("image_path");
             $table->integer("slot");
+            $table->foreignId("seeker_id")->index()->constrained("seekers")->cascadeOnDelete();
             $table->timestamps();
         });
     }

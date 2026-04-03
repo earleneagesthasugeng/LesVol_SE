@@ -17,7 +17,7 @@ Route::get('/activity', [route_controller::class, 'activityPage']);
 Route::get('/be-a-seeker', [route_controller::class, 'beASeekerPage']);
 Route::get('/done-activity', [route_controller::class, 'doneActivityPage']);
 Route::get('/my-activities', [route_controller::class, 'myActivitiesPage']);
-Route::get('/options', [route_controller::class, 'optionsPage']);
+Route::get('/options/{id}', [route_controller::class, 'optionsPage']);
 Route::get('/participants', [route_controller::class, 'participantsPage']);
 Route::get('/profile-user', [route_controller::class, 'profileUserPage']);
 Route::get('/profile', [route_controller::class, 'profilePage']);
@@ -39,7 +39,7 @@ Route::post('/user-login', [login_controller::class, 'login']);
 Route::post('/register-seeker', [seeker_controller::class, 'registerSeeker'])->name('seeker.register');
 Route::post('/upload-activity', [activity_controller::class, 'uploadActivity'])->name('activity.upload');
 Route::post('/update-profile', [route_controller::class, 'updateProfile'])->name('profile.update');
-
+Route::get('/delete-activity/{id}',[activity_controller::class, 'deleteActivity'])->name('activity.delete');
 
 require __DIR__ . '/settings.php';
 

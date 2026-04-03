@@ -16,6 +16,16 @@ class Activity extends Model
        'open_reg_date',
        'close_reg_date',
        'image_path',
-       'slot'
+       'slot',
+       'seeker_id'
     ];
+    public function seeker()
+    {
+        return $this->belongsTo(Seeker::class);
+    }
+
+    public function volunteers()
+    {
+        return $this->hasMany(Volunteer::class);
+    }
 }

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use App\Models\Seeker;
+use App\Models\Activity;
+use App\Models\Volunteer;
 
 
 class route_controller extends Controller
@@ -21,9 +24,10 @@ class route_controller extends Controller
     }
 
 
-    public function homePage()
+   public function homePage()
     {
-        return view('home');
+        $activities = Activity::all();
+        return view('home', compact('activities'));
     }
 
 
@@ -57,9 +61,11 @@ class route_controller extends Controller
     }
 
 
-    public function optionsPage()
+    public function optionsPage(Request $request, $id)
     {
-        return view('options');
+        $activity = Activity::with('seeker.user')->findOrFail($id);
+        $volunteersCount = Volunteer::where('activity_id', $id)->count();
+        return view('options', compact('activity', 'volunteersCount'));
     }
 
 
@@ -84,9 +90,12 @@ class route_controller extends Controller
     }
 
 
-    public function proposedActivitiesPage()
+    public function proposedActivitiesPage(Request $request)
     {
-        return view('proposed-activities');
+        $currentUserId = $request->session()->get('user')->id;
+        $currentSeekerId = Seeker::firstWhere('user_id', '=', $currentUserId)->id;
+        $activities = Activity::where('seeker_id', '=', $currentSeekerId)->get();
+        return view('proposed-activities', compact('activities'));
     }
 
 

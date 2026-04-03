@@ -8,12 +8,13 @@
 </head>
 <body>
 
+
 <nav>
   <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
     <a href="/home">Home</a>
     <a href="/my-activities">My Activities</a>
-    
+   
     <div class="dropdown-wrapper">
       <div class="nav-avatar" onclick="toggleDropdown('nav-dropdown')" id="avatar-trigger">
         <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
@@ -21,54 +22,59 @@
         </svg>
       </div>
 
+
       <div class="dropdown-menu" id="nav-dropdown" style="right: 0; left: auto; background: var(--red); min-width: 180px; padding: 10px 0;">
-        
+       
         <div id="state-logged-in">
           <a href="/profile" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             View Profile
           </a>
-          
+         
           <a href="/be-a-seeker" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             Be a Seeker!
           </a>
-          
+         
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-            Log Out 
+            Log Out
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
             </svg>
           </a>
-          
+         
           <a href="#" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">
             Delete Account
           </a>
         </div>
 
+
         <div id="state-logged-out" style="display: none;">
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;">
-            Log In 
+            Log In
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h4M10 17l5-5-5-5M13 12H3"/></svg>
           </a>
           <a href="/register" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">Sign Up</a>
         </div>
+
 
       </div>
     </div>
   </div>
 </nav>
 
-<div class="hero-banner">
+
+@php $heroActivity = $activities->first(); @endphp
+<div class="hero-banner" @if($heroActivity) style="background-image: url('{{ asset('storage/' . $heroActivity->image_path) }}'); background-size: cover; background-position: center;" @endif>
   <div class="hero-banner-content">
     <div>
-      <div class="hero-banner-title">Nama Aktivitas</div>
+      <div class="hero-banner-title">{{ $heroActivity->activity_name ?? 'Nama Aktivitas' }}</div>
       <div class="hero-banner-meta">
         <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1-2.5-2.5A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9A2.5 2.5 0 0 1 12 11.5z"/>
-        </svg> Lokasi aktivitas &nbsp; 
+        </svg> {{ $heroActivity->location ?? 'Lokasi aktivitas' }} &nbsp;
         <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
             <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
-        </svg> dd/mm/yy</div>
-      <a class="btn-see-more" href="/activity" style="margin-top:10px; display:inline-flex; width:auto;">See More ▶</a>
+        </svg> {{ $heroActivity ? \Carbon\Carbon::parse($heroActivity->activity_date)->format('d/m/y') : 'dd/mm/yy' }}</div>
+      <a class="btn-see-more" href="/see-details?id={{ $heroActivity->id ?? '' }}" style="margin-top:10px; display:inline-flex; width:auto;">see more ▶</a>
       <div class="hero-dots" style="margin-top:12px;">
         <div class="hero-dot active"></div>
         <div class="hero-dot"></div>
@@ -76,10 +82,11 @@
       </div>
     </div>
     <div style="color:rgba(255,255,255,0.85); font-size:12px; line-height:1.7;">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      {{ $heroActivity->description ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' }}
     </div>
   </div>
 </div>
+
 
 <div class="search-bar">
   <input class="search-input" type="text" placeholder="Search">
@@ -88,9 +95,36 @@
   </button>
 </div>
 
+
 <div style="padding: 24px 32px; flex:1;">
-  <div class="activities-grid" id="home-grid"></div>
+  <div class="activities-grid" id="home-grid">
+    @foreach($activities as $activity)
+    <div class="activity-card">
+        <div class="activity-card-img" style="background-image: url('{{ asset('storage/' . $activity->image_path) }}');">
+            <div class="slots-badge">{{ $activity->slot }} slots left</div>
+        </div>
+        <div class="activity-card-body">
+            <h4>{{ $activity->activity_name }}</h4>
+            <div class="activity-meta">
+                <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1-2.5-2.5A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9A2.5 2.5 0 0 1 12 11.5z"/>
+                </svg> {{ $activity->location }}
+            </div>
+            <div class="activity-meta">
+                <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
+                </svg> {{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/y') }}
+            </div>
+            <div class="activity-card-actions">
+                <a class="btn-see-more" href="/see-details?id={{ $activity->id }}">See More ▶</a>
+                <a class="btn-register-card" href="/register-activity?id={{ $activity->id }}">Register ▶</a>
+            </div>
+        </div>
+    </div>
+    @endforeach
+  </div>
 </div>
+
 
 <footer>
   <div>
@@ -103,6 +137,7 @@
         +6212 6767 6767
       </span>
 
+
       <span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -114,6 +149,7 @@
   </div>
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 </footer>
+
 
 <script src = "{{asset('js/home.js')}}"></script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
