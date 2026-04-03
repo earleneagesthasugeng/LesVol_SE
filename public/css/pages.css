@@ -33,7 +33,7 @@
 .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); }
 .hero-dot.active { background: white; }
 
-.reg-activity-img { width: 100%; height: 160px; background: #888; border-radius: 12px; margin-bottom: 12px; }
+.reg-activity-img { width: 100%; height: 260px; background: #888; border-radius: 12px; margin-bottom: 12px; object-fit: contain;}
 .reg-activity-name { font-weight: 700; font-size: 16px; text-align: center; }
 .reg-activity-meta { color: var(--gray); font-size: 13px; margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 12px; }
 

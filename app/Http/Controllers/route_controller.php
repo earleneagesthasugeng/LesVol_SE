@@ -24,10 +24,18 @@ class route_controller extends Controller
     }
 
 
-   public function homePage()
+   public function homePage(Request $request)
     {
-        $activities = Activity::all();
-        return view('home', compact('activities'));
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        if(!$isSeeker){
+             $activities = Activity::all();
+        }
+        else {
+             $currentSeekerId = $isSeeker->id;
+            $activities = Activity::where('seeker_id','!=',$currentSeekerId)->get();
+        }
+        return view('home', compact('activities', 'isSeeker'));
     }
 
 
@@ -55,9 +63,11 @@ class route_controller extends Controller
     }
 
 
-    public function myActivitiesPage()
+    public function myActivitiesPage(Request $request)
     {
-        return view('my-activities');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        return view('my-activities', compact('isSeeker'));
     }
 
 
@@ -99,9 +109,10 @@ class route_controller extends Controller
     }
 
 
-    public function registerActivityPage()
+    public function registerActivityPage(Request $request, $id)
     {
-        return view('register-activity');
+        $activity=Activity::firstWhere('id','=',$id);
+        return view('register-activity', compact('activity'));
     }
 
 

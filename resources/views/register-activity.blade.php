@@ -65,15 +65,15 @@
     <div class="auth-title">Register</div>
     <div class="auth-subtitle">Start making a change!</div>
 
-    <div class="reg-activity-img"></div>
-    <div class="reg-activity-name">nama aktivitas</div>
+    <img class="reg-activity-img" src={{asset('storage/'.$activity->image_path)}}></img>
+    <div class="reg-activity-name">{{$activity->activity_name}}</div>
     <div class="reg-activity-meta" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 8px;">
       <span style="display: flex; align-items: center; gap: 6px; color: var(--gray);">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
           <circle cx="12" cy="10" r="3"></circle>
         </svg>
-        lokasi aktivitas
+        {{$activity->location}}
       </span>
       <span style="display: flex; align-items: center; gap: 6px; color: var(--gray);">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -82,7 +82,7 @@
           <line x1="8" y1="2" x2="8" y2="6"></line>
           <line x1="3" y1="10" x2="21" y2="10"></line>
         </svg>
-        dd/mm/yy
+        {{$activity->activity_date}}
       </span>
 </div>
 

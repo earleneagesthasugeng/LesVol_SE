@@ -22,7 +22,7 @@ Route::get('/participants', [route_controller::class, 'participantsPage']);
 Route::get('/profile-user', [route_controller::class, 'profileUserPage']);
 Route::get('/profile', [route_controller::class, 'profilePage']);
 Route::get('/proposed-activities', [route_controller::class, 'proposedActivitiesPage']);
-Route::get('/register-activity', [route_controller::class, 'registerActivityPage']);
+Route::get('/register-activity/{id}', [route_controller::class, 'registerActivityPage']);
 Route::get('/see-details-done', [route_controller::class, 'seeDetailsDonePage']);
 Route::get('/see-details', [route_controller::class, 'seeDetailsPage']);
 Route::get('/edit-profile', [route_controller::class, 'editProfilePage']);

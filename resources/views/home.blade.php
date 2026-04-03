@@ -30,9 +30,12 @@
             View Profile
           </a>
          
-          <a href="/be-a-seeker" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+          @if (!$isSeeker)
+             <a href="/be-a-seeker" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             Be a Seeker!
-          </a>
+            </a>
+          @endif
+         
          
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             Log Out
@@ -117,7 +120,7 @@
             </div>
             <div class="activity-card-actions">
                 <a class="btn-see-more" href="/see-details?id={{ $activity->id }}">See More ▶</a>
-                <a class="btn-register-card" href="/register-activity?id={{ $activity->id }}">Register ▶</a>
+                <a class="btn-register-card" href="/register-activity/{{ $activity->id }}">Register ▶</a>
             </div>
         </div>
     </div>

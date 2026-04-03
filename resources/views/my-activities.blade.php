@@ -68,7 +68,9 @@
 
       <div class="dropdown-menu" id="my-dropdown">
         <span class="dropdown-item active">Joined Activities</span>
-        <a class="dropdown-item" href="/proposed-activities">Proposed Activities</a>
+        @if ($isSeeker)
+           <a class="dropdown-item" href="/proposed-activities">Proposed Activities</a>
+        @endif
         <a class="dropdown-item" href="/done-activity">Done Activities</a>
         <a class="dropdown-item" href="/upload-activity">Upload Activity</a>
       </div>
