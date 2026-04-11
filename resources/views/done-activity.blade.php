@@ -67,7 +67,7 @@
       <div class="dropdown-menu" id="my-dropdown">
         <a class="dropdown-item" href="/my-activities">Joined Activities</a>
         <a class="dropdown-item" href="/proposed-activities">Proposed Activities</a>
-        <span class="dropdown-item active">Done Activities</span>
+        <a class="dropdown-item" href="/done-activity">Done Activities</a>
         <a class="dropdown-item" href="/upload-activity">Upload Activity</a>
       </div>
     </div>
@@ -99,8 +99,7 @@
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 </footer>
 
-<script src="{{asset('js/done_activity.js')}}">
-</script>
+<script src="{{asset('js/done_activity.js')}}"></script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
 </body>
 </html>

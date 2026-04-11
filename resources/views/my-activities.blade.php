@@ -72,7 +72,9 @@
            <a class="dropdown-item" href="/proposed-activities">Proposed Activities</a>
         @endif
         <a class="dropdown-item" href="/done-activity">Done Activities</a>
-        <a class="dropdown-item" href="/upload-activity">Upload Activity</a>
+        @if ($isSeeker)
+            <a class="dropdown-item" href="/upload-activity">Upload Activity</a>
+        @endif
       </div>
     </div>
   </div>
