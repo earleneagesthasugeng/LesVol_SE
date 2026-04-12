@@ -28,9 +28,11 @@
             View Profile
           </a>
           
+          @if (!$isSeeker)
           <a href="/be-a-seeker" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             Be a Seeker!
           </a>
+          @endif
           
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             Log Out 
@@ -60,7 +62,7 @@
 </nav>
 
 <div style="flex:1; padding: 24px 32px; max-width:900px; margin:0 auto; width:100%;">
-  <a class="back-btn" href="/my-activities" style="margin-bottom:20px; display:inline-flex;">
+  <a class="back-btn" href="{{ url()->previous() }}" style="margin-bottom:20px; display:inline-flex;">
     <div class="back-icon">◀</div> Back
   </a>
 
@@ -68,11 +70,12 @@
     
     <div style="
       height:220px;
-      background:#999;
+      background-color:#d9d9d9;
       @if(!empty($activity->image_path))
         background-image: url('{{ asset('storage/' . $activity->image_path) }}');
-        background-size: cover;
+        background-size: contain;
         background-position: center;
+        background-repeat: no-repeat;
       @endif
     "></div>
 
@@ -99,7 +102,19 @@
           </div>
         </div>
 
-        <span class="accepted-badge">
+        <span
+          style="
+            background: {{ $isJoined ? '#6ac259' : '#c0392b' }};
+            color: white;
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 14px;
+            display: inline-block;
+            min-width: 120px;
+            text-align: center;
+          "
+        >
           {{ $isJoined ? 'Joined' : 'Not Joined' }}
         </span>
       </div>
@@ -148,7 +163,23 @@
       </p>
 
       <div style="text-align:center;">
-        <button class="btn-gray" disabled>Cancel Registration</button>
+        @if($isJoined)
+          <button class="btn-gray" disabled>Cancel Registration</button>
+        @else
+          <a href="{{ url('/register-activity/' . $activity->id) }}"
+             style="
+                display:inline-block;
+                background: var(--red);
+                color:white;
+                text-decoration:none;
+                padding:14px 36px;
+                border-radius:999px;
+                font-weight:700;
+                font-size:16px;
+             ">
+             Register
+          </a>
+        @endif
       </div>
 
     </div>
@@ -178,6 +209,6 @@
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 </footer>
 
-</body>
 <script src="{{ asset('js/dropdown_login.js') }}"></script>
+</body>
 </html>
