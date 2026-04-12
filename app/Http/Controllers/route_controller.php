@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use App\Models\Activity;
 use App\Models\Seeker;
 use App\Models\User;
@@ -36,6 +37,48 @@ class route_controller extends Controller
         }
 
         return view('home', compact('activities', 'isSeeker'));
+    }
+
+    public function loginPage()
+    {
+        return view('login');
+    }
+
+    public function registerPage()
+    {
+        return view('register');
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $currentUser = $request->session()->get('user');
+
+        if (!$currentUser) {
+            return redirect('/login')->with('error', 'Please login first.');
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $currentUser->id,
+            'phone' => 'nullable|string|max:20',
+            'password' => 'nullable|string|min:6|confirmed',
+        ]);
+
+        $user = User::findOrFail($currentUser->id);
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->phone = $validated['phone'] ?? $user->phone;
+
+        if (!empty($validated['password'])) {
+            $user->password = Hash::make($validated['password']);
+        }
+
+        $user->save();
+
+        $request->session()->put('user', $user);
+
+        return redirect('/profile')->with('success', 'Profile updated successfully.');
     }
 
     public function uploadActivityPage(Request $request)
