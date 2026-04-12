@@ -77,7 +77,7 @@
         <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
             <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
         </svg> {{ $heroActivity ? \Carbon\Carbon::parse($heroActivity->activity_date)->format('d/m/y') : 'dd/mm/yy' }}</div>
-      <a class="btn-see-more" href="/see-details?id={{ $heroActivity->id ?? '' }}" style="margin-top:10px; display:inline-flex; width:auto;">see more ▶</a>
+      <a class="btn-see-more" href="{{ $heroActivity ? route('see-details', $heroActivity->id) : '#' }}" style="margin-top:10px; display:inline-flex; width:auto;">see more ▶</a>
       <div class="hero-dots" style="margin-top:12px;">
         <div class="hero-dot active"></div>
         <div class="hero-dot"></div>
@@ -119,7 +119,7 @@
                 </svg> {{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/y') }}
             </div>
             <div class="activity-card-actions">
-                <a class="btn-see-more" href="/see-details?id={{ $activity->id }}">See More ▶</a>
+                <a class="btn-see-more" href="{{ route('see-details', $activity->id) }}">See More ▶</a>
                 <a class="btn-register-card" href="/register-activity/{{ $activity->id }}">Register ▶</a>
             </div>
         </div>

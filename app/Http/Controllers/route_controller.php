@@ -74,10 +74,10 @@ class route_controller extends Controller
         $currentUserId = $request->session()->get('user')->id;
         $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
 
-        $joinedActivityIds = Volunteer::where('user_id', $currentUserId)
-            ->pluck('activity_id');
-
-        $activities = Activity::whereIn('id', $joinedActivityIds)->get();
+        // Ambil semua activity yang diikuti user saat ini
+        $activities = Activity::whereHas('volunteers', function ($query) use ($currentUserId) {
+            $query->where('user_id', $currentUserId);
+        })->get();
 
         return view('my-activities', compact('isSeeker', 'activities'));
     }
@@ -179,10 +179,20 @@ class route_controller extends Controller
     }
 
 
-    public function seeDetailsPage()
+   public function seeDetailsPage($id, Request $request)
     {
-        return view('see-details');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+
+        $activity = Activity::with('seeker.user')->findOrFail($id);
+
+        $isJoined = Volunteer::where('activity_id', $id)
+            ->where('user_id', $currentUserId)
+            ->exists();
+
+        return view('see-details', compact('activity', 'isSeeker', 'isJoined'));
     }
+
 
     public function editProfilePage()
     {

@@ -47,7 +47,9 @@
         <div id="state-logged-out" style="display: none;">
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;">
             Log In 
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h4M10 17l5-5-5-5M13 12H3"/></svg>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h4M10 17l5-5-5-5M13 12H3"/>
+            </svg>
           </a>
           <a href="/register" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">Sign Up</a>
         </div>
@@ -63,41 +65,86 @@
   </a>
 
   <div class="activity-detail-card" style="margin-top:16px;">
-    <div style="height:220px; background:#999;"></div>
+    
+    <div style="
+      height:220px;
+      background:#999;
+      @if(!empty($activity->image_path))
+        background-image: url('{{ asset('storage/' . $activity->image_path) }}');
+        background-size: cover;
+        background-position: center;
+      @endif
+    "></div>
+
     <div class="activity-detail-body">
 
       <div class="detail-header">
         <div>
-          <div class="detail-title">Nama Aktivitas</div>
+          <div class="detail-title">{{ $activity->activity_name }}</div>
+
           <div class="detail-author">
             <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
               <div class="author-avatar">
-                <svg width="18" height="18" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                <svg width="18" height="18" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+                </svg>
               </div>
               <div>
-                <div style="font-weight:700; font-size:14px;">Nama Pembuat</div>
+                <div style="font-weight:700; font-size:14px;">
+                  {{ $activity->seeker->user->name ?? 'Nama Pembuat' }}
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <span class="accepted-badge">Accepted</span>
+
+        <span class="accepted-badge">
+          {{ $isJoined ? 'Joined' : 'Not Joined' }}
+        </span>
       </div>
 
       <hr class="detail-divider">
+
       <div style="font-weight:700; margin-bottom:12px;">Details:</div>
+
       <div class="detail-info-grid" style="margin-bottom:16px;">
-        <div class="detail-info-item"><label>Location:</label><span>lokasi aktivitas</span></div>
-        <div class="detail-info-item"><label>Open Registration:</label><span>dd/mm/yy</span></div>
-        <div class="detail-info-item"><label>Status:</label><span>Not Registered</span></div>
-        <div class="detail-info-item"><label>Date:</label><span>dd/mm/yy</span></div>
-        <div class="detail-info-item"><label>Close Registration:</label><span>dd/mm/yy</span></div>
-        <div class="detail-info-item"><label>Quota:</label><span>100 volunteer(s)</span></div>
+        <div class="detail-info-item">
+          <label>Location:</label>
+          <span>{{ $activity->location }}</span>
+        </div>
+
+        <div class="detail-info-item">
+          <label>Open Registration:</label>
+          <span>{{ \Carbon\Carbon::parse($activity->open_reg_date)->format('d/m/Y') }}</span>
+        </div>
+
+        <div class="detail-info-item">
+          <label>Status:</label>
+          <span>{{ $isJoined ? 'Registered' : 'Not Registered' }}</span>
+        </div>
+
+        <div class="detail-info-item">
+          <label>Date:</label>
+          <span>{{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/Y') }}</span>
+        </div>
+
+        <div class="detail-info-item">
+          <label>Close Registration:</label>
+          <span>{{ \Carbon\Carbon::parse($activity->close_reg_date)->format('d/m/Y') }}</span>
+        </div>
+
+        <div class="detail-info-item">
+          <label>Quota:</label>
+          <span>{{ $activity->slot }} volunteer(s)</span>
+        </div>
       </div>
+
       <hr class="detail-divider">
 
       <div style="font-weight:700; margin-bottom:10px;">Description:</div>
       <p style="font-size:14px; color:#4b5563; line-height:1.7; margin-bottom:28px;">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        {{ $activity->description }}
       </p>
 
       <div style="text-align:center;">
@@ -132,5 +179,5 @@
 </footer>
 
 </body>
-<script src="{{asset('js/dropdown_login.js')}}"></script>
+<script src="{{ asset('js/dropdown_login.js') }}"></script>
 </html>

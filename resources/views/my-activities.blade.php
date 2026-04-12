@@ -109,11 +109,13 @@
                     {{ date('d F Y', strtotime($activity->activity_date)) }}
                 </div>
 
-                <div class="activity-card-actions">
-                    <span class="btn-see-more" style="font-size: 14px; font-weight: 600; color: var(--red);">
-                        Joined ✓
-                    </span>
-                </div>
+               <div class="activity-card-actions">
+                  <a href="{{ route('see-details', $activity->id) }}"
+                    class="btn-see-more"
+                    style="font-size: 14px; font-weight: 600; color: var(--red); text-decoration: none;">
+                      Joined ✓
+                  </a>
+              </div>
             </div>
         </div>
     @empty

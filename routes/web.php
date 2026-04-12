@@ -24,7 +24,7 @@ Route::get('/profile', [route_controller::class, 'profilePage']);
 Route::get('/proposed-activities', [route_controller::class, 'proposedActivitiesPage']);
 Route::get('/register-activity/{id}', [route_controller::class, 'registerActivityPage']);
 Route::get('/see-details-done', [route_controller::class, 'seeDetailsDonePage']);
-Route::get('/see-details', [route_controller::class, 'seeDetailsPage']);
+Route::get('/see-details/{id}', [route_controller::class, 'seeDetailsPage'])->name('see-details');
 Route::get('/edit-profile', [route_controller::class, 'editProfilePage']);
 Route::get('/edit-portfolio', [route_controller::class, 'editPortfolioPage']);
 Route::get('/view-portfolio', [route_controller::class, 'viewPortfolioPage']);
