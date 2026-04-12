@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Seeker;
 use App\Models\Activity;
@@ -39,9 +40,11 @@ class route_controller extends Controller
     }
 
 
-    public function uploadActivityPage()
+    public function uploadActivityPage(Request $request)
     {
-        return view('upload-activity');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        return view('upload-activity', compact('isSeeker'));
     }
 
 
@@ -57,9 +60,12 @@ class route_controller extends Controller
     }
 
 
-    public function doneActivityPage()
+    public function doneActivityPage(Request $request)
     {
-        return view('done-activity');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+
+        return view('done-activity', compact('isSeeker'));
     }
 
 
@@ -67,9 +73,14 @@ class route_controller extends Controller
     {
         $currentUserId = $request->session()->get('user')->id;
         $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
-        return view('my-activities', compact('isSeeker'));
-    }
 
+        $joinedActivityIds = Volunteer::where('user_id', $currentUserId)
+            ->pluck('activity_id');
+
+        $activities = Activity::whereIn('id', $joinedActivityIds)->get();
+
+        return view('my-activities', compact('isSeeker', 'activities'));
+    }
 
     public function optionsPage(Request $request, $id)
     {
@@ -112,10 +123,56 @@ class route_controller extends Controller
     public function registerActivityPage(Request $request, $id)
     {
         $activity=Activity::firstWhere('id','=',$id);
-        return view('register-activity', compact('activity'));
+
+        $currentUserId = $request->session()->get('user')->id;
+        $user = User::firstWhere('id', '=', $currentUserId);
+
+        return view('register-activity', compact('activity', 'user'));
     }
 
+    public function submitRegisterActivity(Request $request, $id)
+    {
+        $currentUser = $request->session()->get('user');
 
+        if (!$currentUser) {
+            return redirect('/login');
+        }
+
+        $activity = Activity::findOrFail($id);
+        $currentUserId = $currentUser->id;
+
+        // Check if slots are available
+        if ($activity->slot <= 0) {
+            return redirect()->back()->with('error', 'Sorry, this activity is full.');
+        }
+
+        // Check if user is the seeker (owner) of the activity
+        $currentSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        if ($currentSeeker && $activity->seeker_id == $currentSeeker->id) {
+            return redirect()->back()->with('error', 'You cannot join your own activity.');
+        }
+
+        // Prevent duplicate registration
+        $existingVolunteer = Volunteer::where('user_id', $currentUserId)
+            ->where('activity_id', $id)
+            ->first();
+
+        if (!$existingVolunteer) {
+            Volunteer::create([
+                'is_banned' => 0,
+                'file_att_path' => null,
+                'user_id' => $currentUserId,
+                'activity_id' => $id,
+            ]);
+
+            // Decrement the slot
+            $activity->decrement('slot');
+        } else {
+            return redirect()->back()->with('error', 'You are already registered for this activity.');
+        }
+
+        return redirect()->back()->with('success', 'You are successfully registered!');
+    }
     public function seeDetailsDonePage()
     {
         return view('see-details-done');
@@ -148,6 +205,3 @@ class route_controller extends Controller
     }
 
 }
-
-
-

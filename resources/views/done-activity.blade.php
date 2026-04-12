@@ -66,9 +66,16 @@
       </div>
       <div class="dropdown-menu" id="my-dropdown">
         <a class="dropdown-item" href="/my-activities">Joined Activities</a>
-        <a class="dropdown-item" href="/proposed-activities">Proposed Activities</a>
-        <a class="dropdown-item" href="/done-activity">Done Activities</a>
-        <a class="dropdown-item" href="/upload-activity">Upload Activity</a>
+
+        @if ($isSeeker)
+            <a class="dropdown-item" href="/proposed-activities">Proposed Activities</a>
+        @endif
+
+        <span class="dropdown-item active" href="/done-activity">Done Activities</span>
+
+        @if ($isSeeker)
+            <a class="dropdown-item" href="/upload-activity">Upload Activity</a>
+        @endif
       </div>
     </div>
   </div>

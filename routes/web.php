@@ -40,8 +40,6 @@ Route::post('/register-seeker', [seeker_controller::class, 'registerSeeker'])->n
 Route::post('/upload-activity', [activity_controller::class, 'uploadActivity'])->name('activity.upload');
 Route::post('/update-profile', [route_controller::class, 'updateProfile'])->name('profile.update');
 Route::get('/delete-activity/{id}',[activity_controller::class, 'deleteActivity'])->name('activity.delete');
+Route::post('/register-activity/{id}', [route_controller::class, 'submitRegisterActivity'])->name('activity.register');
 
 require __DIR__ . '/settings.php';
-
-
-
