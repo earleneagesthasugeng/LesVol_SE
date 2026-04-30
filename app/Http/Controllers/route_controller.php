@@ -104,7 +104,25 @@ class route_controller extends Controller
         $currentUserId = $request->session()->get('user')->id;
         $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
 
-        return view('done-activity', compact('isSeeker'));
+        // Fetch activities with status 'done' where the current user is a volunteer
+        $doneActivities = Activity::where('status', 'done')
+            ->whereHas('volunteers', function ($query) use ($currentUserId) {
+                $query->where('user_id', $currentUserId);
+            })
+            ->get();
+
+        // Also fetch activities proposed by this seeker that are marked done
+        $proposedDoneActivities = collect();
+        if ($isSeeker) {
+            $proposedDoneActivities = Activity::where('status', 'done')
+                ->where('seeker_id', $isSeeker->id)
+                ->get();
+        }
+
+        // Merge both, remove duplicates
+        $activities = $doneActivities->merge($proposedDoneActivities)->unique('id');
+
+        return view('done-activity', compact('isSeeker', 'activities'));
     }
 
     public function myActivitiesPage(Request $request)
@@ -127,9 +145,15 @@ class route_controller extends Controller
         return view('options', compact('activity', 'volunteersCount'));
     }
 
-    public function participantsPage()
+    public function participantsPage(Request $request, $activity_id)
     {
-        return view('participants');
+        $activity = Activity::findOrFail($activity_id);
+        $volunteers = Volunteer::with('user')
+            ->where('activity_id', $activity_id)
+            ->get();
+        $volunteersCount = $volunteers->count();
+
+        return view('participants', compact('activity', 'volunteers', 'volunteersCount'));
     }
 
     public function profileUserPage()
@@ -215,9 +239,21 @@ class route_controller extends Controller
         }
     }
 
-    public function seeDetailsDonePage()
+    public function seeDetailsDonePage(Request $request, $id)
     {
-        return view('see-details-done');
+        $currentUserId = $request->session()->get('user')->id;
+        $activity = Activity::with('seeker.user')->findOrFail($id);
+
+        // Check if the current user is a volunteer for this activity
+        $volunteer = Volunteer::where('activity_id', $id)
+            ->where('user_id', $currentUserId)
+            ->first();
+
+        // Check if the current user is the seeker/owner
+        $isSeeker = Seeker::firstWhere('user_id', $currentUserId);
+        $isOwner = $isSeeker && $activity->seeker_id === $isSeeker->id;
+
+        return view('see-details-done', compact('activity', 'volunteer', 'isOwner'));
     }
 
     public function seeDetailsPage($id, Request $request)
@@ -249,8 +285,19 @@ class route_controller extends Controller
         return view('view-portfolio');
     }
 
-    public function myPortfolioPage()
+    public function myPortfolioPage(Request $request)
     {
-        return view('my-portfolio');
+        $currentUserId = $request->session()->get('user')->id;
+
+        // Fetch all 'done' activities where the user was a volunteer and submitted proof
+        $portfolioItems = Volunteer::with('activity')
+            ->where('user_id', $currentUserId)
+            ->whereNotNull('proof_path')
+            ->whereHas('activity', function ($query) {
+                $query->where('status', 'done');
+            })
+            ->get();
+
+        return view('my-portfolio', compact('portfolioItems'));
     }
 }

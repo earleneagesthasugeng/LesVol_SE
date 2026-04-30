@@ -68,7 +68,33 @@
         <h1 class="portfolio-main-title">My Portfolio</h1>
     </div>
 
-    <div class="portfolio-container" id="portfolio-list"></div>
+    <div class="portfolio-container" id="portfolio-list">
+        @forelse ($portfolioItems as $item)
+            <div class="portfolio-card">
+                <div class="portfolio-img-placeholder" style="
+                    @if($item->activity->image_path)
+                        background-image: url('{{ asset('storage/' . $item->activity->image_path) }}');
+                        background-size: cover;
+                        background-position: center;
+                    @endif
+                "></div>
+                
+                <div class="portfolio-details">
+                    <h3 class="portfolio-name">{{ $item->activity->activity_name }}</h3>
+                    <p class="portfolio-meta">Date: {{ \Carbon\Carbon::parse($item->activity->activity_date)->format('d-m-Y') }}</p>
+                    <p class="portfolio-meta">Location: {{ $item->activity->location }}</p>
+                    <p class="portfolio-contribution">
+                        <strong>Description:</strong> {{ Str::limit($item->activity->description, 150) }}
+                    </p>
+                </div>
+            </div>
+        @empty
+            <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #666;">
+                <p>No portfolio items yet.</p>
+                <p style="font-size: 13px; color: #999; margin-top: 8px;">Complete activities and submit proof to build your portfolio.</p>
+            </div>
+        @endforelse
+    </div>
 
     <div class="add-portfolio-container">
         <a href="/edit-portfolio" class="btn btn-primary btn-lg" style="width: 400px; border-radius: 12px;">Add Portfolio</a>
@@ -99,5 +125,4 @@
     </footer>
 </body>
 <script src="{{ asset('js/dropdown_login.js')}}"></script>
-<script src="{{asset('js/my_portfolio.js')}}"></script>
 </html>

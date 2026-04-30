@@ -80,7 +80,43 @@
     </div>
   </div>
 
-  <div class="activities-grid" id="done-grid"></div>
+  @if(session('success'))
+    <div style="background: #dcfce7; border: 1px solid #22c55e; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 16px; text-align: center; font-size: 14px;">
+      {{ session('success') }}
+    </div>
+  @endif
+
+  <div class="activities-grid" id="done-grid">
+    @forelse ($activities as $activity)
+      <div class="activity-card">
+        <div class="activity-card-img" style="background-image: url('{{ asset('storage/' . $activity->image_path) }}'); background-size: cover; background-position: center; height: 180px; border-radius: 12px 12px 0 0; position: relative;">
+          <div class="status-badge badge-success" style="position:absolute; top:10px; right:10px;">✓</div>
+        </div>
+        <div class="activity-card-body">
+          <h4 style="margin: 0 0 8px; font-size: 16px;">{{ $activity->activity_name }}</h4>
+          <div class="activity-meta" style="font-size: 13px; color: #666; margin-bottom: 4px;">
+            <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1-2.5-2.5A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9A2.5 2.5 0 0 1 12 11.5z"/>
+            </svg>
+            {{ $activity->location }}
+          </div>
+          <div class="activity-meta" style="font-size: 13px; color: #666; margin-bottom: 12px;">
+            <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
+            </svg>
+            {{ date('d F Y', strtotime($activity->activity_date)) }}
+          </div>
+          <div class="activity-card-actions">
+            <a class="btn-see-more" href="{{ route('see-details-done', $activity->id) }}">Details ▶</a>
+          </div>
+        </div>
+      </div>
+    @empty
+      <div style="grid-column: 1 / -1; text-align: center; padding: 120px 20px; color: #666;">
+        <p>No completed activities yet.</p>
+      </div>
+    @endforelse
+  </div>
 </div>
 
 <footer>
@@ -106,7 +142,17 @@
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 </footer>
 
-<script src="{{asset('js/done_activity.js')}}"></script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
+<script>
+function toggleDropdown(id) {
+    document.getElementById(id).classList.toggle('open');
+}
+document.addEventListener('click', function (e) {
+    if (!e.target.closest('.dropdown-wrapper')) {
+        var dd = document.getElementById('my-dropdown');
+        if (dd) dd.classList.remove('open');
+    }
+});
+</script>
 </body>
 </html>
