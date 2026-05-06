@@ -17,8 +17,7 @@ class Activity extends Model
        'close_reg_date',
        'image_path',
        'slot',
-       'seeker_id',
-       'status'
+       'seeker_id'
     ];
     public function seeker()
     {

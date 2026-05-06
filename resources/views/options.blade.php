@@ -100,7 +100,7 @@
             <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
           </svg>
           {{ $volunteersCount }}/{{ $activity->slot }}
-          <a href="{{ route('participants', $activity->id) }}" style="display: flex; align-items: center; margin-left: 8px;" title="View participants">
+          <a href="/participants?activity_id={{ $activity->id }}" style="display: flex; align-items: center; margin-left: 8px;" title="View participants">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
               <circle cx="12" cy="12" r="3"></circle>
@@ -147,37 +147,8 @@
 
 
       <div style="text-align:center;">
-        @if($volunteersCount > 0)
-          <button class="btn-danger" disabled
-            style="opacity: 0.5; cursor: not-allowed;"
-            title="Cannot delete: {{ $volunteersCount }} volunteer(s) have already joined this activity">
-            Delete Activity
-          </button>
-        @else
-          <button class="btn-danger" onclick="confirmDelete('{{ $activity->id }}')">Delete Activity</button>
-        @endif
+        <button class="btn-danger" onclick="confirmDelete('{{ $activity->id }}')">Delete Activity</button>
       </div>
-
-      @if($volunteersCount > 0 && $activity->status !== 'done')
-        <div style="text-align:center; margin-top: 16px;">
-          <form action="{{ route('activity.markDone', $activity->id) }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-primary btn-lg"
-              style="padding: 12px 36px; background: #22c55e; border: none; color: white; border-radius: 999px; font-weight: 700; font-size: 14px; cursor: pointer;"
-              onclick="return confirm('Are you sure you want to mark this activity as Done?')">
-              ✓ Mark as Done
-            </button>
-          </form>
-        </div>
-      @endif
-
-      @if($activity->status === 'done')
-        <div style="text-align:center; margin-top: 16px;">
-          <span style="background: #22c55e; color: white; padding: 10px 24px; border-radius: 999px; font-weight: 700; font-size: 14px;">
-            ✓ Activity Completed
-          </span>
-        </div>
-      @endif
 
 
     </div>

@@ -18,12 +18,12 @@ Route::get('/be-a-seeker', [route_controller::class, 'beASeekerPage']);
 Route::get('/done-activity', [route_controller::class, 'doneActivityPage']);
 Route::get('/my-activities', [route_controller::class, 'myActivitiesPage']);
 Route::get('/options/{id}', [route_controller::class, 'optionsPage']);
-Route::get('/participants/{activity_id}', [route_controller::class, 'participantsPage'])->name('participants');
+Route::get('/participants', [route_controller::class, 'participantsPage']);
 Route::get('/profile-user', [route_controller::class, 'profileUserPage']);
 Route::get('/profile', [route_controller::class, 'profilePage']);
 Route::get('/proposed-activities', [route_controller::class, 'proposedActivitiesPage']);
 Route::get('/register-activity/{id}', [route_controller::class, 'registerActivityPage']);
-Route::get('/see-details-done/{id}', [route_controller::class, 'seeDetailsDonePage'])->name('see-details-done');
+Route::get('/see-details-done', [route_controller::class, 'seeDetailsDonePage']);
 Route::get('/see-details/{id}', [route_controller::class, 'seeDetailsPage'])->name('see-details');
 Route::get('/edit-profile', [route_controller::class, 'editProfilePage']);
 Route::get('/edit-portfolio', [route_controller::class, 'editPortfolioPage']);
@@ -41,8 +41,5 @@ Route::post('/upload-activity', [activity_controller::class, 'uploadActivity'])-
 Route::post('/update-profile', [route_controller::class, 'updateProfile'])->name('profile.update');
 Route::get('/delete-activity/{id}',[activity_controller::class, 'deleteActivity'])->name('activity.delete');
 Route::post('/register-activity/{id}', [route_controller::class, 'submitRegisterActivity'])->name('activity.register');
-Route::post('/toggle-ban/{volunteer_id}', [activity_controller::class, 'toggleBan'])->name('volunteer.toggleBan');
-Route::post('/submit-proof/{activity_id}', [activity_controller::class, 'submitProof'])->name('activity.submitProof');
-Route::post('/mark-done/{activity_id}', [activity_controller::class, 'markDone'])->name('activity.markDone');
 
 require __DIR__ . '/settings.php';

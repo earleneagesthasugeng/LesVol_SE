@@ -58,12 +58,12 @@
 </nav>
 
 <div style="flex:1; padding: 24px 32px; max-width:900px; margin:0 auto; width:100%;">
-  <a class="back-btn" href="/options/{{ $activity->id }}" style="margin-bottom:16px; display:inline-flex;">
+  <a class="back-btn" href="/options" style="margin-bottom:16px; display:inline-flex;">
     <div class="back-icon">◀</div> Back
   </a>
 
   <h2>
-  {{ $activity->activity_name }}
+  Nama Aktivitas [yang dipencet] 
   <span style="display: flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--gray); font-weight: 500; margin-top: 10px; margin-bottom: 10px;">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -71,15 +71,9 @@
       <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
       <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
     </svg>
-    {{ $volunteersCount }}/{{ $activity->slot + $volunteersCount }}
+    67/100
   </span>
 </h2>
-
-  @if(session('success'))
-    <div style="background: #dcfce7; border: 1px solid #22c55e; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 16px; text-align: center; font-size: 14px;">
-      {{ session('success') }}
-    </div>
-  @endif
 
   <div class="search-bar" style="border-radius:30px; margin-bottom:20px;">
     <input class="search-input" type="text" placeholder="Search" id="search-input" oninput="filterParticipants()">
@@ -88,37 +82,7 @@
     </button>
   </div>
 
-  <div id="participants-list">
-    @forelse ($volunteers as $volunteer)
-      <div class="participant-item" data-name="{{ strtolower($volunteer->user->name) }}" style="display:flex; align-items:center; padding:14px 16px; border-bottom:1px solid #eee; {{ $volunteer->is_banned ? 'opacity: 0.5;' : '' }}">
-        <div class="participant-avatar" style="width:36px; height:36px; border-radius:50%; background:#ddd; margin-right:12px; overflow:hidden;">
-          @if($volunteer->user->profile_picture_path)
-            <img src="{{ asset('storage/' . $volunteer->user->profile_picture_path) }}" style="width:100%; height:100%; object-fit:cover;">
-          @endif
-        </div>
-        <span class="participant-name" style="flex:1; font-weight:600; font-size:14px;">
-          {{ $volunteer->user->name }}
-          @if($volunteer->is_banned)
-            <span style="color: #ef4444; font-size: 12px; font-weight: 700; margin-left: 8px;">BANNED</span>
-          @endif
-        </span>
-        <form action="{{ route('volunteer.toggleBan', $volunteer->id) }}" method="POST" style="margin:0;">
-          @csrf
-          <button type="submit"
-            style="padding: 6px 16px; border-radius: 999px; border: none; font-size: 12px; font-weight: 700; cursor: pointer;
-            {{ $volunteer->is_banned 
-              ? 'background: #22c55e; color: white;' 
-              : 'background: #ef4444; color: white;' }}">
-            {{ $volunteer->is_banned ? 'Unban' : 'Ban' }}
-          </button>
-        </form>
-      </div>
-    @empty
-      <div style="text-align:center; padding:40px; color:#666;">
-        <p>No participants yet.</p>
-      </div>
-    @endforelse
-  </div>
+  <div id="participants-list"></div>
 </div>
 
 <footer>
@@ -145,13 +109,26 @@
 </footer>
 
 <script>
-  function filterParticipants() {
-    const query = document.getElementById('search-input').value.toLowerCase();
-    document.querySelectorAll('.participant-item').forEach(item => {
-      const name = item.getAttribute('data-name');
-      item.style.display = name.includes(query) ? 'flex' : 'none';
+  const names = ['Andi Pratama', 'Budi Santoso', 'Citra Dewi', 'Diana Putri', 'Eko Wahyudi'];
+  const list = document.getElementById('participants-list');
+
+  function renderList(filter = '') {
+    list.innerHTML = '';
+    names.filter(n => n.toLowerCase().includes(filter.toLowerCase())).forEach(name => {
+      list.innerHTML += `
+        <a class="participant-item" href="/profile-user">
+          <div class="participant-avatar"></div>
+          <span class="participant-name">${name}</span>
+          <svg width="14" height="14" fill="#8B1A1A" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </a>`;
     });
   }
+
+  function filterParticipants() {
+    renderList(document.getElementById('search-input').value);
+  }
+
+  renderList();
 </script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
 </body>
