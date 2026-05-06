@@ -49,12 +49,20 @@ class activity_controller extends Controller
         return redirect('/proposed-activities')->with('success', 'Activity uploaded successfully!');
     }
 
-     public function deleteActivity($id)
-            {
-                $activity = Activity::findOrFail($id);
-                $activity->delete();
-                return redirect('/proposed-activities')->with('success', 'Activity deleted successfully!');
-            }
+    public function deleteActivity($id)
+    {
+        $activity = Activity::withCount('volunteers')->findOrFail($id);
+
+        if ($activity->volunteers_count > 0) {
+            return redirect('/proposed-activities')
+                ->with('error', 'Activity cannot be deleted because at least one volunteer has joined.');
+        }
+
+        $activity->delete();
+
+        return redirect('/proposed-activities')
+            ->with('success', 'Activity deleted successfully!');
+    }
 
 }
 

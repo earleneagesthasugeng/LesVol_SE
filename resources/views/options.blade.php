@@ -146,9 +146,26 @@
       </p>
 
 
-      <div style="text-align:center;">
-        <button class="btn-danger" onclick="confirmDelete('{{ $activity->id }}')">Delete Activity</button>
-      </div>
+     <div style="text-align:center;">
+      @if($volunteersCount > 0)
+        <button class="btn-danger"
+                disabled
+                style="opacity: 0.5; cursor: not-allowed;"
+                title="Cannot delete because at least one volunteer has joined.">
+            Delete Activity
+        </button>
+
+        <p style="color:red; font-size:14px; margin-top:10px;">
+            Cannot delete this activity because someone has joined.
+        </p>
+
+      @else
+        <button class="btn-danger"
+                onclick="confirmDelete('{{ $activity->id }}')">
+            Delete Activity
+        </button>
+      @endif
+    </div>
 
 
     </div>

@@ -19,7 +19,6 @@ Route::get('/done-activity', [route_controller::class, 'doneActivityPage']);
 Route::get('/my-activities', [route_controller::class, 'myActivitiesPage']);
 Route::get('/options/{id}', [route_controller::class, 'optionsPage']);
 Route::get('/participants', [route_controller::class, 'participantsPage']);
-Route::get('/profile-user', [route_controller::class, 'profileUserPage']);
 Route::get('/profile', [route_controller::class, 'profilePage']);
 Route::get('/proposed-activities', [route_controller::class, 'proposedActivitiesPage']);
 Route::get('/register-activity/{id}', [route_controller::class, 'registerActivityPage']);
@@ -29,8 +28,7 @@ Route::get('/edit-profile', [route_controller::class, 'editProfilePage']);
 Route::get('/edit-portfolio', [route_controller::class, 'editPortfolioPage']);
 Route::get('/view-portfolio', [route_controller::class, 'viewPortfolioPage']);
 Route::get('/my-portfolio', [route_controller::class, 'myPortfolioPage']);
-
-
+Route::get('/profile/{id}', [route_controller::class, 'profilePage']);
 
 
 // BACKEND

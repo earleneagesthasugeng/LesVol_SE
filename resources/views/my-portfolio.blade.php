@@ -70,9 +70,6 @@
 
     <div class="portfolio-container" id="portfolio-list"></div>
 
-    <div class="add-portfolio-container">
-        <a href="/edit-portfolio" class="btn btn-primary btn-lg" style="width: 400px; border-radius: 12px;">Add Portfolio</a>
-    </div>
     </main>
 
         <footer>

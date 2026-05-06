@@ -72,10 +72,16 @@
   <p class="profile-bio">
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
   </p>
+@if($isOwnProfile)
   <div class="profile-actions">
-    <a class="profile-btn" href="/my-portfolio">Edit Portfolio</a>
+    <a class="profile-btn" href="/my-portfolio">View Portfolio</a>
     <a class="profile-btn" href="/edit-profile">Edit Profile</a>
   </div>
+@else
+  <div class="profile-actions">
+    <a class="profile-btn" href="/my-portfolio">View Portfolio</a>
+  </div>
+@endif
 </div>
 
 <footer>

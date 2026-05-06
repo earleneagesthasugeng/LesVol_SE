@@ -127,9 +127,19 @@ class route_controller extends Controller
         return view('options', compact('activity', 'volunteersCount'));
     }
 
-    public function participantsPage()
+  public function participantsPage(Request $request)
     {
-        return view('participants');
+        $activityId = $request->query('activity_id');
+
+        if (!$activityId) {
+            return redirect('/proposed-activities')->with('error', 'Activity not found.');
+        }
+
+        $activity = Activity::with(['volunteers.user'])->findOrFail($activityId);
+        $volunteers = $activity->volunteers()->with('user')->get();
+        $volunteersCount = $volunteers->count();
+
+        return view('participants', compact('activity', 'volunteers', 'volunteersCount'));
     }
 
     public function profileUserPage()
@@ -137,10 +147,23 @@ class route_controller extends Controller
         return view('profile-user');
     }
 
-    public function profilePage(Request $request)
+    public function profilePage(Request $request, $id = null)
     {
-        $user = $request->session()->get('user');
-        return view('profile', compact('user'));
+        $currentUser = $request->session()->get('user');
+
+        if (!$currentUser) {
+            return redirect('/login');
+        }
+
+        if ($id) {
+            $user = User::findOrFail($id);
+        } else {
+            $user = User::findOrFail($currentUser->id);
+        }
+
+        $isOwnProfile = $currentUser->id == $user->id;
+
+        return view('profile', compact('user', 'isOwnProfile'));
     }
 
     public function proposedActivitiesPage(Request $request)
