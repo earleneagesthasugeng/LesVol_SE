@@ -58,7 +58,7 @@
 </nav>
 
 <div style="padding:24px 32px; display:flex;">
-  <a class="back-btn" href="/home">
+  <a class="back-btn" href="{{ $backUrl }}">
     <div class="back-icon">◀</div> Back
   </a>
 </div>

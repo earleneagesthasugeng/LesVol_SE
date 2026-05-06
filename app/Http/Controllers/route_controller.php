@@ -135,8 +135,12 @@ class route_controller extends Controller
             return redirect('/proposed-activities')->with('error', 'Activity not found.');
         }
 
-        $activity = Activity::with(['volunteers.user'])->findOrFail($activityId);
-        $volunteers = $activity->volunteers()->with('user')->get();
+        $activity = Activity::findOrFail($activityId);
+
+        $volunteers = Volunteer::with('user')
+            ->where('activity_id', $activityId)
+            ->get();
+
         $volunteersCount = $volunteers->count();
 
         return view('participants', compact('activity', 'volunteers', 'volunteersCount'));
@@ -163,7 +167,13 @@ class route_controller extends Controller
 
         $isOwnProfile = $currentUser->id == $user->id;
 
-        return view('profile', compact('user', 'isOwnProfile'));
+        $backUrl = '/home';
+
+        if ($request->query('back') === 'participants' && $request->query('activity_id')) {
+            $backUrl = '/participants?activity_id=' . $request->query('activity_id');
+        }
+
+        return view('profile', compact('user', 'isOwnProfile', 'backUrl'));
     }
 
     public function proposedActivitiesPage(Request $request)

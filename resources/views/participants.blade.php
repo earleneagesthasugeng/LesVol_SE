@@ -81,7 +81,7 @@
     @else
       @foreach($volunteers as $volunteer)
         <div class="participant-item" data-name="{{ strtolower($volunteer->user->name) }}">
-          <a class="participant-info" href="/profile/{{ $volunteer->user->id }}?back_activity_id={{ $activity->id }}">
+          <a class="participant-info" href="/profile/{{ $volunteer->user->id }}?back=participants&activity_id={{ $activity->id }}">
             <div class="participant-avatar">
               @if($volunteer->user->profile_picture_path)
                 <img src="{{ asset('storage/' . $volunteer->user->profile_picture_path) }}"
@@ -100,7 +100,7 @@
               <span class="slider"></span>
             </label>
 
-            <a href="/profile/{{ $volunteer->user->id }}?back_activity_id={{ $activity->id }}">
+            <a href="/profile/{{ $volunteer->user->id }}?back=participants&activity_id={{ $activity->id }}">
               <svg width="20" height="20" fill="#8B1A1A" viewBox="0 0 24 24">
                 <path d="M9 18l6-6-6-6"/>
               </svg>
