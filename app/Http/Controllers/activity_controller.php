@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Volunteer;
 use Illuminate\Http\Request;
 use App\Models\Activity;
 use App\Models\Seeker;
@@ -72,5 +73,25 @@ class activity_controller extends Controller
         $activity->save();
 
         return redirect('/proposed-activities')->with('success', 'Activity marked as done!');
+    }
+
+    public function uploadAttendance(Request $request, $id)
+    {
+        $request->validate([
+            'attendance_photo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        $currentUserId = $request->session()->get('user')->id;
+        $volunteer = Volunteer::where('activity_id', $id)
+            ->where('user_id', $currentUserId)
+            ->firstOrFail();
+
+        if ($request->hasFile('attendance_photo')) {
+            $path = $request->file('attendance_photo')->store('attendance_proofs', 'public');
+            $volunteer->file_att_path = $path;
+            $volunteer->save();
+        }
+
+        return redirect()->back()->with('success', 'Attendance proof uploaded successfully!');
     }
 }

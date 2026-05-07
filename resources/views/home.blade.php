@@ -115,11 +115,13 @@
             see more ▶
           </a>
 
-          @if($heroActivity && $heroActivity->slot > 0 && !$heroAlreadyJoined)
-          <a class="btn-register-card" href="{{ url('/register-activity/' . $heroActivity->id) }}"
-            style="display:inline-flex; width:auto;">
-            Register ▶
-          </a>
+          @if($heroActivity && $heroActivity->is_done)
+            <div class="accepted-badge" style="display:inline-flex; width:auto; padding: 10px 24px;">✓ Done</div>
+          @elseif($heroActivity && $heroActivity->slot > 0 && !$heroAlreadyJoined)
+            <a class="btn-register-card" href="{{ url('/register-activity/' . $heroActivity->id) }}"
+              style="display:inline-flex; width:auto;">
+              Register ▶
+            </a>
           @endif
         </div>
 
@@ -201,8 +203,10 @@
             }
             @endphp
 
-            @if(!$alreadyJoined && $activity->slot > 0)
-            <a class="btn-register-card" href="/register-activity/{{ $activity->id }}">Register ▶</a>
+            @if($activity->is_done)
+              <div class="accepted-badge" style="width: 100%; text-align: center; margin-top: 5px;">✓ Done</div>
+            @elseif(!$alreadyJoined && $activity->slot > 0)
+              <a class="btn-register-card" href="/register-activity/{{ $activity->id }}">Register ▶</a>
             @endif
           </div>
         </div>

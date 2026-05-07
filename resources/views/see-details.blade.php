@@ -104,7 +104,7 @@
 
         <span
           style="
-            background: {{ $isJoined ? '#6ac259' : '#c0392b' }};
+            background: {{ $activity->is_done ? '#22c55e' : ($isJoined ? '#6ac259' : '#c0392b') }};
             color: white;
             padding: 10px 20px;
             border-radius: 999px;
@@ -115,7 +115,7 @@
             text-align: center;
           "
         >
-          {{ $isJoined ? 'Joined' : 'Not Joined' }}
+          {{ $activity->is_done ? 'Completed' : ($isJoined ? 'Joined' : 'Not Joined') }}
         </span>
       </div>
 
@@ -162,8 +162,47 @@
         {{ $activity->description }}
       </p>
 
-      <div style="text-align:center;">
-        @if($isJoined)
+      @if($isJoined)
+        <hr class="detail-divider">
+        <div style="margin-top: 20px; background: #f9fafb; padding: 20px; border-radius: 12px; border: 1px dashed #d1d5db;">
+          <div style="font-weight:700; margin-bottom:12px; display: flex; align-items: center; gap: 8px;">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            Attendance Proof
+          </div>
+          
+          @if($volunteer->file_att_path)
+            <div style="margin-bottom: 12px;">
+              <img src="{{ asset('storage/' . $volunteer->file_att_path) }}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
+            </div>
+            <div style="color: #059669; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M5 13l4 4L19 7"/>
+              </svg>
+              Proof uploaded successfully
+            </div>
+          @else
+            <p style="font-size: 13px; color: #6b7280; margin-bottom: 16px;">
+              Please upload a photo of yourself at the activity location as proof of attendance.
+            </p>
+            <form action="{{ route('activity.upload-attendance', $activity->id) }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="file" name="attendance_photo" accept="image/*" required style="font-size: 13px;">
+                <button type="submit" class="btn-success" style="padding: 8px 20px; font-size: 13px; border-radius: 8px;">
+                  Upload Proof
+                </button>
+              </div>
+            </form>
+          @endif
+        </div>
+      @endif
+
+      <div style="text-align:center; margin-top: 32px;">
+        @if($activity->is_done)
+          <div class="accepted-badge" style="display:inline-block; padding:14px 36px; border-radius:999px; font-size:16px;">✓ Done</div>
+        @elseif($isJoined)
           <button class="btn-gray" disabled>Cancel Registration</button>
         @else
           <a href="{{ url('/register-activity/' . $activity->id) }}"

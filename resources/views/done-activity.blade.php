@@ -86,7 +86,16 @@
     @foreach($activities as $activity)
       <div class="activity-card">
           <div class="activity-card-img" style="background-image: url('{{ asset('storage/' . $activity->image_path) }}'); background-size: cover; background-position: center; background-color: #d9d9d9; height: 180px;">
-              <div class="status-badge badge-success">✓</div>
+              @php
+                  $userVolunteer = $activity->volunteers->where('user_id', $currentUserId)->first();
+                  $hasProof = $userVolunteer && $userVolunteer->file_att_path;
+              @endphp
+
+              @if($hasProof || !$userVolunteer)
+                  <div class="status-badge badge-success">✓</div>
+              @else
+                  <div class="status-badge badge-alert">!</div>
+              @endif
           </div>
           <div class="activity-card-body">
               <h4>{{ $activity->activity_name }}</h4>
@@ -101,7 +110,7 @@
                   </svg> {{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/y') }}
               </div>
               <div class="activity-card-actions">
-                  <a class="btn-see-more" href="/see-details-done">Details ▶</a>
+                  <a class="btn-see-more" href="/see-details-done/{{ $activity->id }}">Details ▶</a>
               </div>
           </div>
       </div>

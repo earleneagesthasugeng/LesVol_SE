@@ -65,19 +65,32 @@
   </a>
 
   <div class="activity-detail-card" style="margin-top:16px;">
-    <div style="height:220px; background:#999;"></div>
+    <div style="
+      height:220px;
+      background-color:#d9d9d9;
+      @if(!empty($activity->image_path))
+        background-image: url('{{ asset('storage/' . $activity->image_path) }}');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      @endif
+    "></div>
     <div class="activity-detail-body">
 
       <div class="detail-header">
         <div>
-          <div class="detail-title">Nama Aktivitas</div>
+          <div class="detail-title">{{ $activity->activity_name }}</div>
           <div class="detail-author">
             <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
               <div class="author-avatar">
-                <svg width="18" height="18" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                @if($activity->seeker->user->profile_picture_path)
+                  <img src="{{ asset('storage/' . $activity->seeker->user->profile_picture_path) }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                @else
+                  <svg width="18" height="18" fill="none" stroke="#888" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                @endif
               </div>
               <div>
-                <div style="font-weight:700; font-size:14px;">Nama Pembuat</div>
+                <div style="font-weight:700; font-size:14px;">{{ $activity->seeker->user->name ?? 'Nama Pembuat' }}</div>
               </div>
             </div>
           </div>
@@ -88,23 +101,43 @@
       <hr class="detail-divider">
       <div style="font-weight:700; margin-bottom:12px;">Details:</div>
       <div class="detail-info-grid" style="margin-bottom:16px;">
-        <div class="detail-info-item"><label>Location:</label><span>lokasi aktivitas</span></div>
-        <div class="detail-info-item"><label>Open Registration:</label><span>dd/mm/yy</span></div>
-        <div class="detail-info-item"><label>Status:</label><span>Not Registered</span></div>
-        <div class="detail-info-item"><label>Date:</label><span>dd/mm/yy</span></div>
-        <div class="detail-info-item"><label>Close Registration:</label><span>dd/mm/yy</span></div>
-        <div class="detail-info-item"><label>Quota:</label><span>100 volunteer(s)</span></div>
+        <div class="detail-info-item"><label>Location:</label><span>{{ $activity->location }}</span></div>
+        <div class="detail-info-item"><label>Open Registration:</label><span>{{ \Carbon\Carbon::parse($activity->open_reg_date)->format('d/m/Y') }}</span></div>
+        <div class="detail-info-item"><label>Status:</label><span>{{ $isJoined ? 'Joined' : 'Not Joined' }}</span></div>
+        <div class="detail-info-item"><label>Date:</label><span>{{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/Y') }}</span></div>
+        <div class="detail-info-item"><label>Close Registration:</label><span>{{ \Carbon\Carbon::parse($activity->close_reg_date)->format('d/m/Y') }}</span></div>
+        <div class="detail-info-item"><label>Quota:</label><span>{{ $activity->slot }} volunteer(s)</span></div>
       </div>
       <hr class="detail-divider">
 
       <div style="font-weight:700; margin-bottom:10px;">Description:</div>
       <p style="font-size:14px; color:#4b5563; line-height:1.7; margin-bottom:28px;">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        {{ $activity->description }}
       </p>
 
-      <div style="text-align:center;">
-        <button class="btn-danger" href="#" onclick="openModal('modal-activity-details'); return false;">Upload Attendance</button>
-      </div>
+      @if($volunteer && $volunteer->file_att_path)
+        <div style="margin-top: 20px; background: #f9fafb; padding: 20px; border-radius: 12px; border: 1px dashed #d1d5db; margin-bottom: 20px;">
+          <div style="font-weight:700; margin-bottom:12px; display: flex; align-items: center; gap: 8px;">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            Attendance Proof
+          </div>
+          <div style="margin-bottom: 12px;">
+            <img src="{{ asset('storage/' . $volunteer->file_att_path) }}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
+          </div>
+          <div style="color: #059669; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M5 13l4 4L19 7"/>
+            </svg>
+            Proof uploaded successfully
+          </div>
+        </div>
+      @elseif($isJoined)
+        <div style="text-align:center;">
+          <button class="btn-danger" href="#" onclick="openModal('modal-activity-details'); return false;">Upload Attendance</button>
+        </div>
+      @endif
 
     </div>
   </div>
@@ -138,11 +171,11 @@
     <button class="modal-close" onclick="closeModal('modal-activity-details')" style="font-weight: bold; font-size: 24px; top: 20px; right: 25px;">✕</button>
     
     <div class="popup-title" style="font-size: 32px; margin-top: 10px;">Upload Attendance</div>
-    <div class="popup-subtitle" style="font-size: 20px; margin-top: 8px;">nama aktivitas</div>
+    <div class="popup-subtitle" style="font-size: 20px; margin-top: 8px;">{{ $activity->activity_name }}</div>
     
     <div class="popup-meta" style="display: flex; justify-content: center; gap: 15px; margin-top: 10px;">
-      <span style="display: flex; align-items: center; gap: 5px;">📍 lokasi aktivitas</span>
-      <span style="display: flex; align-items: center; gap: 5px;">🗓 dd/mm/yy</span>
+      <span style="display: flex; align-items: center; gap: 5px;">📍 {{ $activity->location }}</span>
+      <span style="display: flex; align-items: center; gap: 5px;">🗓 {{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/Y') }}</span>
     </div>
 
     <hr class="detail-divider" style="margin: 20px 0;">
@@ -150,18 +183,22 @@
     <div style="text-align: center; margin-bottom: 20px;">
       <p style="font-size: 14px; color: #6b7280; margin-bottom: 20px;">Upload a picture of yourself at the place of volunteer</p>
       
-      <div class="upload-img-box" style="background: #f3f4f6; border: none; height: 200px; flex-direction: column; gap: 15px;">
-        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="17 8 12 3 7 8"></polyline>
-          <line x1="12" y1="3" x2="12" y2="15"></line>
-        </svg>
-        <span style="color: #6b7280; font-size: 14px;">Select a file to upload (jpg, jpeg, png, max 10MB)</span>
-      </div>
+      <form action="{{ route('activity.upload-attendance', $activity->id) }}" method="POST" enctype="multipart/form-data" id="attendanceForm">
+        @csrf
+        <label for="attendance_photo" class="upload-img-box" style="background: #f3f4f6; border: none; height: 200px; flex-direction: column; gap: 15px; cursor: pointer;">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <span style="color: #6b7280; font-size: 14px;" id="file-label">Select a file to upload (jpg, jpeg, png, max 2MB)</span>
+          <input type="file" name="attendance_photo" id="attendance_photo" accept="image/*" style="display: none;" onchange="updateFileName(this)">
+        </label>
+      </form>
     </div>
 
     <div style="text-align: center; margin-top: 30px;">
-      <button class="btn-danger" style="padding: 12px 60px; font-size: 16px;">Upload</button>
+      <button class="btn-danger" style="padding: 12px 60px; font-size: 16px;" onclick="document.getElementById('attendanceForm').submit()">Upload</button>
     </div>
   </div>
 </div>
@@ -173,6 +210,14 @@ function closeModal(id) { document.getElementById(id).classList.remove('open'); 
 document.querySelectorAll('.modal-overlay').forEach(el => {
   el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
 });
+function updateFileName(input) {
+  const label = document.getElementById('file-label');
+  if (input.files && input.files[0]) {
+    label.textContent = input.files[0].name;
+    label.style.color = 'var(--red)';
+    label.style.fontWeight = '700';
+  }
+}
 </script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
 </html>

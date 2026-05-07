@@ -108,7 +108,10 @@ class route_controller extends Controller
         $currentUserId = $request->session()->get('user')->id;
         $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
 
-        $activities = Activity::where('is_done', true)
+        $activities = Activity::with(['volunteers' => function ($query) use ($currentUserId) {
+                $query->where('user_id', $currentUserId);
+            }])
+            ->where('is_done', true)
             ->where(function ($query) use ($currentUserId, $isSeeker) {
                 $query->whereHas('volunteers', function ($q) use ($currentUserId) {
                     $q->where('user_id', $currentUserId);
@@ -118,7 +121,7 @@ class route_controller extends Controller
                 }
             })->get();
 
-        return view('done-activity', compact('isSeeker', 'activities'));
+        return view('done-activity', compact('isSeeker', 'activities', 'currentUserId'));
     }
 
     public function myActivitiesPage(Request $request)
@@ -128,7 +131,9 @@ class route_controller extends Controller
 
         $activities = Activity::whereHas('volunteers', function ($query) use ($currentUserId) {
             $query->where('user_id', $currentUserId);
-        })->get();
+        })
+        ->where('is_done', false)
+        ->get();
 
         return view('my-activities', compact('isSeeker', 'activities'));
     }
@@ -207,7 +212,9 @@ class route_controller extends Controller
             return redirect('/')->with('error', 'You are not registered as a seeker.');
         }
 
-        $activities = Activity::where('seeker_id', '=', $isSeeker->id)->get();
+        $activities = Activity::where('seeker_id', '=', $isSeeker->id)
+            ->where('is_done', false)
+            ->get();
 
         return view('proposed-activities', compact('activities', 'isSeeker'));
     }
@@ -237,6 +244,10 @@ class route_controller extends Controller
         try {
             DB::transaction(function () use ($id, $currentUserId, $currentSeeker) {
                 $activity = Activity::lockForUpdate()->findOrFail($id);
+
+                if ($activity->is_done) {
+                    throw new \Exception('Sorry, this activity has already been completed.');
+                }
 
                 if ($activity->slot <= 0) {
                     throw new \Exception('Sorry, this activity is full.');
@@ -271,11 +282,20 @@ class route_controller extends Controller
         }
     }
 
-    public function seeDetailsDonePage(Request $request)
+    public function seeDetailsDonePage(Request $request, $id)
     {
         $currentUserId = $request->session()->get('user')->id;
         $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
-        return view('see-details-done', compact('isSeeker'));
+
+        $activity = Activity::with('seeker.user')->findOrFail($id);
+
+        $volunteer = Volunteer::where('activity_id', $id)
+            ->where('user_id', $currentUserId)
+            ->first();
+
+        $isJoined = $volunteer !== null;
+
+        return view('see-details-done', compact('activity', 'isSeeker', 'isJoined', 'volunteer'));
     }
 
     public function seeDetailsPage($id, Request $request)
@@ -285,11 +305,13 @@ class route_controller extends Controller
 
         $activity = Activity::with('seeker.user')->findOrFail($id);
 
-        $isJoined = Volunteer::where('activity_id', $id)
+        $volunteer = Volunteer::where('activity_id', $id)
             ->where('user_id', $currentUserId)
-            ->exists();
+            ->first();
 
-        return view('see-details', compact('activity', 'isSeeker', 'isJoined'));
+        $isJoined = $volunteer !== null;
+
+        return view('see-details', compact('activity', 'isSeeker', 'isJoined', 'volunteer'));
     }
 
     public function editProfilePage(Request $request)
