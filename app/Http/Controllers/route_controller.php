@@ -89,14 +89,18 @@ class route_controller extends Controller
         return view('upload-activity', compact('isSeeker'));
     }
 
-    public function activityPage()
+    public function activityPage(Request $request)
     {
-        return view('activity');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        return view('activity', compact('isSeeker'));
     }
 
-    public function beASeekerPage()
+    public function beASeekerPage(Request $request)
     {
-        return view('be-a-seeker');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        return view('be-a-seeker', compact('isSeeker'));
     }
 
     public function doneActivityPage(Request $request)
@@ -121,14 +125,18 @@ class route_controller extends Controller
 
     public function optionsPage(Request $request, $id)
     {
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
         $activity = Activity::with('seeker.user')->findOrFail($id);
         $volunteersCount = Volunteer::where('activity_id', $id)->count();
 
-        return view('options', compact('activity', 'volunteersCount'));
+        return view('options', compact('activity', 'volunteersCount', 'isSeeker'));
     }
 
   public function participantsPage(Request $request)
     {
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
         $activityId = $request->query('activity_id');
 
         if (!$activityId) {
@@ -143,12 +151,14 @@ class route_controller extends Controller
 
         $volunteersCount = $volunteers->count();
 
-        return view('participants', compact('activity', 'volunteers', 'volunteersCount'));
+        return view('participants', compact('activity', 'volunteers', 'volunteersCount', 'isSeeker'));
     }
 
-    public function profileUserPage()
+    public function profileUserPage(Request $request)
     {
-        return view('profile-user');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        return view('profile-user', compact('isSeeker'));
     }
 
     public function profilePage(Request $request, $id = null)
@@ -158,6 +168,8 @@ class route_controller extends Controller
         if (!$currentUser) {
             return redirect('/login');
         }
+
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUser->id);
 
         if ($id) {
             $user = User::findOrFail($id);
@@ -173,30 +185,31 @@ class route_controller extends Controller
             $backUrl = '/participants?activity_id=' . $request->query('activity_id');
         }
 
-        return view('profile', compact('user', 'isOwnProfile', 'backUrl'));
+        return view('profile', compact('user', 'isOwnProfile', 'backUrl', 'isSeeker'));
     }
 
     public function proposedActivitiesPage(Request $request)
     {
         $currentUserId = $request->session()->get('user')->id;
-        $currentSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
 
-        if (!$currentSeeker) {
+        if (!$isSeeker) {
             return redirect('/')->with('error', 'You are not registered as a seeker.');
         }
 
-        $activities = Activity::where('seeker_id', '=', $currentSeeker->id)->get();
+        $activities = Activity::where('seeker_id', '=', $isSeeker->id)->get();
 
-        return view('proposed-activities', compact('activities'));
+        return view('proposed-activities', compact('activities', 'isSeeker'));
     }
 
     public function registerActivityPage(Request $request, $id)
     {
         $activity = Activity::findOrFail($id);
         $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
         $user = User::firstWhere('id', '=', $currentUserId);
 
-        return view('register-activity', compact('activity', 'user'));
+        return view('register-activity', compact('activity', 'user', 'isSeeker'));
     }
 
     public function submitRegisterActivity(Request $request, $id)
@@ -248,9 +261,11 @@ class route_controller extends Controller
         }
     }
 
-    public function seeDetailsDonePage()
+    public function seeDetailsDonePage(Request $request)
     {
-        return view('see-details-done');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        return view('see-details-done', compact('isSeeker'));
     }
 
     public function seeDetailsPage($id, Request $request)
@@ -267,23 +282,31 @@ class route_controller extends Controller
         return view('see-details', compact('activity', 'isSeeker', 'isJoined'));
     }
 
-    public function editProfilePage()
+    public function editProfilePage(Request $request)
     {
-        return view('edit-profile');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        return view('edit-profile', compact('isSeeker'));
     }
 
-    public function editPortfolioPage()
+    public function editPortfolioPage(Request $request)
     {
-        return view('edit-portfolio');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        return view('edit-portfolio', compact('isSeeker'));
     }
 
-    public function viewPortfolioPage()
+    public function viewPortfolioPage(Request $request)
     {
-        return view('view-portfolio');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        return view('view-portfolio', compact('isSeeker'));
     }
 
-    public function myPortfolioPage()
+    public function myPortfolioPage(Request $request)
     {
-        return view('my-portfolio');
+        $currentUserId = $request->session()->get('user')->id;
+        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        return view('my-portfolio', compact('isSeeker'));
     }
 }

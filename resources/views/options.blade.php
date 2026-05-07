@@ -30,9 +30,11 @@
             View Profile
           </a>
          
+          @if (!$isSeeker)
           <a href="/be-a-seeker" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             Be a Seeker!
           </a>
+          @endif
          
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             Log Out
