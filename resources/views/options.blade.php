@@ -148,22 +148,31 @@
       </p>
 
 
-     <div style="text-align:center;">
+     <div style="text-align:center; display: flex; flex-direction: column; gap: 12px; align-items: center;">
+      @if(!$activity->is_done)
+        <button class="btn-success" onclick="markAsDone('{{ $activity->id }}')" style="width: 200px;">
+            Mark as done
+        </button>
+      @else
+        <div class="accepted-badge" style="width: 200px; text-align: center;">✓ Completed</div>
+      @endif
+
       @if($volunteersCount > 0)
         <button class="btn-danger"
                 disabled
-                style="opacity: 0.5; cursor: not-allowed;"
+                style="opacity: 0.5; cursor: not-allowed; width: 200px;"
                 title="Cannot delete because at least one volunteer has joined.">
             Delete Activity
         </button>
 
-        <p style="color:red; font-size:14px; margin-top:10px;">
+        <p style="color:red; font-size:14px;">
             Cannot delete this activity because someone has joined.
         </p>
 
       @else
         <button class="btn-danger"
-                onclick="confirmDelete('{{ $activity->id }}')">
+                onclick="confirmDelete('{{ $activity->id }}')"
+                style="width: 200px;">
             Delete Activity
         </button>
       @endif

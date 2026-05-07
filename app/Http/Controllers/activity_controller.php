@@ -8,7 +8,8 @@ use App\Models\Seeker;
 
 class activity_controller extends Controller
 {
-    public function uploadActivity(Request $request){
+    public function uploadActivity(Request $request)
+    {
         $validated = $request->validate([
             'activity_name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
@@ -64,5 +65,12 @@ class activity_controller extends Controller
             ->with('success', 'Activity deleted successfully!');
     }
 
-}
+    public function markDoneActivity($id)
+    {
+        $activity = Activity::findOrFail($id);
+        $activity->is_done = true;
+        $activity->save();
 
+        return redirect('/proposed-activities')->with('success', 'Activity marked as done!');
+    }
+}

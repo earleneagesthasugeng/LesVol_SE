@@ -49,6 +49,19 @@
   text-decoration: none;
 }
 .btn-danger:hover { background: #c9421f; }
+.btn-success { 
+  background: #22c55e; 
+  color: white; 
+  border-radius: 30px; 
+  padding: 12px 40px; 
+  font-size: 15px; 
+  border: none; 
+  cursor: pointer; 
+  font-family: 'DM Sans', sans-serif; 
+  font-weight: 600; 
+  text-decoration: none;
+}
+.btn-success:hover { background: #16a34a; }
 .btn-gray { 
   background: #d1d5db; 
   color: #9ca3af; 

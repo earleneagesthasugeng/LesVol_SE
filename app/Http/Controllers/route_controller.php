@@ -108,7 +108,17 @@ class route_controller extends Controller
         $currentUserId = $request->session()->get('user')->id;
         $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
 
-        return view('done-activity', compact('isSeeker'));
+        $activities = Activity::where('is_done', true)
+            ->where(function ($query) use ($currentUserId, $isSeeker) {
+                $query->whereHas('volunteers', function ($q) use ($currentUserId) {
+                    $q->where('user_id', $currentUserId);
+                });
+                if ($isSeeker) {
+                    $query->orWhere('seeker_id', $isSeeker->id);
+                }
+            })->get();
+
+        return view('done-activity', compact('isSeeker', 'activities'));
     }
 
     public function myActivitiesPage(Request $request)

@@ -82,7 +82,31 @@
     </div>
   </div>
 
-  <div class="activities-grid" id="done-grid"></div>
+  <div class="activities-grid" id="done-grid">
+    @foreach($activities as $activity)
+      <div class="activity-card">
+          <div class="activity-card-img" style="background-image: url('{{ asset('storage/' . $activity->image_path) }}'); background-size: cover; background-position: center; background-color: #d9d9d9; height: 180px;">
+              <div class="status-badge badge-success">✓</div>
+          </div>
+          <div class="activity-card-body">
+              <h4>{{ $activity->activity_name }}</h4>
+              <div class="activity-meta">
+                  <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1-2.5-2.5A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9A2.5 2.5 0 0 1 12 11.5z"/>
+                  </svg> {{ $activity->location }}
+              </div>
+              <div class="activity-meta">
+                  <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
+                  </svg> {{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/y') }}
+              </div>
+              <div class="activity-card-actions">
+                  <a class="btn-see-more" href="/see-details-done">Details ▶</a>
+              </div>
+          </div>
+      </div>
+    @endforeach
+  </div>
 </div>
 
 <footer>
@@ -108,7 +132,6 @@
   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 </footer>
 
-<script src="{{asset('js/done_activity.js')}}"></script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
 </body>
 </html>
