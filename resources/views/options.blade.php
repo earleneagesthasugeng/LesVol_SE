@@ -5,6 +5,142 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LesVol - Options</title>
 <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
+<style>
+    .edit-description-modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .edit-description-modal-overlay.open {
+        display: flex;
+    }
+
+    .edit-description-modal {
+        background: #ffffff;
+        width: 100%;
+        max-width: 520px;
+        border-radius: 22px;
+        padding: 28px;
+        position: relative;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+        animation: editModalIn 0.2s ease;
+    }
+
+    @keyframes editModalIn {
+        from {
+            transform: scale(0.95);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .edit-description-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+    }
+
+    .edit-description-modal-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: #1f2937;
+        margin: 0;
+    }
+
+    .edit-description-close {
+        border: none;
+        background: transparent;
+        font-size: 26px;
+        line-height: 1;
+        cursor: pointer;
+        color: #6b7280;
+        padding: 4px;
+    }
+
+    .edit-description-close:hover {
+        color: var(--red-btn);
+    }
+
+    .edit-description-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 700;
+        color: #374151;
+        margin-bottom: 8px;
+    }
+
+    .edit-description-textarea {
+        width: 100%;
+        min-height: 170px;
+        resize: vertical;
+        border: 1.5px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 14px 16px;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #374151;
+        outline: none;
+        font-family: inherit;
+    }
+
+    .edit-description-textarea:focus {
+        border-color: var(--red-btn);
+        box-shadow: 0 0 0 3px rgba(180, 40, 40, 0.08);
+    }
+
+    .edit-description-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .edit-description-cancel {
+        border: 1.5px solid #e5e7eb;
+        background: #ffffff;
+        color: #4b5563;
+        padding: 10px 18px;
+        border-radius: 999px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .edit-description-save {
+        border: none;
+        background: var(--red-btn);
+        color: #ffffff;
+        padding: 10px 22px;
+        border-radius: 999px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .edit-description-save:hover {
+        opacity: 0.9;
+    }
+
+    .edit-description-success {
+        background: #ecfdf5;
+        color: #047857;
+        border: 1px solid #a7f3d0;
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-size: 14px;
+        margin-bottom: 16px;
+    }
+</style>
+
 </head>
 <body>
 
@@ -116,12 +252,6 @@
 
       <div style="display:flex; align-items:center; gap:8px; font-weight:700; margin-bottom:12px;">
         Details:
-        <a href="/edit-activity?id={{ $activity->id }}" style="cursor:pointer; display: flex; align-items: center; color: var(--red-btn);" title="Edit">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-          </svg>
-        </a>
       </div>
       <div class="detail-info-grid" style="margin-bottom:16px;">
         <div class="detail-info-item"><label>Location:</label><span>{{ $activity->location }}</span></div>
@@ -136,16 +266,28 @@
 
       <div style="display:flex; align-items:center; gap:8px; font-weight:700; margin-bottom:12px;">
         Description:
-        <a href="/edit-activity?id={{ $activity->id }}" style="cursor:pointer; display: flex; align-items: center; color: var(--red-btn);" title="Edit">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-          </svg>
-        </a>
-      </div>
-      <p style="font-size:14px; color:#4b5563; line-height:1.7; margin-bottom:28px;">
+
+        <button type="button"
+            onclick="openEditDescriptionModal()"
+            style="border:none; background:transparent; cursor:pointer; display:flex; align-items:center; color:var(--red-btn); padding:0;"
+            title="Edit description">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+        </button>
+    </div>
+
+    @if(session('success'))
+        <div class="edit-description-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <p style="font-size:14px; color:#4b5563; line-height:1.7; margin-bottom:28px;">
         {{ $activity->description }}
-      </p>
+    </p>
 
 
      <div style="text-align:center; display: flex; flex-direction: column; gap: 12px; align-items: center;">
@@ -182,7 +324,44 @@
     </div>
   </div>
 </div>
+<div class="edit-description-modal-overlay" id="editDescriptionModal">
+    <div class="edit-description-modal">
+        <div class="edit-description-modal-header">
+            <h2 class="edit-description-modal-title">Edit Description</h2>
 
+            <button type="button" class="edit-description-close" onclick="closeEditDescriptionModal()">
+                &times;
+            </button>
+        </div>
+
+        <form action="/activity/{{ $activity->id }}/update-description" method="POST">
+            @csrf
+
+            <label for="description" class="edit-description-label">Activity Description</label>
+
+            <textarea
+                name="description"
+                id="description"
+                class="edit-description-textarea"
+                required
+                placeholder="Write the updated activity description here...">{{ old('description', $activity->description) }}</textarea>
+
+            @error('description')
+                <p style="color:red; font-size:13px; margin-top:8px;">{{ $message }}</p>
+            @enderror
+
+            <div class="edit-description-actions">
+                <button type="button" class="edit-description-cancel" onclick="closeEditDescriptionModal()">
+                    Cancel
+                </button>
+
+                <button type="submit" class="edit-description-save">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <footer>
   <div>
@@ -212,6 +391,21 @@
 <script src="{{asset('js/proposed_activities.js')}}">
 </script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
+<script>
+    function openEditDescriptionModal() {
+        document.getElementById('editDescriptionModal').classList.add('open');
+    }
+
+    function closeEditDescriptionModal() {
+        document.getElementById('editDescriptionModal').classList.remove('open');
+    }
+
+    document.getElementById('editDescriptionModal').addEventListener('click', function(event) {
+        if (event.target === this) {
+            closeEditDescriptionModal();
+        }
+    });
+</script>
 </body>
 </html>
 

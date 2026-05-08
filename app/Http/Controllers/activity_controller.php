@@ -94,4 +94,23 @@ class activity_controller extends Controller
 
         return redirect()->back()->with('success', 'Attendance proof uploaded successfully!');
     }
+
+    public function updateDescription(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'description' => 'required|string|max:5000',
+        ]);
+
+        $currentUserId = $request->session()->get('user')->id;
+        $currentSeeker = Seeker::where('user_id', $currentUserId)->firstOrFail();
+
+        $activity = Activity::where('id', $id)
+            ->where('seeker_id', $currentSeeker->id)
+            ->firstOrFail();
+
+        $activity->description = $validated['description'];
+        $activity->save();
+
+        return redirect('/options/' . $id)->with('success', 'Description updated successfully!');
+    }
 }

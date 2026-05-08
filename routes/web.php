@@ -41,5 +41,6 @@ Route::get('/delete-activity/{id}', [activity_controller::class, 'deleteActivity
 Route::get('/mark-done-activity/{id}', [activity_controller::class, 'markDoneActivity'])->name('activity.mark-done');
 Route::post('/activity/{id}/upload-attendance', [activity_controller::class, 'uploadAttendance'])->name('activity.upload-attendance');
 Route::post('/register-activity/{id}', [route_controller::class, 'submitRegisterActivity'])->name('activity.register');
+Route::post('/activity/{id}/update-description', [activity_controller::class, 'updateDescription'])->name('activity.update-description');
 
 require __DIR__ . '/settings.php';
