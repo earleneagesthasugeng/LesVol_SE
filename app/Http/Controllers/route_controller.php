@@ -25,6 +25,8 @@ class route_controller extends Controller
 
         if (!$isSeeker) {
             $activities = Activity::where('slot', '>', 0)
+                ->where('is_done', false)
+                ->whereDate('activity_date', '>=', now()->toDateString())
                 ->orderBy('activity_date', 'asc')
                 ->get();
         } else {
@@ -32,6 +34,8 @@ class route_controller extends Controller
 
             $activities = Activity::where('seeker_id', '!=', $currentSeekerId)
                 ->where('slot', '>', 0)
+                ->where('is_done', false)
+                ->whereDate('activity_date', '>=', now()->toDateString())
                 ->orderBy('activity_date', 'asc')
                 ->get();
         }

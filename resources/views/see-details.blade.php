@@ -121,39 +121,47 @@
 
       <hr class="detail-divider">
 
-      <div style="font-weight:700; margin-bottom:12px;">Details:</div>
+      <div style="margin-bottom: 22px;">
+        <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 18px; color: #000;">Details:</h3>
 
-      <div class="detail-info-grid" style="margin-bottom:16px;">
-        <div class="detail-info-item">
-          <label>Location:</label>
-          <span>{{ $activity->location }}</span>
-        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 34px;">
+            <div>
+                <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Location:</p>
+                <p style="font-size: 14px; font-weight: 400; color: #000;">{{ $activity->location }}</p>
+            </div>
 
-        <div class="detail-info-item">
-          <label>Open Registration:</label>
-          <span>{{ \Carbon\Carbon::parse($activity->open_reg_date)->format('d/m/Y') }}</span>
-        </div>
+            <div>
+                <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Open Registration:</p>
+                <p style="font-size: 14px; font-weight: 400; color: #000;">
+                    {{ \Carbon\Carbon::parse($activity->open_reg_date)->format('d/m/Y') }}
+                </p>
+            </div>
 
-        <div class="detail-info-item">
-          <label>Status:</label>
-          <span>{{ $isJoined ? 'Registered' : 'Not Registered' }}</span>
-        </div>
+            <div>
+                <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Status:</p>
+                <p style="font-size: 14px; font-weight: 400; color: #000;">Not Registered</p>
+            </div>
 
-        <div class="detail-info-item">
-          <label>Date:</label>
-          <span>{{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/Y') }}</span>
-        </div>
+            <div>
+                <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Date:</p>
+                <p style="font-size: 14px; font-weight: 400; color: #000;">
+                    {{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/Y') }}
+                </p>
+            </div>
 
-        <div class="detail-info-item">
-          <label>Close Registration:</label>
-          <span>{{ \Carbon\Carbon::parse($activity->close_reg_date)->format('d/m/Y') }}</span>
-        </div>
+            <div>
+                <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Close Registration:</p>
+                <p style="font-size: 14px; font-weight: 400; color: #000;">
+                    {{ \Carbon\Carbon::parse($activity->close_reg_date)->format('d/m/Y') }}
+                </p>
+            </div>
 
-        <div class="detail-info-item">
-          <label>Quota:</label>
-          <span>{{ $activity->slot }} volunteer(s)</span>
+            <div>
+                <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Quota:</p>
+                <p style="font-size: 14px; font-weight: 400; color: #000;">{{ $activity->slot }} volunteer(s)</p>
+            </div>
         </div>
-      </div>
+    </div>
 
       <hr class="detail-divider">
 
@@ -162,7 +170,12 @@
         {{ $activity->description }}
       </p>
 
-      @if($isJoined)
+      <div style="font-weight:700; margin-bottom:10px;">Requirements:</div>
+      <p style="font-size:14px; color:#4b5563; line-height:1.7; margin-bottom:28px;">
+          {{ $activity->requirements }}
+      </p>
+
+      {{-- @if($isJoined)
         <hr class="detail-divider">
         <div style="margin-top: 20px; background: #f9fafb; padding: 20px; border-radius: 12px; border: 1px dashed #d1d5db;">
           <div style="font-weight:700; margin-bottom:12px; display: flex; align-items: center; gap: 8px;">
@@ -197,7 +210,7 @@
             </form>
           @endif
         </div>
-      @endif
+      @endif --}}
 
       <div style="text-align:center; margin-top: 32px;">
         @if($activity->is_done)
@@ -241,11 +254,11 @@
           <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
           <polyline points="22,6 12,13 2,6"/>
         </svg>
-        emailus@mail.com
+        lesvol@mail.com
       </span>
     </div>
   </div>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  <p>LesVol is a volunteer discovery platform that connects passionate individuals with meaningful social activities and community programs. Our mission is to make volunteering easier, more accessible, and more impactful by helping users find activities that match their interests, availability, and location. Through LesVol, seekers can organize volunteer events while volunteers can participate, collaborate, and contribute to positive change within their communities.</p>
 </footer>
 
 <script src="{{ asset('js/dropdown_login.js') }}"></script>
