@@ -8,6 +8,18 @@
 </head>
 <body>
 
+@php
+  $currentVolunteer = null;
+
+  if (session('user')) {
+    $currentVolunteer = \App\Models\Volunteer::where('activity_id', $activity->id)
+      ->where('user_id', session('user')->id)
+      ->first();
+  }
+
+  $isBanned = $currentVolunteer && $currentVolunteer->is_banned;
+@endphp
+
 <nav>
   <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
@@ -22,7 +34,6 @@
       </div>
 
       <div class="dropdown-menu" id="nav-dropdown" style="right: 0; left: auto; background: var(--red); min-width: 180px; padding: 10px 0;">
-        
         <div id="state-logged-in">
           <a href="/profile" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             View Profile
@@ -45,15 +56,6 @@
             Delete Account
           </a>
         </div>
-
-        <div id="state-logged-out" style="display: none;">
-          <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;">
-            Log In 
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h4M10 17l5-5-5-5M13 12H3"/></svg>
-          </a>
-          <a href="/register" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">Sign Up</a>
-        </div>
-
       </div>
     </div>
   </div>
@@ -75,8 +77,8 @@
         background-repeat: no-repeat;
       @endif
     "></div>
-    <div class="activity-detail-body">
 
+    <div class="activity-detail-body">
       <div class="detail-header">
         <div>
           <div class="detail-title">{{ $activity->activity_name }}</div>
@@ -99,6 +101,7 @@
       </div>
 
       <hr class="detail-divider">
+
       <div style="font-weight:700; margin-bottom:12px;">Details:</div>
       <div class="detail-info-grid" style="margin-bottom:16px;">
         <div class="detail-info-item"><label>Location:</label><span>{{ $activity->location }}</span></div>
@@ -108,6 +111,7 @@
         <div class="detail-info-item"><label>Close Registration:</label><span>{{ \Carbon\Carbon::parse($activity->close_reg_date)->format('d/m/Y') }}</span></div>
         <div class="detail-info-item"><label>Quota:</label><span>{{ $activity->slot }} volunteer(s)</span></div>
       </div>
+
       <hr class="detail-divider">
 
       <div style="font-weight:700; margin-bottom:10px;">Description:</div>
@@ -135,10 +139,42 @@
         </div>
       @elseif($isJoined)
         <div style="text-align:center;">
-          <button class="btn-danger" href="#" onclick="openModal('modal-activity-details'); return false;">Upload Attendance</button>
+          @if($isBanned)
+            <div style="
+              background:#fee2e2;
+              color:#b91c1c;
+              border:1px solid #fca5a5;
+              padding:12px 16px;
+              border-radius:10px;
+              font-size:14px;
+              font-weight:600;
+              margin-bottom:12px;
+              text-align:center;
+            ">
+              You have been banned, contact the seeker for info.
+            </div>
+
+            <button
+              type="button"
+              disabled
+              class="btn-danger"
+              style="
+                background:#d1d5db;
+                color:#6b7280;
+                cursor:not-allowed;
+                opacity:0.8;
+                border:none;
+              "
+            >
+              Upload Attendance Disabled
+            </button>
+          @else
+            <button class="btn-danger" type="button" onclick="openModal('modal-activity-details'); return false;">
+              Upload Attendance
+            </button>
+          @endif
         </div>
       @endif
-
     </div>
   </div>
 </div>
@@ -166,6 +202,7 @@
   <p>LesVol is a volunteer discovery platform that connects passionate individuals with meaningful social activities and community programs. Our mission is to make volunteering easier, more accessible, and more impactful by helping users find activities that match their interests, availability, and location. Through LesVol, seekers can organize volunteer events while volunteers can participate, collaborate, and contribute to positive change within their communities.</p>
 </footer>
 
+@if(!$isBanned)
 <div class="modal-overlay" id="modal-activity-details">
   <div class="modal" style="max-width:560px; border-radius: 24px;">
     <button class="modal-close" onclick="closeModal('modal-activity-details')" style="font-weight: bold; font-size: 24px; top: 20px; right: 25px;">✕</button>
@@ -202,14 +239,31 @@
     </div>
   </div>
 </div>
-</div>
-</body>
+@endif
+
 <script>
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.classList.add('open');
+  }
+}
+
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.classList.remove('open');
+  }
+}
+
 document.querySelectorAll('.modal-overlay').forEach(el => {
-  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+  el.addEventListener('click', e => {
+    if (e.target === el) {
+      el.classList.remove('open');
+    }
+  });
 });
+
 function updateFileName(input) {
   const label = document.getElementById('file-label');
   if (input.files && input.files[0]) {
@@ -219,5 +273,7 @@ function updateFileName(input) {
   }
 }
 </script>
+
 <script src="{{asset('js/dropdown_login.js')}}"></script>
+</body>
 </html>

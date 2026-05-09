@@ -114,7 +114,7 @@
                <div class="activity-card-actions">
                   <a href="{{ route('see-details', $activity->id) }}"
                     class="btn-see-more"
-                    style="font-size: 14px; font-weight: 600; color: var(--red); text-decoration: none;">
+                    style="font-size: 14px; font-weight: 600; color: var(--white); text-decoration: none;">
                       Joined ✓
                   </a>
               </div>

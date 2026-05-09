@@ -97,10 +97,25 @@
           </a>
 
           <div style="display: flex; align-items: center; gap: 5px;">
-            <label class="switch">
-              <input type="checkbox" {{ $volunteer->is_banned ? 'checked' : '' }}>
-              <span class="slider"></span>
-            </label>
+            <form action="{{ route('volunteer.toggle-ban', $volunteer->id) }}" method="POST">
+  @csrf
+
+  <button
+    type="submit"
+    style="
+      background: {{ $volunteer->is_banned ? '#dc2626' : '#f3f4f6' }};
+      color: {{ $volunteer->is_banned ? 'white' : '#8B1A1A' }};
+      border: {{ $volunteer->is_banned ? 'none' : '1px solid #8B1A1A' }};
+      border-radius:999px;
+      padding:7px 16px;
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+    "
+  >
+    {{ $volunteer->is_banned ? 'BANNED' : 'ACTIVE' }}
+  </button>
+</form>
 
             <a href="/profile/{{ $volunteer->user->id }}?back=participants&activity_id={{ $activity->id }}">
               <svg width="20" height="20" fill="#8B1A1A" viewBox="0 0 24 24">

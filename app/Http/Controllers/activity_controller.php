@@ -14,15 +14,27 @@ class activity_controller extends Controller
         $validated = $request->validate([
             'activity_name' => 'required|string|max:255',
             'location' => 'required|string|max:255',
-            'activity_date' => 'required|date',
+
+            'activity_date' => 'required|date|after:today',
             'activity_time' => 'required',
+
             'slot' => 'required|integer|min:1',
+
             'open_reg_date' => 'required|date',
-            'close_reg_date' => 'required|date',
+            'close_reg_date' => 'required|date|after:open_reg_date|before:activity_date',
+
             'requirements' => 'nullable|string',
             'description' => 'nullable|string',
+
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'proposal' => 'nullable|mimes:pdf|max:10240',
+        ], [
+            'activity_date.after' => 'Activity date must be after today.',
+            'close_reg_date.after' => 'Close registration date must be after open registration date.',
+            'close_reg_date.before' => 'Close registration date must be before the activity date.',
+            'image.image' => 'Uploaded file must be an image.',
+            'image.mimes' => 'Image must be in JPG, JPEG, or PNG format.',
+            'image.max' => 'Image size must not be larger than 2MB.',
         ]);
 
 
@@ -82,9 +94,20 @@ class activity_controller extends Controller
         ]);
 
         $currentUserId = $request->session()->get('user')->id;
+
         $volunteer = Volunteer::where('activity_id', $id)
             ->where('user_id', $currentUserId)
             ->firstOrFail();
+
+        if ($volunteer->is_banned) {
+            return redirect()->back()->with('error', 'You cannot upload attendance because you have been banned from this activity.');
+        }
+
+        $activity = Activity::findOrFail($id);
+
+        if (!$activity->is_done) {
+            return redirect()->back()->with('error', 'Attendance can only be uploaded after the activity is marked as done.');
+        }
 
         if ($request->hasFile('attendance_photo')) {
             $path = $request->file('attendance_photo')->store('attendance_proofs', 'public');
@@ -112,5 +135,15 @@ class activity_controller extends Controller
         $activity->save();
 
         return redirect('/options/' . $id)->with('success', 'Description updated successfully!');
+    }
+
+    public function toggleBan($id)
+    {
+        $volunteer = Volunteer::findOrFail($id);
+
+        $volunteer->is_banned = !$volunteer->is_banned;
+        $volunteer->save();
+
+        return redirect()->back()->with('success', 'Volunteer status updated successfully!');
     }
 }

@@ -14,7 +14,7 @@ class route_controller extends Controller
 {
     public function homePage(Request $request)
     {
-        $currentUser = $request->session()->get('user');
+        $currentUser = session()->get('user');
 
         if (!$currentUser) {
             return redirect('/login');
@@ -22,25 +22,31 @@ class route_controller extends Controller
 
         $currentUserId = $currentUser->id;
         $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+        $search = $request->query('search');
 
-        if (!$isSeeker) {
-            $activities = Activity::where('slot', '>', 0)
-                ->where('is_done', false)
-                ->whereDate('activity_date', '>=', now()->toDateString())
-                ->orderBy('activity_date', 'asc')
-                ->get();
-        } else {
-            $currentSeekerId = $isSeeker->id;
+        $activitiesQuery = Activity::where('slot', '>', 0)
+            ->where('is_done', false)
+            ->whereDate('activity_date', '>=', now()->toDateString());
 
-            $activities = Activity::where('seeker_id', '!=', $currentSeekerId)
-                ->where('slot', '>', 0)
-                ->where('is_done', false)
-                ->whereDate('activity_date', '>=', now()->toDateString())
-                ->orderBy('activity_date', 'asc')
-                ->get();
+        if ($search) {
+            $activitiesQuery->where(function ($query) use ($search) {
+                $query->where('activity_name', 'like', '%' . $search . '%')
+                    ->orWhere('location', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+            });
         }
 
-        return view('home', compact('activities', 'isSeeker'));
+        $activities = $activitiesQuery
+            ->orderBy('activity_date', 'asc')
+            ->paginate(6)
+            ->withQueryString();
+
+        $heroActivities = $activitiesQuery
+            ->orderBy('activity_date', 'asc')
+            ->limit(6)
+            ->get();
+
+        return view('home', compact('activities', 'heroActivities', 'isSeeker', 'search'));
     }
 
     public function loginPage()

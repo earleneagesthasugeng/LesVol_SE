@@ -113,7 +113,7 @@
             {{ date('d F Y', strtotime($activity->activity_date)) }}
           </div>
           <div class="activity-card-actions">
-            <a class="btn-see-more" href="/options/{{ $activity->id }}" style="font-size: 14px; font-weight: 600; color: var(--red);">Options ▶</a>
+            <a class="btn-see-more" href="/options/{{ $activity->id }}" style="font-size: 14px; font-weight: 600; color: var(--white);">Options ▶</a>
           </div>
         </div>
       </div>

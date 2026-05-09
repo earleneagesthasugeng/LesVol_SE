@@ -6,6 +6,100 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LesVol - Home</title>
   <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+  <style>
+  .hero-carousel {
+    position: relative;
+    width: 100%;
+  }
+
+  .hero-slide {
+    display: none;
+  }
+
+  .hero-slide.active {
+    display: block;
+  }
+
+  .hero-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--red-btn);
+    font-size: 34px;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-arrow:hover {
+    background: white;
+  }
+
+ .hero-arrow-left {
+    left: 24px;
+}
+
+.hero-banner-content {
+    padding-left: 90px;
+    padding-right: 90px;
+}
+
+  .hero-arrow-right {
+    right: 24px;
+  }
+
+  .carousel-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+
+  .carousel-dot {
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .home-pagination {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .home-pagination nav {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .home-pagination .hidden {
+    display: none;
+  }
+
+  .home-pagination a,
+  .home-pagination span {
+    margin: 0 6px;
+    color: var(--red-btn);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .home-pagination span[aria-current="page"] span {
+    color: #111827;
+  }
+</style>
 </head>
 
 <body>
@@ -71,103 +165,110 @@
     </div>
   </nav>
 
-  @php
-  $heroActivity = $activities->first();
-  @endphp
-
-  <div class="hero-banner" @if($heroActivity) style="
-      background-image: url('{{ asset('storage/' . $heroActivity->image_path) }}');
-      background-size: fill;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-color: #cfcfd4;
-    " @else style="background-color: #cfcfd4; display: flex; align-items: center; justify-content: center;" @endif>
-    @if($heroActivity)
-    <div class="hero-banner-content">
-      <div>
-        <div class="hero-banner-title">{{ $heroActivity->activity_name ?? 'Nama Aktivitas' }}</div>
-        <div class="hero-banner-meta">
-          <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24"
-            fill="currentColor">
-            <path
-              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1-2.5-2.5A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9A2.5 2.5 0 0 1 12 11.5z" />
-          </svg> {{ $heroActivity->location ?? 'Lokasi aktivitas' }} &nbsp;
-          <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24"
-            fill="currentColor">
-            <path
-              d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z" />
-          </svg> {{ $heroActivity ? \Carbon\Carbon::parse($heroActivity->activity_date)->format('d/m/y') : 'dd/mm/yy' }}
-        </div>
-
+  <div class="hero-carousel" id="heroCarousel">
+    @if($heroActivities->count() > 0)
+      @foreach($heroActivities as $index => $heroActivity)
         @php
-        $heroAlreadyJoined = false;
+          $heroAlreadyJoined = false;
 
-        if ($heroActivity && session('user')) {
-        $heroAlreadyJoined = \App\Models\Volunteer::where('user_id', session('user')->id)
-        ->where('activity_id', $heroActivity->id)
-        ->exists();
-        }
+          if (session('user')) {
+            $heroAlreadyJoined = \App\Models\Volunteer::where('user_id', session('user')->id)
+              ->where('activity_id', $heroActivity->id)
+              ->exists();
+          }
         @endphp
 
-        <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-          <a class="btn-see-more" href="{{ $heroActivity ? route('see-details', $heroActivity->id) : '#' }}"
-            style="display:inline-flex; width:auto;">
-            see more ▶
-          </a>
+        <div class="hero-banner hero-slide {{ $index === 0 ? 'active' : '' }}"
+          style="
+            background-image: url('{{ asset('storage/' . $heroActivity->image_path) }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #cfcfd4;
+          ">
 
-          @if($heroActivity && $heroActivity->is_done)
-            <div class="accepted-badge" style="display:inline-flex; width:auto; padding: 10px 24px;">✓ Done</div>
-          @elseif($heroActivity && $heroActivity->slot > 0 && !$heroAlreadyJoined)
-            <a class="btn-register-card" href="{{ url('/register-activity/' . $heroActivity->id) }}"
-              style="display:inline-flex; width:auto;">
-              Register ▶
-            </a>
-          @endif
+          <div class="hero-banner-content">
+            <div>
+              <div class="hero-banner-title">{{ $heroActivity->activity_name }}</div>
+
+              <div class="hero-banner-meta">
+                <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1-2.5-2.5A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9A2.5 2.5 0 0 1 12 11.5z" />
+                </svg>
+                {{ $heroActivity->location }}
+
+                &nbsp;
+
+                <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z" />
+                </svg>
+                {{ \Carbon\Carbon::parse($heroActivity->activity_date)->format('d/m/y') }}
+              </div>
+
+              <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <a class="btn-see-more" href="{{ route('see-details', $heroActivity->id) }}" style="display:inline-flex; width:auto;">
+                  see more ▶
+                </a>
+
+                @if($heroActivity->is_done)
+                  <div class="accepted-badge" style="display:inline-flex; width:auto; padding: 10px 24px;">✓ Done</div>
+                @elseif($heroActivity->slot > 0 && !$heroAlreadyJoined)
+                  <a class="btn-register-card" href="{{ url('/register-activity/' . $heroActivity->id) }}" style="display:inline-flex; width:auto;">
+                    Register ▶
+                  </a>
+                @endif
+              </div>
+            </div>
+
+            <div style="color:rgba(255,255,255,0.85); font-size:12px; line-height:1.7;">
+              {{ $heroActivity->description }}
+            </div>
+          </div>
         </div>
+      @endforeach
 
-        <div class="hero-dots" style="margin-top:12px;">
-          <div class="hero-dot active"></div>
-          <div class="hero-dot"></div>
-          <div class="hero-dot"></div>
-        </div>
-      </div>
+      <button class="hero-arrow hero-arrow-left" type="button" onclick="changeHeroSlide(-1)">‹</button>
+      <button class="hero-arrow hero-arrow-right" type="button" onclick="changeHeroSlide(1)">›</button>
 
-      <div style="color:rgba(255,255,255,0.85); font-size:12px; line-height:1.7;">
-        {{ $heroActivity->description ?? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-        nisi ut aliquip ex ea commodo consequat.' }}
+      <div class="hero-dots carousel-dots">
+        @foreach($heroActivities as $index => $heroActivity)
+          <button type="button"
+            class="hero-dot carousel-dot {{ $index === 0 ? 'active' : '' }}"
+            onclick="goToHeroSlide({{ $index }})">
+          </button>
+        @endforeach
       </div>
-    </div>
     @else
-    <div style="color: white; font-size: 24px; font-weight: 700; text-align: center;">
-      Belum ada activity
-    </div>
+      <div class="hero-banner" style="background-color: #cfcfd4; display: flex; align-items: center; justify-content: center;">
+        <div style="color: white; font-size: 24px; font-weight: 700; text-align: center;">
+          Belum ada activity
+        </div>
+      </div>
     @endif
   </div>
 
-  <div class="search-bar">
-    <input class="search-input" type="text" placeholder="Search">
-    <button class="search-btn">
+  <form class="search-bar" method="GET" action="/home">
+    <input class="search-input" type="text" name="search" placeholder="Search" value="{{ $search ?? '' }}">
+    <button class="search-btn" type="submit">
       <svg width="18" height="18" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
         <circle cx="11" cy="11" r="8" />
         <path d="m21 21-4.35-4.35" />
       </svg>
     </button>
-  </div>
+  </form>
 
   <div style="padding: 24px 32px; flex:1;">
-    <div class="activities-grid" id="home-grid">
-      @foreach($activities as $activity)
-      @if($activity->slot > 0)
+  <div class="activities-grid" id="home-grid">
+    @foreach($activities as $activity)
       <div class="activity-card">
         <div class="activity-card-img" style="
-                  background-image: url('{{ asset('storage/' . $activity->image_path) }}');
-                  background-size: contain;
-                  background-position: center;
-                  background-repeat: no-repeat;
-                  background-color: #d9d9d9;
-                  height: 180px;
-               ">
+          background-image: url('{{ asset('storage/' . $activity->image_path) }}');
+          background-size: contain;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-color: #d9d9d9;
+          height: 180px;
+        ">
           <div class="slots-badge">{{ $activity->slot }} slots left</div>
         </div>
 
@@ -175,46 +276,62 @@
           <h4>{{ $activity->activity_name }}</h4>
 
           <div class="activity-meta">
-            <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24"
-              fill="currentColor">
-              <path
-                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1-2.5-2.5A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9A2.5 2.5 0 0 1 12 11.5z" />
-            </svg> {{ $activity->location }}
+            <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1-2.5-2.5A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9A2.5 2.5 0 0 1 12 11.5z" />
+            </svg>
+            {{ $activity->location }}
           </div>
 
           <div class="activity-meta">
-            <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24"
-              fill="currentColor">
-              <path
-                d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z" />
-            </svg> {{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/y') }}
+            <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z" />
+            </svg>
+            {{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/y') }}
           </div>
 
           <div class="activity-card-actions">
-            <a class="btn-see-more" href="{{ route('see-details', $activity->id) }}">See More ▶</a>
+          @php
+              $alreadyJoined = false;
+              $isOwnActivity = $isSeeker && $activity->seeker_id == $isSeeker->id;
 
-            @php
-            $alreadyJoined = false;
+              if (session('user')) {
+                  $alreadyJoined = \App\Models\Volunteer::where('user_id', session('user')->id)
+                      ->where('activity_id', $activity->id)
+                      ->exists();
+              }
+          @endphp
 
-            if (session('user')) {
-            $alreadyJoined = \App\Models\Volunteer::where('user_id', session('user')->id)
-            ->where('activity_id', $activity->id)
-            ->exists();
-            }
-            @endphp
+          @if($isOwnActivity)
+              <a class="btn-see-more" href="/options/{{ $activity->id }}">
+                  Options ▶
+              </a>
+          @else
+              <a class="btn-see-more" href="{{ route('see-details', $activity->id) }}">
+                  See More ▶
+              </a>
 
-            @if($activity->is_done)
-              <div class="accepted-badge" style="width: 100%; text-align: center; margin-top: 5px;">✓ Done</div>
-            @elseif(!$alreadyJoined && $activity->slot > 0)
-              <a class="btn-register-card" href="/register-activity/{{ $activity->id }}">Register ▶</a>
-            @endif
-          </div>
+              @if($activity->is_done)
+                  <div class="accepted-badge" style="width: 100%; text-align: center; margin-top: 5px;">
+                      ✓ Done
+                  </div>
+              @elseif(!$alreadyJoined && $activity->slot > 0)
+                  <a class="btn-register-card" href="/register-activity/{{ $activity->id }}">
+                      Register ▶
+                  </a>
+              @endif
+          @endif
+      </div>
         </div>
       </div>
-      @endif
-      @endforeach
-    </div>
+    @endforeach
   </div>
+
+  @if($activities->hasPages())
+    <div class="home-pagination">
+      {{ $activities->links() }}
+    </div>
+  @endif
+</div>
 
   <footer>
     <div>

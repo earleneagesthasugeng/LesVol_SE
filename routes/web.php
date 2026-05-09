@@ -31,6 +31,7 @@ Route::get('/my-portfolio', [route_controller::class, 'myPortfolioPage']);
 Route::get('/profile/{id}', [route_controller::class, 'profilePage']);
 
 
+
 // BACKEND
 Route::post('/user-register', [register_controller::class, 'register']);
 Route::post('/user-login', [login_controller::class, 'login']);
@@ -42,5 +43,6 @@ Route::get('/mark-done-activity/{id}', [activity_controller::class, 'markDoneAct
 Route::post('/activity/{id}/upload-attendance', [activity_controller::class, 'uploadAttendance'])->name('activity.upload-attendance');
 Route::post('/register-activity/{id}', [route_controller::class, 'submitRegisterActivity'])->name('activity.register');
 Route::post('/activity/{id}/update-description', [activity_controller::class, 'updateDescription'])->name('activity.update-description');
+Route::post('/volunteer/{id}/toggle-ban', [activity_controller::class, 'toggleBan'])->name('volunteer.toggle-ban');
 
 require __DIR__ . '/settings.php';
