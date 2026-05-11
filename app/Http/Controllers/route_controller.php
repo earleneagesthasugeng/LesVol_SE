@@ -338,17 +338,33 @@ class route_controller extends Controller
         return view('edit-portfolio', compact('isSeeker'));
     }
 
-    public function viewPortfolioPage(Request $request)
-    {
-        $currentUserId = $request->session()->get('user')->id;
-        $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
-        return view('view-portfolio', compact('isSeeker'));
-    }
-
     public function myPortfolioPage(Request $request)
     {
-        $currentUserId = $request->session()->get('user')->id;
+    $currentUserId = $request->session()->get('user')->id;
+    $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
+
+    $portfolioItems = \App\Models\Volunteer::where('user_id', $currentUserId)
+        ->whereNotNull('file_att_path') 
+        ->where('is_banned', false)
+        ->with('activity') 
+        ->paginate(10); // Ganti get() jadi paginate(10)
+
+    return view('my-portfolio', compact('isSeeker', 'portfolioItems'));
+    }
+
+   
+    public function viewPortfolioPage(Request $request)
+    {
+      
+        $currentUserId = $request->session()->get('user')->id; 
         $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
-        return view('my-portfolio', compact('isSeeker'));
+
+        $portfolioItems = \App\Models\Volunteer::where('user_id', $currentUserId)
+            ->where('status', 'done')
+            ->whereNotNull('file_att_path')
+            ->with('activity')
+            ->get();
+
+        return view('view-portfolio', compact('isSeeker', 'portfolioItems'));
     }
 }

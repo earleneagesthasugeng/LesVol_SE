@@ -70,7 +70,97 @@
         <h1 class="portfolio-main-title">My Portfolio</h1>
     </div>
 
-    <div class="portfolio-container" id="portfolio-list"></div>
+<div class="portfolio-container" id="portfolio-list">
+    @forelse($portfolioItems as $item)
+        
+        <div class="portfolio-card" style="display: flex; background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); align-items: center; gap: 20px;">
+            
+            <div class="portfolio-img-box" style="flex: 0 0 300px; height: 180px; border-radius: 12px; overflow: hidden; background: #eee;">
+                @if($item->file_att_path)
+                    <img src="{{ asset('storage/' . $item->file_att_path) }}" 
+                         alt="Attendance Proof" 
+                         style="width: 100%; height: 100%; object-fit: cover;">
+                @else
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #999; background: #ccc;">
+                        No Attendance Image
+                    </div>
+                @endif
+            </div>
+
+            <div class="portfolio-info" style="flex: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <h2 style="margin: 0; font-size: 1.5rem; color: #333;">
+                     
+                        {{ $item->activity?->activity_name ?? 'Activity Deleted/Not Found' }}
+                    </h2>
+                    
+                    <div style="cursor: pointer; color: #666;">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <p style="color: #888; margin: 5px 0;">
+                    
+                    Date: {{ $item->activity ? \Carbon\Carbon::parse($item->activity->activity_date)->format('d-m-Y') : '-' }}
+                </p>
+
+                <div style="margin-top: 15px;">
+                    <strong style="display: block; color: #444;">Contribution:</strong>
+                    <p style="margin: 0; color: #777; line-height: 1.4; font-size: 0.95rem; text-align: justify; 
+                        word-wrap: break-word; overflow-wrap: break-word; word-break: break-all;">
+                        {{ $item->activity?->description ?? 'Telah menyelesaikan kegiatan volunteer.' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    @empty
+        <div style="text-align: center; padding: 50px; background: white; border-radius: 15px; color: #999;">
+            <p>Belum ada portfolio yang bisa ditampilkan.</p>
+        </div>
+    @endforelse
+</div>
+
+
+    @if($portfolioItems->hasPages())
+    <div class="porto-pagination">
+        {{ $portfolioItems->links() }}
+    </div>
+    @endif
+</div>
+
+  <style>
+
+  .porto-pagination {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .porto-pagination nav {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .porto-pagination .hidden {
+    display: none;
+  }
+
+  .porto-pagination a,
+  .porto-pagination span {
+    margin: 0 6px;
+    color: var(--red-btn);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .porto-pagination span[aria-current="page"] span {
+    color: #111827;
+  }
+</style>
+
 
     </main>
 
