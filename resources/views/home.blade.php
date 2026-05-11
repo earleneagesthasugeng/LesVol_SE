@@ -20,28 +20,38 @@
     display: block;
   }
 
-  .hero-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(255, 255, 255, 0.85);
-    color: var(--red-btn);
-    font-size: 34px;
-    font-weight: 700;
-    cursor: pointer;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
 
-  .hero-arrow:hover {
-    background: white;
-  }
+.hero-arrow:hover {
+  background: #fff7f5;
+}
+
+.hero-arrow-icon {
+  width: 15px;
+  height: 15px;
+  fill: var(--red-btn);
+  display: block;
+}
+
+.hero-arrow-right .hero-arrow-icon {
+  transform: scaleX(-1);
+}
 
  .hero-arrow-left {
     left: 24px;
@@ -227,8 +237,17 @@
         </div>
       @endforeach
 
-      <button class="hero-arrow hero-arrow-left" type="button" onclick="changeHeroSlide(-1)">‹</button>
-      <button class="hero-arrow hero-arrow-right" type="button" onclick="changeHeroSlide(1)">›</button>
+      <button class="hero-arrow hero-arrow-left" type="button" onclick="changeHeroSlide(-1)" aria-label="Previous activity">
+        <svg class="hero-arrow-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="m4.431 12.822 13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"></path>
+        </svg>
+      </button>
+
+      <button class="hero-arrow hero-arrow-right" type="button" onclick="changeHeroSlide(1)" aria-label="Next activity">
+        <svg class="hero-arrow-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="m4.431 12.822 13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"></path>
+        </svg>
+      </button>
 
       <div class="hero-dots carousel-dots">
         @foreach($heroActivities as $index => $heroActivity)
@@ -326,12 +345,34 @@
     @endforeach
   </div>
 
-  @if($activities->hasPages())
-    <div class="home-pagination">
-      {{ $activities->links() }}
-    </div>
+    @if($activities->hasPages())
+      <div class="home-pagination-wrapper">
+          @if ($activities->onFirstPage())
+              <button class="home-pagination-btn home-pagination-disabled" disabled>
+                  Prev
+              </button>
+          @else
+              <a href="{{ $activities->previousPageUrl() }}" class="home-pagination-btn">
+                  Prev
+              </a>
+          @endif
+
+          <span class="home-pagination-info">
+              Page {{ $activities->currentPage() }} of {{ $activities->lastPage() }}
+          </span>
+
+          @if ($activities->hasMorePages())
+              <a href="{{ $activities->nextPageUrl() }}" class="home-pagination-btn">
+                  Next
+              </a>
+          @else
+              <button class="home-pagination-btn home-pagination-disabled" disabled>
+                  Next
+              </button>
+          @endif
+      </div>
   @endif
-</div>
+  </div>
 
   <footer>
     <div>

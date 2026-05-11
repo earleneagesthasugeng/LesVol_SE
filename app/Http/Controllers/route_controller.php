@@ -24,9 +24,16 @@ class route_controller extends Controller
         $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
         $search = $request->query('search');
 
-        $activitiesQuery = Activity::where('slot', '>', 0)
+        $baseActivitiesQuery = Activity::where('slot', '>', 0)
             ->where('is_done', false)
             ->whereDate('activity_date', '>=', now()->toDateString());
+
+        $heroActivities = (clone $baseActivitiesQuery)
+            ->orderBy('activity_date', 'asc')
+            ->limit(6)
+            ->get();
+
+        $activitiesQuery = clone $baseActivitiesQuery;
 
         if ($search) {
             $activitiesQuery->where(function ($query) use ($search) {
@@ -40,11 +47,6 @@ class route_controller extends Controller
             ->orderBy('activity_date', 'asc')
             ->paginate(6)
             ->withQueryString();
-
-        $heroActivities = $activitiesQuery
-            ->orderBy('activity_date', 'asc')
-            ->limit(6)
-            ->get();
 
         return view('home', compact('activities', 'heroActivities', 'isSeeker', 'search'));
     }
