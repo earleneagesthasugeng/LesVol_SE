@@ -107,7 +107,7 @@
                 </p>
 
                 <div style="margin-top: 15px;">
-                    <strong style="display: block; color: #444;">Contribution:</strong>
+                    <strong style="display: block; color: #444;">Description:</strong>
                     <p style="margin: 0; color: #777; line-height: 1.4; font-size: 0.95rem; text-align: justify; 
                         word-wrap: break-word; overflow-wrap: break-word; word-break: break-all;">
                         {{ $item->activity?->description ?? 'Telah menyelesaikan kegiatan volunteer.' }}

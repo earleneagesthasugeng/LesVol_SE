@@ -347,7 +347,7 @@ class route_controller extends Controller
         ->whereNotNull('file_att_path') 
         ->where('is_banned', false)
         ->with('activity') 
-        ->paginate(10); // Ganti get() jadi paginate(10)
+        ->paginate(10); 
 
     return view('my-portfolio', compact('isSeeker', 'portfolioItems'));
     }
