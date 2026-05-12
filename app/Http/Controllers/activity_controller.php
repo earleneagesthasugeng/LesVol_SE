@@ -146,4 +146,61 @@ class activity_controller extends Controller
 
         return redirect()->back()->with('success', 'Volunteer status updated successfully!');
     }
+
+    public function showMyActivities(Request $request)
+    {
+        $search = $request->input('search');
+        $currentUserId = $request->session()->get('user')->id;
+
+       
+        $currentSeeker = Seeker::where('user_id', $currentUserId)->first();
+        $isSeeker = !is_null($currentSeeker);
+
+     
+        $activities = Volunteer::where('user_id', $currentUserId)
+            ->with('activity')
+            ->whereHas('activity', function($query) use ($search) {
+                if ($search) {
+                    $query->where('activity_name', 'like', '%' . $search . '%');
+                }
+            })
+            ->get()
+            ->pluck('activity'); // Kita ambil object activity-nya saja agar loop di blade tidak error
+
+        return view('my-activities', compact('activities', 'isSeeker'));
+    }
+
+    public function showProposed(Request $request)
+    {
+        $search = $request->input('search');
+        $currentUserId = $request->session()->get('user')->id;
+        $currentSeeker = Seeker::where('user_id', $currentUserId)->first();
+        $isSeeker = !is_null($currentSeeker);
+
+        $activities = Activity::where('seeker_id', $currentSeeker->id)
+            ->where('is_done', false)
+            ->when($search, function($query) use ($search) {
+                return $query->where('activity_name', 'like', '%' . $search . '%');
+            })->get();
+
+        return view('proposed-activities', compact('activities', 'isSeeker'));
+    }
+
+  
+    public function showDone(Request $request)
+    {
+        $search = $request->input('search');
+        $currentUserId = $request->session()->get('user')->id; // Ambil ID user yang sedang login
+        $currentSeeker = Seeker::where('user_id', $currentUserId)->first();
+        $isSeeker = !is_null($currentSeeker);
+
+        $activities = Activity::where('seeker_id', $currentSeeker->id)
+            ->where('is_done', true)
+            ->when($search, function($query) use ($search) {
+                return $query->where('activity_name', 'like', '%' . $search . '%');
+            })->get();
+
+        // Kirim $currentUserId ke view agar tidak error
+        return view('done-activity', compact('activities', 'isSeeker', 'currentUserId'));
+    }
 }

@@ -402,3 +402,51 @@
     color: var(--gray);
     font-size: 14px;
 }
+
+.search-bar-container {
+    width: 100%;
+    max-width: 600px; /* Membatasi lebar agar tidak terlalu melar */
+    margin: 20px 0;
+}
+
+.search-form {
+    position: relative;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 50px 12px 25px;
+    border-radius: 50px;
+    border: 1.5px solid #eee; /* Warna border halus */
+    background-color: #fff;
+    font-size: 15px;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Shadow tipis agar elegan */
+}
+
+.search-input:focus {
+    border-color: #e63946; /* Gunakan warna merah LesVol saat diklik */
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.1);
+}
+
+.search-icon-btn {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #e63946; /* Warna ikon jadi merah sesuai tema */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.search-icon-btn:hover {
+    transform: translateY(-50%) scale(1.1); /* Efek membesar sedikit saat hover */
+}
