@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,59 +13,69 @@
     width: 100%;
   }
 
+
   .hero-slide {
     display: none;
   }
+
 
   .hero-slide.active {
     display: block;
   }
 
-.hero-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: none;
-  background: white;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
 
-.hero-arrow:hover {
-  background: #fff7f5;
-}
+  .hero-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
 
-.hero-arrow-icon {
-  width: 15px;
-  height: 15px;
-  fill: var(--red-btn);
-  display: block;
-}
 
-.hero-arrow-right .hero-arrow-icon {
-  transform: scaleX(-1);
-}
+  .hero-arrow:hover {
+    background: #fff7f5;
+  }
 
- .hero-arrow-left {
+
+  .hero-arrow-icon {
+    width: 15px;
+    height: 15px;
+    fill: var(--red-btn);
+    display: block;
+  }
+
+
+  .hero-arrow-right .hero-arrow-icon {
+    transform: scaleX(-1);
+  }
+
+
+  .hero-arrow-left {
     left: 24px;
-}
+  }
 
-.hero-banner-content {
+
+  .hero-banner-content {
     padding-left: 90px;
     padding-right: 90px;
-}
+  }
+
 
   .hero-arrow-right {
     right: 24px;
   }
+
 
   .carousel-dots {
     position: absolute;
@@ -76,11 +87,13 @@
     z-index: 10;
   }
 
+
   .carousel-dot {
     border: none;
     cursor: pointer;
     padding: 0;
   }
+
 
   .home-pagination {
     margin-top: 28px;
@@ -88,15 +101,18 @@
     justify-content: center;
   }
 
+
   .home-pagination nav {
     background: transparent;
     box-shadow: none;
     padding: 0;
   }
 
+
   .home-pagination .hidden {
     display: none;
   }
+
 
   .home-pagination a,
   .home-pagination span {
@@ -106,19 +122,23 @@
     text-decoration: none;
   }
 
+
   .home-pagination span[aria-current="page"] span {
     color: #111827;
   }
-</style>
+  </style>
 </head>
 
+
 <body>
+
 
   <nav>
     <a class="nav-brand" href="/home">LesVol</a>
     <div class="nav-links">
       <a href="/home">Home</a>
       <a href="/my-activities">My Activities</a>
+
 
       <div class="dropdown-wrapper">
         <div class="nav-avatar" onclick="toggleDropdown('nav-dropdown')" id="avatar-trigger">
@@ -128,8 +148,10 @@
           </svg>
         </div>
 
+
         <div class="dropdown-menu" id="nav-dropdown"
           style="right: 0; left: auto; background: var(--red); min-width: 180px; padding: 10px 0;">
+
 
           <div id="state-logged-in">
             <a href="/profile" class="dropdown-item"
@@ -137,12 +159,14 @@
               View Profile
             </a>
 
+
             @if (!$isSeeker)
             <a href="/be-a-seeker" class="dropdown-item"
               style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
               Be a Seeker!
             </a>
             @endif
+
 
             <a href="/login" class="dropdown-item"
               style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -152,11 +176,13 @@
               </svg>
             </a>
 
+
             <a href="#" class="dropdown-item"
               style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">
               Delete Account
             </a>
           </div>
+
 
           <div id="state-logged-out" style="display: none;">
             <a href="/login" class="dropdown-item"
@@ -170,16 +196,20 @@
               style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">Sign Up</a>
           </div>
 
+
         </div>
       </div>
     </div>
   </nav>
+
 
   <div class="hero-carousel" id="heroCarousel">
     @if($heroActivities->count() > 0)
       @foreach($heroActivities as $index => $heroActivity)
         @php
           $heroAlreadyJoined = false;
+          $heroIsOwnActivity = $isSeeker && $heroActivity->seeker_id == $isSeeker->id;
+
 
           if (session('user')) {
             $heroAlreadyJoined = \App\Models\Volunteer::where('user_id', session('user')->id)
@@ -187,6 +217,7 @@
               ->exists();
           }
         @endphp
+
 
         <div class="hero-banner hero-slide {{ $index === 0 ? 'active' : '' }}"
           style="
@@ -197,9 +228,11 @@
             background-color: #cfcfd4;
           ">
 
+
           <div class="hero-banner-content">
             <div>
               <div class="hero-banner-title">{{ $heroActivity->activity_name }}</div>
+
 
               <div class="hero-banner-meta">
                 <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
@@ -207,7 +240,9 @@
                 </svg>
                 {{ $heroActivity->location }}
 
+
                 &nbsp;
+
 
                 <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z" />
@@ -215,20 +250,29 @@
                 {{ \Carbon\Carbon::parse($heroActivity->activity_date)->format('d/m/y') }}
               </div>
 
-              <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-                <a class="btn-see-more" href="{{ route('see-details', $heroActivity->id) }}" style="display:inline-flex; width:auto;">
-                  see more ▶
-                </a>
 
-                @if($heroActivity->is_done)
-                  <div class="accepted-badge" style="display:inline-flex; width:auto; padding: 10px 24px;">✓ Done</div>
-                @elseif($heroActivity->slot > 0 && !$heroAlreadyJoined)
-                  <a class="btn-register-card" href="{{ url('/register-activity/' . $heroActivity->id) }}" style="display:inline-flex; width:auto;">
-                    Register ▶
+              <div style="margin-top:10px; display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                @if($heroIsOwnActivity)
+                  <a class="btn-see-more" href="/options/{{ $heroActivity->id }}?back={{ urlencode(request()->fullUrl()) }}" style="display:inline-flex; width:auto;">
+                    Options ▶
                   </a>
+                @else
+                  <a class="btn-see-more" href="{{ route('see-details', $heroActivity->id) }}?back={{ urlencode(request()->fullUrl()) }}" style="display:inline-flex; width:auto;">
+                    see more ▶
+                  </a>
+
+
+                  @if($heroActivity->is_done)
+                    <div class="accepted-badge" style="display:inline-flex; width:auto; padding: 10px 24px;">✓ Done</div>
+                  @elseif($heroActivity->slot > 0 && !$heroAlreadyJoined)
+                    <a class="btn-register-card" href="{{ url('/register-activity/' . $heroActivity->id) }}" style="display:inline-flex; width:auto;">
+                      Register ▶
+                    </a>
+                  @endif
                 @endif
               </div>
             </div>
+
 
             <div style="color:rgba(255,255,255,0.85); font-size:12px; line-height:1.7;">
               {{ $heroActivity->description }}
@@ -237,17 +281,20 @@
         </div>
       @endforeach
 
+
       <button class="hero-arrow hero-arrow-left" type="button" onclick="changeHeroSlide(-1)" aria-label="Previous activity">
         <svg class="hero-arrow-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="m4.431 12.822 13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"></path>
         </svg>
       </button>
 
+
       <button class="hero-arrow hero-arrow-right" type="button" onclick="changeHeroSlide(1)" aria-label="Next activity">
         <svg class="hero-arrow-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="m4.431 12.822 13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"></path>
         </svg>
       </button>
+
 
       <div class="hero-dots carousel-dots">
         @foreach($heroActivities as $index => $heroActivity)
@@ -266,6 +313,7 @@
     @endif
   </div>
 
+
   <form class="search-bar" method="GET" action="/home">
     <input class="search-input" type="text" name="search" placeholder="Search" value="{{ $search ?? '' }}">
     <button class="search-btn" type="submit">
@@ -276,103 +324,115 @@
     </button>
   </form>
 
+
   <div style="padding: 24px 32px; flex:1;">
-  <div class="activities-grid" id="home-grid">
-    @foreach($activities as $activity)
-      <div class="activity-card">
-        <div class="activity-card-img" style="
-          background-image: url('{{ asset('storage/' . $activity->image_path) }}');
-          background-size: contain;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-color: #d9d9d9;
-          height: 180px;
-        ">
-          <div class="slots-badge">{{ $activity->slot }} slots left</div>
-        </div>
-
-        <div class="activity-card-body">
-          <h4>{{ $activity->activity_name }}</h4>
-
-          <div class="activity-meta">
-            <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1-2.5-2.5A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9A2.5 2.5 0 0 1 12 11.5z" />
-            </svg>
-            {{ $activity->location }}
+    <div class="activities-grid" id="home-grid">
+      @foreach($activities as $activity)
+        <div class="activity-card">
+          <div class="activity-card-img" style="
+            background-image: url('{{ asset('storage/' . $activity->image_path) }}');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #d9d9d9;
+            height: 180px;
+          ">
+            <div class="slots-badge">{{ $activity->slot }} slots left</div>
           </div>
 
-          <div class="activity-meta">
-            <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z" />
-            </svg>
-            {{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/y') }}
-          </div>
 
-          <div class="activity-card-actions">
-          @php
-              $alreadyJoined = false;
-              $isOwnActivity = $isSeeker && $activity->seeker_id == $isSeeker->id;
+          <div class="activity-card-body">
+            <h4>{{ $activity->activity_name }}</h4>
 
-              if (session('user')) {
+
+            <div class="activity-meta">
+              <svg style="width: 1.2em; height: 1.2em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1-2.5-2.5A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9A2.5 2.5 0 0 1 12 11.5z" />
+              </svg>
+              {{ $activity->location }}
+            </div>
+
+
+            <div class="activity-meta">
+              <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z" />
+              </svg>
+              {{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/y') }}
+            </div>
+
+
+            <div class="activity-card-actions">
+              @php
+                $alreadyJoined = false;
+                $isOwnActivity = $isSeeker && $activity->seeker_id == $isSeeker->id;
+
+
+                if (session('user')) {
                   $alreadyJoined = \App\Models\Volunteer::where('user_id', session('user')->id)
-                      ->where('activity_id', $activity->id)
-                      ->exists();
-              }
-          @endphp
+                    ->where('activity_id', $activity->id)
+                    ->exists();
+                }
+              @endphp
 
-          @if($isOwnActivity)
-              <a class="btn-see-more" href="/options/{{ $activity->id }}">
+
+              @if($isOwnActivity)
+                <a class="btn-see-more" href="/options/{{ $activity->id }}?back={{ urlencode(request()->fullUrl()) }}">
                   Options ▶
-              </a>
-          @else
-              <a class="btn-see-more" href="{{ route('see-details', $activity->id) }}">
+                </a>
+              @else
+                <a class="btn-see-more" href="{{ route('see-details', $activity->id) }}?back={{ urlencode(request()->fullUrl()) }}">
                   See More ▶
-              </a>
+                </a>
 
-              @if($activity->is_done)
+
+                @if($activity->is_done)
                   <div class="accepted-badge" style="width: 100%; text-align: center; margin-top: 5px;">
-                      ✓ Done
+                    ✓ Done
                   </div>
-              @elseif(!$alreadyJoined && $activity->slot > 0)
+                @elseif(!$alreadyJoined && $activity->slot > 0)
                   <a class="btn-register-card" href="/register-activity/{{ $activity->id }}">
-                      Register ▶
+                    Register ▶
                   </a>
+                @endif
               @endif
-          @endif
-      </div>
+            </div>
+          </div>
         </div>
-      </div>
-    @endforeach
-  </div>
+      @endforeach
+    </div>
+
 
     @if($activities->hasPages())
       <div class="home-pagination-wrapper">
-          @if ($activities->onFirstPage())
-              <button class="home-pagination-btn home-pagination-disabled" disabled>
-                  Prev
-              </button>
-          @else
-              <a href="{{ $activities->previousPageUrl() }}" class="home-pagination-btn">
-                  Prev
-              </a>
-          @endif
+        @if ($activities->onFirstPage())
+          <button class="home-pagination-btn home-pagination-disabled" disabled>
+            Prev
+          </button>
+        @else
+          <a href="{{ $activities->previousPageUrl() }}" class="home-pagination-btn">
+            Prev
+          </a>
+        @endif
 
-          <span class="home-pagination-info">
-              Page {{ $activities->currentPage() }} of {{ $activities->lastPage() }}
-          </span>
 
-          @if ($activities->hasMorePages())
-              <a href="{{ $activities->nextPageUrl() }}" class="home-pagination-btn">
-                  Next
-              </a>
-          @else
-              <button class="home-pagination-btn home-pagination-disabled" disabled>
-                  Next
-              </button>
-          @endif
+        <span class="home-pagination-info">
+          Page {{ $activities->currentPage() }} of {{ $activities->lastPage() }}
+        </span>
+
+
+        @if ($activities->hasMorePages())
+          <a href="{{ $activities->nextPageUrl() }}" class="home-pagination-btn">
+            Next
+          </a>
+        @else
+          <button class="home-pagination-btn home-pagination-disabled" disabled>
+            Next
+          </button>
+        @endif
       </div>
-  @endif
+    @endif
   </div>
+
 
   <footer>
     <div>
@@ -387,6 +447,7 @@
           +6212 6767 6767
         </span>
 
+
         <span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
@@ -400,8 +461,11 @@
     <p>LesVol is a volunteer discovery platform that connects passionate individuals with meaningful social activities and community programs. Our mission is to make volunteering easier, more accessible, and more impactful by helping users find activities that match their interests, availability, and location. Through LesVol, seekers can organize volunteer events while volunteers can participate, collaborate, and contribute to positive change within their communities.</p>
   </footer>
 
+
   <script src="{{ asset('js/home.js') }}"></script>
   <script src="{{ asset('js/dropdown_login.js') }}"></script>
 </body>
 
+
 </html>
+

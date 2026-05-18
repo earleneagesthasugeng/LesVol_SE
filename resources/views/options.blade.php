@@ -6,6 +6,7 @@
 <title>LesVol - Options</title>
 <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
+
 <style>
     .edit-description-modal-overlay {
         display: none;
@@ -18,9 +19,11 @@
         padding: 20px;
     }
 
+
     .edit-description-modal-overlay.open {
         display: flex;
     }
+
 
     .edit-description-modal {
         background: #ffffff;
@@ -33,6 +36,7 @@
         animation: editModalIn 0.2s ease;
     }
 
+
     @keyframes editModalIn {
         from {
             transform: scale(0.95);
@@ -44,6 +48,7 @@
         }
     }
 
+
     .edit-description-modal-header {
         display: flex;
         align-items: center;
@@ -51,12 +56,14 @@
         margin-bottom: 18px;
     }
 
+
     .edit-description-modal-title {
         font-size: 22px;
         font-weight: 800;
         color: #1f2937;
         margin: 0;
     }
+
 
     .edit-description-close {
         border: none;
@@ -68,9 +75,11 @@
         padding: 4px;
     }
 
+
     .edit-description-close:hover {
         color: var(--red-btn);
     }
+
 
     .edit-description-label {
         display: block;
@@ -79,6 +88,7 @@
         color: #374151;
         margin-bottom: 8px;
     }
+
 
     .edit-description-textarea {
         width: 100%;
@@ -94,10 +104,12 @@
         font-family: inherit;
     }
 
+
     .edit-description-textarea:focus {
         border-color: var(--red-btn);
         box-shadow: 0 0 0 3px rgba(180, 40, 40, 0.08);
     }
+
 
     .edit-description-actions {
         display: flex;
@@ -105,6 +117,7 @@
         gap: 12px;
         margin-top: 20px;
     }
+
 
     .edit-description-cancel {
         border: 1.5px solid #e5e7eb;
@@ -116,6 +129,7 @@
         cursor: pointer;
     }
 
+
     .edit-description-save {
         border: none;
         background: var(--red-btn);
@@ -126,9 +140,11 @@
         cursor: pointer;
     }
 
+
     .edit-description-save:hover {
         opacity: 0.9;
     }
+
 
     .edit-description-success {
         background: #ecfdf5;
@@ -141,8 +157,11 @@
     }
 </style>
 
+
 </head>
 <body>
+
+
 
 
 <nav>
@@ -157,6 +176,8 @@
           <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
         </svg>
       </div>
+
+
 
 
       <div class="dropdown-menu" id="nav-dropdown" style="right: 0; left: auto; background: var(--red); min-width: 180px; padding: 10px 0;">
@@ -185,6 +206,8 @@
         </div>
 
 
+
+
         <div id="state-logged-out" style="display: none;">
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;">
             Log In
@@ -194,21 +217,29 @@
         </div>
 
 
+
+
       </div>
     </div>
   </div>
 </nav>
 
 
+
+
 <div style="flex:1; padding: 24px 32px; max-width:900px; margin:0 auto; width:100%;">
-  <a class="back-btn" href="/proposed-activities" style="margin-bottom:20px; display:inline-flex;">
+  <a class="back-btn" href="{{ $backUrl }}">
     <div class="back-icon">◀</div> Back
   </a>
+
+
 
 
   <div class="activity-detail-card" style="margin-top:16px;">
     <div style="height:200px; background: url('{{ asset('storage/' . $activity->image_path) }}') center/cover no-repeat;"></div>
     <div class="activity-detail-body">
+
+
 
 
       <div class="detail-header">
@@ -250,6 +281,8 @@
       <hr class="detail-divider">
 
 
+
+
       <div style="display:flex; align-items:center; gap:8px; font-weight:700; margin-bottom:12px;">
         Details:
       </div>
@@ -259,13 +292,16 @@
         <div class="detail-info-item"><label>Status:</label><span>{{ \Carbon\Carbon::parse($activity->close_reg_date)->isPast() ? 'Registration Closed' : 'Registration Open' }}</span></div>
         <div class="detail-info-item"><label>Date:</label><span>{{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/Y') }}</span></div>
         <div class="detail-info-item"><label>Close Registration:</label><span>{{ \Carbon\Carbon::parse($activity->close_reg_date)->format('d/m/Y') }}</span></div>
-        <div class="detail-info-item"><label>Quota:</label><span>{{ $activity->slot }} volunteer(s)</span></div>
+        <div class="detail-info-item"><label>Quota:</label><span>{{ $activity->slot + $volunteersCount }} volunteer(s)</span></div>
       </div>
       <hr class="detail-divider">
 
 
+
+
       <div style="display:flex; align-items:center; gap:8px; font-weight:700; margin-bottom:12px;">
         Description:
+
 
         <button type="button"
             onclick="openEditDescriptionModal()"
@@ -279,15 +315,19 @@
         </button>
     </div>
 
+
     @if(session('success'))
         <div class="edit-description-success">
             {{ session('success') }}
         </div>
     @endif
 
+
     <p style="font-size:14px; color:#4b5563; line-height:1.7; margin-bottom:28px;">
         {{ $activity->description }}
     </p>
+
+
 
 
      <div style="text-align:center; display: flex; flex-direction: column; gap: 12px; align-items: center;">
@@ -299,6 +339,7 @@
         <div class="accepted-badge" style="width: 200px; text-align: center;">✓ Completed</div>
       @endif
 
+
       @if($volunteersCount > 0)
         <button class="btn-danger"
                 disabled
@@ -307,9 +348,11 @@
             Delete Activity
         </button>
 
+
         <p style="color:red; font-size:14px;">
             Cannot delete this activity because someone has joined.
         </p>
+
 
       @else
         <button class="btn-danger"
@@ -321,6 +364,8 @@
     </div>
 
 
+
+
     </div>
   </div>
 </div>
@@ -329,15 +374,19 @@
         <div class="edit-description-modal-header">
             <h2 class="edit-description-modal-title">Edit Description</h2>
 
+
             <button type="button" class="edit-description-close" onclick="closeEditDescriptionModal()">
                 &times;
             </button>
         </div>
 
+
         <form action="/activity/{{ $activity->id }}/update-description" method="POST">
             @csrf
 
+
             <label for="description" class="edit-description-label">Activity Description</label>
+
 
             <textarea
                 name="description"
@@ -346,14 +395,17 @@
                 required
                 placeholder="Write the updated activity description here...">{{ old('description', $activity->description) }}</textarea>
 
+
             @error('description')
                 <p style="color:red; font-size:13px; margin-top:8px;">{{ $message }}</p>
             @enderror
+
 
             <div class="edit-description-actions">
                 <button type="button" class="edit-description-cancel" onclick="closeEditDescriptionModal()">
                     Cancel
                 </button>
+
 
                 <button type="submit" class="edit-description-save">
                     Save Changes
@@ -362,6 +414,7 @@
         </form>
     </div>
 </div>
+
 
 <footer>
   <div>
@@ -373,6 +426,8 @@
         </svg>
         +6212 6767 6767
       </span>
+
+
 
 
       <span>
@@ -388,6 +443,8 @@
 </footer>
 
 
+
+
 <script src="{{asset('js/proposed_activities.js')}}">
 </script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
@@ -396,9 +453,11 @@
         document.getElementById('editDescriptionModal').classList.add('open');
     }
 
+
     function closeEditDescriptionModal() {
         document.getElementById('editDescriptionModal').classList.remove('open');
     }
+
 
     document.getElementById('editDescriptionModal').addEventListener('click', function(event) {
         if (event.target === this) {
@@ -408,6 +467,15 @@
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
 
 
 

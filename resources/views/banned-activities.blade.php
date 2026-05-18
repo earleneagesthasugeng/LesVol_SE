@@ -67,7 +67,7 @@
 <div style="flex:1; padding: 24px 32px;">
  
   <div class="activity-page-tabs">
-      <a href="/my-activities" class="activity-page-tab active">Joined</a>
+      <a href="/my-activities" class="activity-page-tab">Joined</a>
 
 
       @if ($isSeeker)
@@ -76,7 +76,7 @@
 
 
       <a href="/done-activity?type=joined" class="activity-page-tab">Done</a>
-      <a href="/banned-activities" class="activity-page-tab">Banned</a>
+      <a href="/banned-activities" class="activity-page-tab active">Banned</a>
 
 
       @if ($isSeeker)
@@ -146,17 +146,17 @@
 
 
                <div class="activity-card-actions">
-                  <a href="{{ route('see-details', $activity->id) }}?back={{ urlencode(request()->fullUrl()) }}"
+                  <a href="{{ route('see-details-done', $activity->id) }}?back={{ urlencode(request()->fullUrl()) }}"
                     class="btn-see-more"
-                    style="font-size: 14px; font-weight: 600; color: var(--white); text-decoration: none;">
-                      Joined ✓
+                    style="font-size: 14px; font-weight: 600; color: var(--white); text-decoration: none; background:#8B1A1A;">
+                      Banned
                   </a>
-              </div>
+                </div>
             </div>
         </div>
     @empty
         <div style="grid-column: 1 / -1; text-align: center; padding: 120px 20px; color: #666;">
-            <p style="margin-bottom: 8px;">You haven't joined any activities yet.</p>
+            <p style="margin-bottom: 8px;">You are not banned from any activities.</p>
             <a href="/home" style="color: var(--red); font-weight: 600;">Find activities on Home</a>
         </div>
     @endforelse

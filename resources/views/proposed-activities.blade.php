@@ -11,6 +11,10 @@
 
 
 
+
+
+
+
 <nav>
   <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
@@ -23,6 +27,10 @@
           <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
         </svg>
       </div>
+
+
+
+
 
 
 
@@ -55,6 +63,10 @@
 
 
 
+
+
+
+
         <div id="state-logged-out" style="display: none;">
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;">
             Log In
@@ -62,6 +74,10 @@
           </a>
           <a href="/register" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">Sign Up</a>
         </div>
+
+
+
+
 
 
 
@@ -74,30 +90,38 @@
 
 
 
+
+
+
+
 <div style="flex:1; padding: 24px 32px;">
-  <div class="page-title-row">
-    <div class="dropdown-wrapper">
-      <div style="display:flex; align-items:center; gap:8px; cursor:pointer;" onclick="toggleDropdown('my-dropdown')">
-        <span class="page-title">Proposed Activities</span>
-        <span style="color:var(--red); font-size:20px;">▼</span>
-      </div>
-      <div class="dropdown-menu" id="my-dropdown">
-        <a class="dropdown-item" href="/my-activities">Joined Activities</a>
-        <span class="dropdown-item active">Proposed Activities</span>
-        <a class="dropdown-item" href="/done-activity">Done Activities</a>
-        <a class="dropdown-item" href="/upload-activity">Upload Activity</a>
-      </div>
-    </div>
-  </div>
+<div class="activity-page-tabs">
+    <a href="/my-activities" class="activity-page-tab">Joined</a>
+
+
+    @if ($isSeeker)
+        <a href="/proposed-activities" class="activity-page-tab active">Proposed</a>
+    @endif
+
+
+    <a href="/done-activity?type=joined" class="activity-page-tab">Done</a>
+    <a href="/banned-activities" class="activity-page-tab">Banned</a>
+
+
+    @if ($isSeeker)
+        <a href="/upload-activity" class="activity-page-tab activity-page-tab-upload">Upload</a>
+    @endif
+</div>
+
 
 <div class="search-bar-container">
     <form action="{{ request()->url() }}" method="GET" class="search-form">
-        <input type="text" 
-               name="search" 
-               class="search-input" 
-               placeholder="Search" 
+        <input type="text"
+               name="search"
+               class="search-input"
+               placeholder="Search"
                value="{{ request('search') }}">
-        
+       
         <button type="submit" class="search-icon-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
@@ -106,6 +130,8 @@
         </button>
     </form>
 </div>
+
+
 
 
   <div class="activities-grid" id="proposed-grid">
@@ -128,7 +154,7 @@
             {{ date('d F Y', strtotime($activity->activity_date)) }}
           </div>
           <div class="activity-card-actions">
-            <a class="btn-see-more" href="/options/{{ $activity->id }}" style="font-size: 14px; font-weight: 600; color: var(--white);">Options ▶</a>
+            <a class="btn-see-more" href="/options/{{ $activity->id }}?back={{ urlencode(request()->fullUrl()) }}" style="font-size: 14px; font-weight: 600; color: var(--white);">Options ▶</a>
           </div>
         </div>
       </div>
@@ -140,6 +166,10 @@
     @endforelse
   </div>
 </div>
+
+
+
+
 
 
 
@@ -167,6 +197,8 @@
 </footer>
 
 
+
+
 @if(session('success'))
 <div class="modal-overlay open" id="modal-register-success">
     <div class="modal" style="text-align:center; max-width:420px; padding:40px 32px;">
@@ -182,6 +214,8 @@
 @endif
 
 
+
+
 <script src="{{asset('js/proposed_activities.js')}}"></script>
 <script src="{{asset('js/dropdown_login.js')}}"></script>
 <script>
@@ -190,3 +224,6 @@
 </script>
 </body>
 </html>
+
+
+

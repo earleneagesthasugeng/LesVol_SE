@@ -8,12 +8,13 @@
 </head>
 <body>
 
+
 <nav>
   <a class="nav-brand" href="/home">LesVol</a>
   <div class="nav-links">
     <a href="/home">Home</a>
     <a href="/my-activities">My Activities</a>
-    
+   
     <div class="dropdown-wrapper">
       <div class="nav-avatar" onclick="toggleDropdown('nav-dropdown')" id="avatar-trigger">
         <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
@@ -21,34 +22,36 @@
         </svg>
       </div>
 
+
       <div class="dropdown-menu" id="nav-dropdown" style="right: 0; left: auto; background: var(--red); min-width: 180px; padding: 10px 0;">
-        
+       
         <div id="state-logged-in">
           <a href="/profile" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             View Profile
           </a>
-          
+         
           @if (!$isSeeker)
           <a href="/be-a-seeker" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
             Be a Seeker!
           </a>
           @endif
-          
+         
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-            Log Out 
+            Log Out
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
             </svg>
           </a>
-          
+         
           <a href="#" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">
             Delete Account
           </a>
         </div>
 
+
         <div id="state-logged-out" style="display: none;">
           <a href="/login" class="dropdown-item" style="color: white; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 20px;">
-            Log In 
+            Log In
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h4M10 17l5-5-5-5M13 12H3"/>
             </svg>
@@ -56,18 +59,21 @@
           <a href="/register" class="dropdown-item" style="color: white; font-weight: 700; text-align: center; padding: 15px 20px;">Sign Up</a>
         </div>
 
+
       </div>
     </div>
   </div>
 </nav>
 
+
 <div style="flex:1; padding: 24px 32px; max-width:900px; margin:0 auto; width:100%;">
-  <a class="back-btn" href="{{ url()->previous() }}" style="margin-bottom:20px; display:inline-flex;">
+  <a class="back-btn" href="{{ $backUrl ?? '/done-activity?type=joined' }}" style="margin-bottom:20px; display:inline-flex;">
     <div class="back-icon">◀</div> Back
   </a>
 
+
   <div class="activity-detail-card" style="margin-top:16px;">
-    
+   
     <div style="
       height:220px;
       background-color:#d9d9d9;
@@ -79,11 +85,14 @@
       @endif
     "></div>
 
+
     <div class="activity-detail-body">
+
 
       <div class="detail-header">
         <div>
           <div class="detail-title">{{ $activity->activity_name }}</div>
+
 
           <div class="detail-author">
             <div style="margin-top: 10px; display: flex; align-items: center; gap: 10px;">
@@ -102,6 +111,7 @@
           </div>
         </div>
 
+
         <span
           style="
             background: {{ $activity->is_done ? '#22c55e' : ($isJoined ? '#6ac259' : '#c0392b') }};
@@ -119,16 +129,20 @@
         </span>
       </div>
 
+
       <hr class="detail-divider">
+
 
       <div style="margin-bottom: 22px;">
         <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 18px; color: #000;">Details:</h3>
+
 
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 34px;">
             <div>
                 <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Location:</p>
                 <p style="font-size: 14px; font-weight: 400; color: #000;">{{ $activity->location }}</p>
             </div>
+
 
             <div>
                 <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Open Registration:</p>
@@ -137,10 +151,12 @@
                 </p>
             </div>
 
+
             <div>
                 <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Status:</p>
                 <p style="font-size: 14px; font-weight: 400; color: #000;">Not Registered</p>
             </div>
+
 
             <div>
                 <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Date:</p>
@@ -149,12 +165,14 @@
                 </p>
             </div>
 
+
             <div>
                 <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Close Registration:</p>
                 <p style="font-size: 14px; font-weight: 400; color: #000;">
                     {{ \Carbon\Carbon::parse($activity->close_reg_date)->format('d/m/Y') }}
                 </p>
             </div>
+
 
             <div>
                 <p style="font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px;">Quota:</p>
@@ -163,17 +181,21 @@
         </div>
     </div>
 
+
       <hr class="detail-divider">
+
 
       <div style="font-weight:700; margin-bottom:10px;">Description:</div>
       <p style="font-size:14px; color:#4b5563; line-height:1.7; margin-bottom:28px;">
         {{ $activity->description }}
       </p>
 
+
       <div style="font-weight:700; margin-bottom:10px;">Requirements:</div>
       <p style="font-size:14px; color:#4b5563; line-height:1.7; margin-bottom:28px;">
           {{ $activity->requirements }}
       </p>
+
 
       {{-- @if($isJoined)
         <hr class="detail-divider">
@@ -184,7 +206,7 @@
             </svg>
             Attendance Proof
           </div>
-          
+         
           @if($volunteer->file_att_path)
             <div style="margin-bottom: 12px;">
               <img src="{{ asset('storage/' . $volunteer->file_att_path) }}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
@@ -212,6 +234,7 @@
         </div>
       @endif --}}
 
+
       <div style="text-align:center; margin-top: 32px;">
         @if($activity->is_done)
           <div class="accepted-badge" style="display:inline-block; padding:14px 36px; border-radius:999px; font-size:16px;">✓ Done</div>
@@ -234,9 +257,11 @@
         @endif
       </div>
 
+
     </div>
   </div>
 </div>
+
 
 <footer>
   <div>
@@ -248,6 +273,7 @@
         </svg>
         +6212 6767 6767
       </span>
+
 
       <span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -261,6 +287,8 @@
   <p>LesVol is a volunteer discovery platform that connects passionate individuals with meaningful social activities and community programs. Our mission is to make volunteering easier, more accessible, and more impactful by helping users find activities that match their interests, availability, and location. Through LesVol, seekers can organize volunteer events while volunteers can participate, collaborate, and contribute to positive change within their communities.</p>
 </footer>
 
+
 <script src="{{ asset('js/dropdown_login.js') }}"></script>
 </body>
 </html>
+
