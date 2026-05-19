@@ -105,12 +105,6 @@
 </div>
 
 
-
-
-
-
-
-
 <div class="activities-grid" id="joined-grid">
     @forelse ($activities as $activity)
         <div class="activity-card">

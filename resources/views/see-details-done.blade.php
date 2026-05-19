@@ -213,8 +213,21 @@
           </div>
 
 
-          <button type="button" class="btn-danger" style="padding: 12px 60px; font-size: 16px;" onclick="showAttendanceConfirmModal()">
-            Upload
+          <button
+            type="button"
+            disabled
+            class="btn-danger"
+            style="
+              background:#d1d5db;
+              color:#6b7280;
+              cursor:not-allowed;
+              opacity:0.8;
+              border:none;
+              padding: 12px 60px;
+              font-size: 16px;
+            "
+          >
+            Upload Attendance Disabled
           </button>
         </div>
 
