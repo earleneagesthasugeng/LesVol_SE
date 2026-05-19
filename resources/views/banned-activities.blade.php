@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LesVol - My Activities</title>
+<title>LesVol - Banned Activities</title>
 <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
 <body>
@@ -114,12 +114,7 @@
 <div class="activities-grid" id="joined-grid">
     @forelse ($activities as $activity)
         <div class="activity-card">
-            <div class="activity-card-img"
-                 style="background-image: url('{{ asset('storage/' . $activity->image_path) }}');
-                        background-size: cover;
-                        background-position: center;
-                        height: 180px;
-                        border-radius: 12px 12px 0 0;">
+            <div class="activity-card-img activity-img-contain" style="background-image: url('{{ asset('storage/' . $activity->image_path) }}'); height: 180px;">
             </div>
 
 

@@ -147,7 +147,7 @@
   <div class="activities-grid" id="done-grid">
     @forelse($activities as $activity)
       <div class="activity-card">
-        <div class="activity-card-img" style="background-image: url('{{ asset('storage/' . $activity->image_path) }}'); background-size: cover; background-position: center; background-color: #d9d9d9; height: 180px;">
+        <div class="activity-card-img activity-img-contain" style="background-image: url('{{ asset('storage/' . $activity->image_path) }}'); height: 180px;">
           @php
             $userVolunteer = $activity->volunteers->where('user_id', $currentUserId)->first();
             $hasProof = $userVolunteer && $userVolunteer->file_att_path;

@@ -83,7 +83,9 @@
             <div class="auth-title">Register</div>
             <div class="auth-subtitle">Start making a change!</div>
 
-            <img class="reg-activity-img" src="{{ asset('storage/' . $activity->image_path) }}" alt="Activity Image">
+            <div class="register-activity-image activity-img-contain"
+                style="background-image: url('{{ asset('storage/' . $activity->image_path) }}');">
+            </div>
 
             <div class="reg-activity-name">{{ $activity->activity_name }}</div>
 
@@ -185,6 +187,19 @@
                       {{ $activity->requirements }}
                   </p>
               </div>
+
+              <div style="
+                    background: #fff7ed;
+                    border: 1px solid #fdba74;
+                    color: #9a3412;
+                    padding: 12px 16px;
+                    border-radius: 10px;
+                    font-size: 13px;
+                    line-height: 1.6;
+                    margin-bottom: 18px;
+                ">
+                    Your name, phone number, and email are automatically taken from your profile. To update this information, please go to Edit Profile before registering.
+                </div>
 
                 <div class="form-group">
                     <label>Name</label>

@@ -137,7 +137,7 @@
   <div class="activities-grid" id="proposed-grid">
     @forelse ($activities as $activity)
       <div class="activity-card">
-        <div class="activity-card-img" style="background-image: url('{{ asset('storage/' . $activity->image_path) }}'); background-size: cover; background-position: center; height: 180px; border-radius: 12px 12px 0 0;">
+        <div class="activity-card-img activity-img-contain" style="background-image: url('{{ asset('storage/' . $activity->image_path) }}'); height: 180px;">
         </div>
         <div class="activity-card-body">
           <h4 style="margin: 0 0 8px; font-size: 16px;">{{ $activity->activity_name }}</h4>
