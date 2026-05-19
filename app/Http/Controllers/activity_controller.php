@@ -23,13 +23,25 @@ class activity_controller extends Controller
             'open_reg_date' => 'required|date',
             'close_reg_date' => 'required|date|after:open_reg_date|before:activity_date',
 
-            'requirements' => 'nullable|string',
-            'description' => 'nullable|string',
+            'requirements' => 'required|string',
+            'description' => 'required|string',
 
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'proposal' => 'nullable|mimes:pdf|max:10240',
         ], [
+            'activity_name.required' => 'This field is required.',
+            'location.required' => 'This field is required.',
+            'activity_date.required' => 'This field is required.',
+            'activity_time.required' => 'This field is required.',
+            'slot.required' => 'This field is required.',
+            'open_reg_date.required' => 'This field is required.',
+            'close_reg_date.required' => 'This field is required.',
+            'requirements.required' => 'This field is required.',
+            'description.required' => 'This field is required.',
+            'image.required' => 'This field is required.',
+
             'activity_date.after' => 'Activity date must be after today.',
+            'slot.integer' => 'Slot must be a number.',
+            'slot.min' => 'Slot must be at least 1.',
             'close_reg_date.after' => 'Close registration date must be after open registration date.',
             'close_reg_date.before' => 'Close registration date must be before the activity date.',
             'image.image' => 'Uploaded file must be an image.',
@@ -37,14 +49,19 @@ class activity_controller extends Controller
             'image.max' => 'Image size must not be larger than 2MB.',
         ]);
 
+        $currentUser = $request->session()->get('user');
 
-        $imagePath = '';
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('activities', 'public');
+        if (!$currentUser) {
+            return redirect('/login')->with('error', 'Please login first.');
         }
 
-        $currentUserId = $request->session()->get('user')->id;
-        $currentSeekerId = Seeker::firstWhere('user_id', '=', $currentUserId)->id;
+        $currentSeeker = Seeker::firstWhere('user_id', '=', $currentUser->id);
+
+        if (!$currentSeeker) {
+            return redirect('/be-a-seeker')->with('error', 'You need to become a seeker before uploading an activity.');
+        }
+
+        $imagePath = $request->file('image')->store('activities', 'public');
 
         Activity::create([
             'activity_name' => $validated['activity_name'],
@@ -57,7 +74,7 @@ class activity_controller extends Controller
             'close_reg_date' => $validated['close_reg_date'],
             'image_path' => $imagePath,
             'slot' => $validated['slot'],
-            'seeker_id' => $currentSeekerId,
+            'seeker_id' => $currentSeeker->id,
         ]);
 
         return redirect('/proposed-activities')->with('success', 'Activity uploaded successfully!');
