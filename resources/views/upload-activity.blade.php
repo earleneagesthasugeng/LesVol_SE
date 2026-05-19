@@ -190,13 +190,27 @@
 
           <div class="form-group">
             <label>Requirements</label>
-            <textarea class="form-input" name="requirements" style="min-height:80px;" placeholder="What are the requirements?"></textarea>
+            <textarea class="form-input @error('requirements') input-error @enderror"
+                        name="requirements"
+                        style="min-height:80px;"
+                        placeholder="What are the requirements?"
+                        required>{{ old('requirements') }}</textarea>
+              @error('requirements')
+                <p class="field-error" style="display:block;">{{ $message }}</p>
+              @enderror
           </div>
 
 
           <div class="form-group">
             <label>Description</label>
-            <textarea class="form-input" name="description" style="min-height:120px;" placeholder="Describe your activity"></textarea>
+            <textarea class="form-input @error('description') input-error @enderror"
+                      name="description"
+                      style="min-height:120px;"
+                      placeholder="Describe your activity"
+                      required>{{ old('description') }}</textarea>
+            @error('description')
+              <p class="field-error" style="display:block;">{{ $message }}</p>
+            @enderror
           </div>
 
 
