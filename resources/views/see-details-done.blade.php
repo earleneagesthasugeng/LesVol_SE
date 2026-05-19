@@ -213,19 +213,8 @@
           </div>
 
 
-          <button
-            type="button"
-            disabled
-            class="btn-danger"
-            style="
-              background:#d1d5db;
-              color:#6b7280;
-              cursor:not-allowed;
-              opacity:0.8;
-              border:none;
-            "
-          >
-            Upload Attendance Disabled
+          <button type="button" class="btn-danger" style="padding: 12px 60px; font-size: 16px;" onclick="showAttendanceConfirmModal()">
+            Upload
           </button>
         </div>
 
@@ -343,12 +332,47 @@
 
 
     <div style="text-align: center; margin-top: 30px;">
-      <button class="btn-danger" style="padding: 12px 60px; font-size: 16px;" onclick="document.getElementById('attendanceForm').submit()">Upload</button>
+      <button type="button" class="btn-danger" style="padding: 12px 60px; font-size: 16px;" onclick="showAttendanceConfirmModal()">
+        Upload
+      </button>
+    </div>
+  </div>
+</div>
+{{-- UNIQUE IDENTIFIER: ATTENDANCE CONFIRMATION MODAL --}}
+<div class="modal-overlay" id="modal-attendance-confirm">
+  <div class="modal" style="max-width:520px; border-radius: 24px; text-align:center;">
+    <button type="button" class="modal-close" onclick="closeModal('modal-attendance-confirm')" style="font-weight: bold; font-size: 24px; top: 20px; right: 25px;">✕</button>
+
+    <div class="popup-title" style="font-size: 28px; margin-top: 10px;">Confirm Attendance Photo</div>
+
+    <p style="font-size: 14px; color: #6b7280; margin: 12px 0 20px;">
+      Are you sure this is correct? You cannot edit once you submit.
+    </p>
+
+    <div style="background:#f3f4f6; border-radius:16px; padding:12px; margin-bottom:22px;">
+      <img id="attendance-confirm-preview"
+           src=""
+           alt="Attendance preview"
+           style="width:100%; max-height:280px; object-fit:contain; border-radius:12px; display:none;">
+    </div>
+
+    <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+      <button type="button"
+              class="btn-gray"
+              onclick="closeModal('modal-attendance-confirm')"
+              style="cursor:pointer; color:#6b7280;">
+        Cancel
+      </button>
+
+      <button type="button"
+              class="btn-danger"
+              onclick="submitAttendanceForm()">
+        Yes, Upload
+      </button>
     </div>
   </div>
 </div>
 @endif
-
 
 <script>
 function openModal(id) {
@@ -358,14 +382,12 @@ function openModal(id) {
   }
 }
 
-
 function closeModal(id) {
   const modal = document.getElementById(id);
   if (modal) {
     modal.classList.remove('open');
   }
 }
-
 
 document.querySelectorAll('.modal-overlay').forEach(el => {
   el.addEventListener('click', e => {
@@ -375,13 +397,50 @@ document.querySelectorAll('.modal-overlay').forEach(el => {
   });
 });
 
-
 function updateFileName(input) {
   const label = document.getElementById('file-label');
+
   if (input.files && input.files[0]) {
     label.textContent = input.files[0].name;
     label.style.color = 'var(--red)';
     label.style.fontWeight = '700';
+  }
+}
+
+function showAttendanceConfirmModal() {
+  const input = document.getElementById('attendance_photo');
+  const preview = document.getElementById('attendance-confirm-preview');
+
+  if (!input || !input.files || !input.files[0]) {
+    alert('Please select an attendance photo first.');
+    return;
+  }
+
+  const file = input.files[0];
+
+  if (!file.type.startsWith('image/')) {
+    alert('Please upload a valid image file.');
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function (event) {
+    preview.src = event.target.result;
+    preview.style.display = 'block';
+
+    closeModal('modal-activity-details');
+    openModal('modal-attendance-confirm');
+  };
+
+  reader.readAsDataURL(file);
+}
+
+function submitAttendanceForm() {
+  const form = document.getElementById('attendanceForm');
+
+  if (form) {
+    form.submit();
   }
 }
 </script>
