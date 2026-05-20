@@ -187,8 +187,7 @@ footer {
   -webkit-text-fill-color: transparent;
   color: transparent; 
   display: inline-block;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 700;
+  font-weight: 900;
   font-size: 16px;
   margin-top: 0;
   margin-bottom: 8px;
@@ -291,12 +290,11 @@ footer {
   align-items: center;
   gap: 8px;
   color: var(--red-btn);
-  font-weight: 600;
+  font-weight: 900;
   cursor: pointer;
   background: none;
   border: none;
   font-size: 15px;
-  font-family: 'DM Sans', sans-serif;
   text-decoration: none;
 }
 .back-icon {
