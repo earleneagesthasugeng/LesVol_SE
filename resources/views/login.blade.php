@@ -55,40 +55,40 @@
   </div>
 </nav>
 
+<main class="main-content">
+  <div class="auth-container fade-in-up">
+    <div class="auth-card" style="max-width:520px;">
+      <div class="auth-title">Welcome Back, Volunteer!</div>
+      <div class="auth-subtitle">Let's go back to make a change.</div>
 
-<div class="auth-container">
-  <div class="auth-card" style="max-width:520px;">
-    <div class="auth-title">Welcome Back, Volunteer!</div>
-    <div class="auth-subtitle">Let's go back to make a change.</div>
+
+      <form method="POST" action="/user-login">
+        @csrf
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input class="form-input" type="email" name="email" placeholder="Type Email Here" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input class="form-input" type="password" name="password" placeholder="Type Password Here" id="password" required>
+        </div>
 
 
-    <form method="POST" action="/user-login">
-      @csrf
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input class="form-input" type="email" name="email" placeholder="Type Email Here" id="email" required>
+        @if(session('error'))
+          <div id="error-msg" style="color:#dc2626; font-size:13px; margin-bottom:10px;">{{ session('error') }}</div>
+        @endif
+
+
+        <div style="text-align:center; margin-top:24px;">
+          <button type="submit" class="btn btn-primary btn-lg" style="padding:14px 60px;">Log in</button>
+        </div>
+      </form>
+      <div style="text-align:center; margin-top:16px; font-size:13px; color:var(--gray);">
+        Don't have an account? <a href="/register" style="color:var(--red-btn); font-weight:600;">Sign Up</a>
       </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input class="form-input" type="password" name="password" placeholder="Type Password Here" id="password" required>
-      </div>
-
-
-      @if(session('error'))
-        <div id="error-msg" style="color:#dc2626; font-size:13px; margin-bottom:10px;">{{ session('error') }}</div>
-      @endif
-
-
-      <div style="text-align:center; margin-top:24px;">
-        <button type="submit" class="btn btn-primary btn-lg" style="padding:14px 60px;">Log in</button>
-      </div>
-    </form>
-    <div style="text-align:center; margin-top:16px; font-size:13px; color:var(--gray);">
-      Don't have an account? <a href="/register" style="color:var(--red-btn); font-weight:600;">Sign Up</a>
     </div>
   </div>
-</div>
-
+</main>
 
   <footer>
   <div class="footer-grid">

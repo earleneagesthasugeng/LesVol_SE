@@ -61,7 +61,7 @@
   </nav>
 
 
-  <div class="auth-container" style="padding: 32px 24px; align-items:flex-start;">
+  <div class="auth-container fade-in-up" style="padding: 32px 24px; align-items:flex-start;">
     <div class="auth-card" style="max-width: 680px; padding: 40px;">
       <div class="auth-title">Become a Volunteer!</div>
       <div class="auth-subtitle">One step a way to make real change.</div>

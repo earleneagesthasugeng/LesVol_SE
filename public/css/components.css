@@ -510,7 +510,6 @@
 }
 
 
-/* UNIQUE IDENTIFIER: MY ACTIVITIES TAB NAVIGATION STYLE */
 .activity-page-tabs {
     width: fit-content;
     flex-shrink: 0; 
@@ -687,4 +686,16 @@
         flex-wrap: wrap;
         justify-content: center; 
     }
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+.fade-in-up.show {
+  opacity: 1;
+  transform: translateY(0);
 }

@@ -30,7 +30,9 @@
         <a href="\register" class="btn-signup">Sign Up</a>
     </div>
 </header>
-
+    <main>
+        
+    </main>
     <section class="hero">
         <video class="motion-bg" autoplay muted loop playsinline>
             <source src="images/Motion_graphic.mp4" type="video/mp4">
@@ -38,7 +40,7 @@
 
         <div class="hero-overlay"></div>
 
-        <div class="hero-content">
+        <div class="hero-content fade-in-up">
             <div class="hero-text">
                 <h1>
                     <span class="hero-title-light">Small Actions,</span><br>
@@ -56,7 +58,7 @@
     </section>
 
     <section class="about-section" id="about">
-        <div class="section-header">
+        <div class="section-header fade-in-up">
             <h2>About Us</h2>
             <p>
                 LesVol is a volunteer discovery platform that connects passionate individuals with
@@ -67,7 +69,7 @@
             </p>
         </div>
 
-        <div class="carousel-wrapper">
+        <div class="carousel-wrapper fade-in-up">
             <div class="carousel-track">
                 <img src="https://www.wastatepta.org/wp-content/uploads/2016/11/Senior-volunteer-helping-African-American-man-register-for-marathon-000065245281_Medium.jpg" alt="Volunteer Activity">
                 <img src="https://www.tgccpa.com/wp-content/uploads/2025/04/AdobeStock_1132162675-scaled.jpeg" alt="Volunteer Activity">
@@ -81,17 +83,17 @@
             </div>
         </div>
 
-        <p class="event-caption">
+        <p class="event-caption fade-in-up">
             Explore moments from volunteer events and community activities that have been successfully carried out.
         </p>
     </section>
 
     <section class="mission-section" id="mission">
-        <div class="section-header">
+        <div class="section-header fade-in-up">
             <h2>Our Mission</h2>
         </div>
 
-        <div class="mission-cards">
+        <div class="mission-cards fade-in-up">
             <div class="mission-card">
                 <div class="icon-circle">
                     <i class="fa-solid fa-hand-holding-heart"></i>
@@ -186,6 +188,6 @@
   </div>
 </footer>
 
-    <script src="{{ asset('js/landing.js') }}"></script>
+<script src="{{ asset('js/landing.js') }}"></script>
 </body>
 </html>
