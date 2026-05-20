@@ -84,40 +84,50 @@ class route_controller extends Controller
     {
         $currentUser = $request->session()->get('user');
 
-
         if (!$currentUser) {
             return redirect('/login')->with('error', 'Please login first.');
         }
 
-
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $currentUser->id,
-            'phone' => 'nullable|string|max:20',
-            'password' => 'nullable|string|min:6|confirmed',
+            'name'                  => 'required|string|max:255',
+            'email'                 => 'required|email|max:255|unique:users,email,' . $currentUser->id,
+            'phone'                 => 'nullable|string|max:20',
+            'volunteer_type'        => 'nullable|string|max:100',
+            'date_of_birth'         => 'nullable|date',
+            'occupation'            => 'nullable|string|max:255',
+            'domicile'              => 'nullable|string|max:255',
+            'bio'                   => 'nullable|string|max:1000',
+            'password'              => 'nullable|string|min:6|confirmed',
+            'profile_picture'       => 'nullable|image|mimes:jpeg,png,jpg|max:1024',
         ]);
-
 
         $user = User::findOrFail($currentUser->id);
 
-
-        $user->name = $validated['name'];
-        $user->email = $validated['email'];
-        $user->phone = $validated['phone'] ?? $user->phone;
-
+        $user->name           = $validated['name'];
+        $user->email          = $validated['email'];
+        $user->phone          = $validated['phone'] ?? null;
+        $user->volunteer_type = $validated['volunteer_type'] ?? null;
+        $user->date_of_birth  = $validated['date_of_birth'] ?? null;
+        $user->occupation     = $validated['occupation'] ?? null;
+        $user->domicile       = $validated['domicile'] ?? null;
+        $user->bio            = $validated['bio'] ?? null;
 
         if (!empty($validated['password'])) {
             $user->password = Hash::make($validated['password']);
         }
 
+        if ($request->hasFile('profile_picture')) {
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture_path = $path;
+        }
 
-        $user->save();
-
-
-        $request->session()->put('user', $user);
-
-
-        return redirect('/profile')->with('success', 'Profile updated successfully.');
+        try {
+            $user->save();
+            $request->session()->put('user', $user);
+            return redirect('/profile')->with('success', 'Profile updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Failed to save: ' . $e->getMessage()])->withInput();
+        }
     }
 
 
@@ -503,7 +513,8 @@ class route_controller extends Controller
     {
         $currentUserId = $request->session()->get('user')->id;
         $isSeeker = Seeker::firstWhere('user_id', '=', $currentUserId);
-        return view('edit-profile', compact('isSeeker'));
+        $user = User::findOrFail($currentUserId);
+        return view('edit-profile', compact('isSeeker', 'user'));
     }
 
 

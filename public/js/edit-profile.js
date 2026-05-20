@@ -1,6 +1,6 @@
 const imageInput = document.getElementById('image-input');
 const selectBtn = document.getElementById('select-image-btn');
-const previewImg = document.getElementById('profile-img-output');
+const previewImg = document.getElementById('image-preview');
 const placeholderIcon = document.getElementById('placeholder-icon');
 
 selectBtn.addEventListener('click', function() {
@@ -31,9 +31,3 @@ function openModal() {
 function closeModal() {
     document.getElementById('success-modal').classList.remove('open');
 }
-
-const form = document.querySelector('form');
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    openModal();
-});
