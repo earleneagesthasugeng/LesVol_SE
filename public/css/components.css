@@ -691,3 +691,8 @@
         justify-content: center; 
     }
 }
+
+.reg-activity-name {
+  margin-top: 18px;
+  margin-bottom: 8px;
+}

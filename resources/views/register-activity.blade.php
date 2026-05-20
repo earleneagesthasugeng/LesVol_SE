@@ -137,7 +137,44 @@
                     {{ $activity->activity_date }}
                 </span>
             </div>
+            <div style="
+    margin-top: 18px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+">
+    <div style="
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #d9d9d9;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    ">
+        @if($activity->seeker && $activity->seeker->user && $activity->seeker->user->profile_picture_path)
+            <img src="{{ asset('storage/' . $activity->seeker->user->profile_picture_path) }}"
+                 alt="Organizer Profile"
+                 style="width:100%; height:100%; object-fit:cover;">
+        @else
+            <svg width="22" height="22" fill="none" stroke="#777" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+        @endif
+    </div>
 
+    <div style="
+        font-size: 15px;
+        color: var(--red);
+        font-weight: 800;
+    ">
+        {{ $activity->seeker->user->name ?? 'Unknown Organizer' }}
+    </div>
+</div>
             <form action="{{ route('activity.register', $activity->id) }}" method="POST" style="margin-top:28px;">
                 @csrf
 
