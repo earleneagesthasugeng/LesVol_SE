@@ -13,7 +13,7 @@ use App\Http\Controllers\route_controller;
 
 
 
-Route::get('/', [route_controller::class, 'loginPage']);
+Route::get('/', [route_controller::class, 'landingPage']);
 Route::get('/register', [route_controller::class, 'registerPage']);
 Route::get('/home', [route_controller::class, 'homePage']);
 Route::get('/upload-activity', [route_controller::class, 'uploadActivityPage']);
@@ -34,6 +34,7 @@ Route::get('/edit-portfolio', [route_controller::class, 'editPortfolioPage']);
 Route::get('/view-portfolio', [route_controller::class, 'viewPortfolioPage']);
 Route::get('/my-portfolio', [route_controller::class, 'myPortfolioPage']);
 Route::get('/profile/{id}', [route_controller::class, 'profilePage']);
+Route::get('/login', [route_controller::class, 'loginPage']);
 
 
 

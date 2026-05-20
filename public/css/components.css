@@ -18,7 +18,7 @@
   color: white;
 }
 .btn-primary:hover {
-  background: #c9421f;
+  background: var(--red-gradient);
   transform: translateY(-1px);
 }
 .btn-dark {
@@ -264,9 +264,22 @@
   display: block;
   color: var(--text);
 }
-.dropdown-item:hover { background: var(--red);}
-.dropdown-item.active { font-weight: 700; color: var(--red); }
+.dropdown-item:hover, 
+.dropdown-item.active { 
+  background: var(--red-gradient);
+  -webkit-background-clip: text;
+  color: #8b1a1a; 
+}
 
+.dropdown-item svg {
+  stroke: #8b1a1a; 
+  transition: stroke 0.3s ease;
+}
+
+.dropdown-item:hover svg,
+.dropdown-item.active svg {
+  stroke: url(#dropdownGradient); 
+}
 
 .portfolio-header-box {
     background: white;
@@ -280,9 +293,11 @@
 
 
 .portfolio-main-title {
-    font-family: 'DM Serif Display', serif;
     font-size: 32px;
+    font-weight: 900;
     color: var(--text);
+    -webkit-text-stroke: 1px var(--red);
+    text-shadow: 0px 2px 15px rgb(224, 174, 174);
 }
 
 
@@ -384,7 +399,6 @@
 }
 
 
-/* UNIQUE IDENTIFIER: HOME CUSTOM PAGINATION STYLE */
 .home-pagination-wrapper {
     display: flex;
     justify-content: center;
@@ -432,13 +446,25 @@
     font-size: 14px;
 }
 
+.activities-toolbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start; 
+    gap: 24px;
+    margin: 24px 0; 
+}
+
+.activities-toolbar-simple {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin: 24px 0; 
+}
 
 .search-bar-container {
     width: 100%;
-    max-width: 600px; /* Membatasi lebar agar tidak terlalu melar */
-    margin: 20px 0;
+    max-width: 1050px; 
 }
-
 
 .search-form {
     position: relative;
@@ -450,18 +476,18 @@
     width: 100%;
     padding: 12px 50px 12px 25px;
     border-radius: 50px;
-    border: 1.5px solid #eee; /* Warna border halus */
+    border: 1.5px solid #eee;
     background-color: #fff;
     font-size: 15px;
     color: #333;
     outline: none;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Shadow tipis agar elegan */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
 }
 
 
 .search-input:focus {
-    border-color: #e63946; /* Gunakan warna merah LesVol saat diklik */
+    border-color: var(--red); 
     box-shadow: 0 4px 12px rgba(230, 57, 70, 0.1);
 }
 
@@ -474,7 +500,7 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #e63946; /* Warna ikon jadi merah sesuai tema */
+    color: var(--red);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -490,9 +516,9 @@
 /* UNIQUE IDENTIFIER: MY ACTIVITIES TAB NAVIGATION STYLE */
 .activity-page-tabs {
     width: fit-content;
-    margin: 18px auto 24px;
+    flex-shrink: 0; 
     background: white;
-    border-radius: 6px;
+    border-radius: 20px;
     padding: 6px;
     display: flex;
     align-items: center;
@@ -500,12 +526,13 @@
     box-shadow: 0 3px 10px rgba(0,0,0,0.12);
 }
 
-
 .activity-page-tab {
     min-width: 74px;
     padding: 8px 16px;
-    border-radius: 5px;
-    color: var(--red);
+    border-radius: 20px;
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    color: rgb(188, 177, 177);
     font-size: 13px;
     font-weight: 800;
     text-align: center;
@@ -513,87 +540,94 @@
     transition: background 0.2s, color 0.2s, transform 0.2s;
 }
 
-
 .activity-page-tab:hover {
-    background: #f3d8d2;
-    color: var(--red);
+    background: var(--red-gradient);
+    color: var(--white);
     transform: translateY(-1px);
 }
 
-
 .activity-page-tab.active {
-    background: #f1d4cf;
-    color: var(--red);
+    color: transparent; 
+    opacity: 1;  
 }
-
+.activity-page-tab:hover.active {
+    color: var(--white); 
+}
 
 .activity-page-tab-upload {
     background: var(--red);
     color: white;
 }
 
-
+.activity-page-tab-upload.active {
+    background: var(--red-gradient);
+    -webkit-background-clip: text;
+    color: transparent; 
+    opacity: 1;
+}
 .activity-page-tab-upload:hover {
-    background: var(--red-btn);
+    background: var(--red-gradient);
     color: white;
 }
+.done-activity-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px; 
+    width: fit-content;
+}
 
-
-/* UNIQUE IDENTIFIER: DONE ACTIVITIES SIMPLE DROPDOWN STYLE */
 .done-filter-wrapper {
     position: relative;
-    width: fit-content;
-    margin: 8px auto 24px;
+    margin: 0; 
+    padding: 0;
     z-index: 30;
 }
 
-
 .done-filter-trigger {
-    background: transparent;
-    border: none;
+    background: white;
+    border: 1px solid rgba(139, 26, 26, 0.2);
     color: var(--red);
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 800;
     cursor: pointer;
-    padding: 8px 14px;
-    border-radius: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
     font-family: inherit;
     display: flex;
     align-items: center;
     gap: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
 }
-
 
 .done-filter-trigger:hover {
     background: #f3d8d2;
+    transform: translateY(-1px);
 }
-
 
 .done-filter-arrow {
     font-size: 10px;
     line-height: 1;
 }
 
-
 .done-filter-menu {
     display: none;
     position: absolute;
     top: 100%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%); 
     min-width: 120px;
     background: white;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.16);
-    margin-top: 4px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    margin-top: 6px;
 }
-
 
 .done-filter-menu.show {
     display: block;
 }
-
 
 .done-filter-item {
     display: block;
@@ -604,8 +638,12 @@
     font-weight: 800;
     text-decoration: none;
     background: white;
+    border-bottom: 1px solid rgba(139, 26, 26, 0.05);
 }
 
+.done-filter-item:last-child {
+    border-bottom: none;
+}
 
 .done-filter-item:hover {
     background: #f3d8d2;
@@ -625,4 +663,31 @@
   background-repeat: no-repeat;
   border-radius: 16px;
   overflow: hidden;
+}
+
+@media (max-width: 800px) {
+    .done-activity-tab {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .activities-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .search-bar-container {
+        max-width: 100%;
+    }
+
+    .activity-page-tabs {
+        align-self: center;
+        width: 70%;
+        flex-wrap: wrap;
+        justify-content: center; 
+    }
 }
