@@ -70,16 +70,29 @@
         <div class="card" style="padding: 48px; max-width: 900px; margin: 0 auto;">
             <h2 class="auth-title" style="margin-bottom: 40px;">Edit Profile</h2>
 
-            <form>
+            <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PATCH')
+
+                @if ($errors->any())
+                    <div style="color: red; margin-bottom: 16px; padding: 12px; border: 1px solid red; border-radius: 8px;">
+                        <ul style="margin: 0; padding-left: 20px;">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="profile-edit-grid">
                     <div class="photo-upload-section">
                         <div class="photo-placeholder" id="preview-container">
-                            <img id="image-preview" src="" style="display: none; width: 100%; height: 100%; object-fit: cover;">
-                            <svg id="placeholder-icon" width="100" height="100" viewBox="0 0 24 24" fill="#9ca3af">
+                            <img id="image-preview" src="{{ $user->profile_picture_path ? asset('storage/' . $user->profile_picture_path) : '' }}" style="{{ $user->profile_picture_path ? '' : 'display: none;' }} width: 100%; height: 100%; object-fit: cover;">
+                            <svg id="placeholder-icon" width="100" height="100" viewBox="0 0 24 24" fill="#9ca3af" style="{{ $user->profile_picture_path ? 'display: none;' : '' }}">
                                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                             </svg>
                         </div>
-                        <input type="file" id="image-input" accept="image/*" style="display: none;">
+                        <input type="file" name="profile_picture" id="image-input" accept="image/jpeg,image/png" style="display: none;">
                         <button type="button" id="select-image-btn" class="btn btn-dark" style="padding: 10px 30px;">Select Image</button>
                         <p class="upload-info">File size: max 1 MB<br>Extension: .JPEG, .PNG</p>
                     </div>
@@ -87,19 +100,19 @@
                     <div>
                         <div class="form-group">
                             <label>Volunteer Type</label>
-                            <input type="text" class="form-input" placeholder="Type">
+                            <input type="text" name="volunteer_type" class="form-input" placeholder="Type" value="{{ old('volunteer_type', $user->volunteer_type) }}">
                         </div>
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" class="form-input" placeholder="Name">
+                            <input type="text" name="name" class="form-input" placeholder="Name" value="{{ old('name', $user->name) }}" required>
                         </div>
                         <div class="form-group">
                             <label>Phone Number</label>
-                            <input type="text" class="form-input" placeholder="Phone Number">
+                            <input type="text" name="phone" class="form-input" placeholder="Phone Number" value="{{ old('phone', $user->phone) }}">
                         </div>
                         <div class="form-group">
-                            <label>Email Adresss</label>
-                            <input type="email" class="form-input" placeholder="Email Adresss">
+                            <label>Email Address</label>
+                            <input type="email" name="email" class="form-input" placeholder="Email Address" value="{{ old('email', $user->email) }}" required>
                         </div>
                     </div>
                 </div>
@@ -107,32 +120,37 @@
                 <div class="form-row-3" style="margin-top: 20px;">
                     <div class="form-group">
                         <label>Date of Birth</label>
-                        <input type="text" class="form-input" placeholder="Date of Birth">
+                        <input type="date" name="date_of_birth" class="form-input" value="{{ old('date_of_birth', $user->date_of_birth) }}">
                     </div>
                     <div class="form-group">
                         <label>Occupation</label>
-                        <input type="text" class="form-input" placeholder="Occupation">
+                        <input type="text" name="occupation" class="form-input" placeholder="Occupation" value="{{ old('occupation', $user->occupation) }}">
                     </div>
                     <div class="form-group">
                         <label>Domicile</label>
-                        <input type="text" class="form-input" placeholder="Domicile">
+                        <input type="text" name="domicile" class="form-input" placeholder="Domicile" value="{{ old('domicile', $user->domicile) }}">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Bio</label>
-                    <textarea class="form-input" placeholder="Bio"></textarea>
+                    <textarea name="bio" class="form-input" placeholder="Bio">{{ old('bio', $user->bio) }}</textarea>
                 </div>
 
-                <form action="/update-profile" method="POST" enctype="multipart/form-data">
-                    @csrf <div class="profile-edit-grid">
-                        <input type="file" name="profile_picture" id="image-input" accept="image/*" style="display: none;">
-                        </div>
-
-                    <div class="save-container">
-                        <button type="submit" class="btn btn-primary btn-lg" style="width: 400px;">Save Changes</button>
+                <div class="form-row-3" style="margin-top: 20px;">
+                    <div class="form-group">
+                        <label>New Password <span style="font-weight: 400; font-size: 0.85em;">(leave blank to keep current)</span></label>
+                        <input type="password" name="password" class="form-input" placeholder="New Password">
                     </div>
-                </form>
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" name="password_confirmation" class="form-input" placeholder="Confirm New Password">
+                    </div>
+                </div>
+
+                <div class="save-container">
+                    <button type="submit" class="btn btn-primary btn-lg" style="width: 400px;">Save Changes</button>
+                </div>
             </form>
         </div>
     </main>
