@@ -3,20 +3,21 @@
 :root {
   --red: #8B1A1A;
   --red-light: #C0392B;
-  --red-btn: #E04D2E;
+  --red-btn: #8B1A1A;
+  --red-gradient: linear-gradient(275deg,#8B1A1A, #E04D2E);
   --bg: #EEF0F8;
   --white: #ffffff;
-  --text: #1a1a1a;
+  --text: #8B1A1A;
   --gray: #6b7280;
   --gray-light: #d1d5db;
-  --card-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  --card-shadow: 0 2px 20px rgba(139, 26, 26, 0.15);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
+  background: #fef9f9;
   color: var(--text);
   min-height: 100vh;
   display: flex;

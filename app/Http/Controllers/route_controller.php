@@ -67,6 +67,11 @@ class route_controller extends Controller
     {
         return view('login');
     }
+    
+    public function landingPage()
+    {
+        return view('landing');
+    }
 
 
     public function registerPage()
