@@ -262,17 +262,20 @@
   transition: background 0.2s;
   text-decoration: none;
   display: block;
-  color: var(--text);
+  color: rgba(81, 24, 24, 0.58);
+  font-weight: 900;
 }
+
 .dropdown-item:hover, 
 .dropdown-item.active { 
   background: var(--red-gradient);
   -webkit-background-clip: text;
-  color: #8b1a1a; 
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .dropdown-item svg {
-  stroke: #8b1a1a; 
+  stroke: rgba(81, 24, 24, 0.58); 
   transition: stroke 0.3s ease;
 }
 
