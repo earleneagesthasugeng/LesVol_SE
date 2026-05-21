@@ -10,3 +10,21 @@ window.addEventListener("scroll", function () {
         navbarLogo.src = navbarLogo.dataset.white;
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  const animatedElements = document.querySelectorAll('.fade-in-up');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      } else {
+        entry.target.classList.remove('show');
+      }
+    });
+  }, {
+    threshold: 0.15 
+  });
+
+  animatedElements.forEach(el => observer.observe(el));
+});

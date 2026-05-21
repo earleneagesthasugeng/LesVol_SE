@@ -5,8 +5,7 @@
   gap: 8px;
   padding: 10px 22px;
   border-radius: 8px;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 600;
+  font-weight: 900;
   font-size: 14px;
   cursor: pointer;
   border: none;
@@ -44,8 +43,7 @@
   font-size: 15px;
   border: none;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 600;
+  font-weight: 900;
   text-decoration: none;
 }
 .btn-danger:hover { background: #c9421f; }
@@ -57,8 +55,7 @@
   font-size: 15px;
   border: none;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 600;
+  font-weight: 900;
   text-decoration: none;
 }
 .btn-success:hover { background: #16a34a; }
@@ -70,7 +67,7 @@
   font-size: 15px;
   cursor: not-allowed;
   border: none;
-  font-family: 'DM Sans', sans-serif;
+  font-weight: 900;
 }
 .btn-see-more {
   background: var(--red-btn);
@@ -78,7 +75,7 @@
   border-radius: 8px;
   padding: 9px 18px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 900;
   border: none;
   cursor: pointer;
   display: inline-flex;
@@ -87,7 +84,6 @@
   gap: 6px;
   width: 100%;
   text-decoration: none;
-  font-family: 'DM Sans', sans-serif;
   transition: background 0.2s;
 }
 .btn-see-more:hover { background: #c9421f; }
@@ -99,7 +95,7 @@
   border-radius: 8px;
   padding: 9px 18px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 900;
   border: none;
   cursor: pointer;
   width: 100%;
@@ -108,7 +104,6 @@
   justify-content: center;
   gap: 6px;
   text-decoration: none;
-  font-family: 'DM Sans', sans-serif;
   transition: background 0.2s;
 }
 .btn-register-card:hover { background: #631010; }
@@ -142,7 +137,7 @@
 }
 
 .activity-img-contain {
-  background-size: contain !important;
+  background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-color: #d9d9d9 !important;
@@ -262,17 +257,20 @@
   transition: background 0.2s;
   text-decoration: none;
   display: block;
-  color: var(--text);
+  color: rgba(81, 24, 24, 0.58);
+  font-weight: 900;
 }
+
 .dropdown-item:hover, 
 .dropdown-item.active { 
   background: var(--red-gradient);
   -webkit-background-clip: text;
-  color: #8b1a1a; 
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .dropdown-item svg {
-  stroke: #8b1a1a; 
+  stroke: rgba(81, 24, 24, 0.58); 
   transition: stroke 0.3s ease;
 }
 
@@ -415,10 +413,9 @@
     border: none;
     border-radius: 999px;
     padding: 10px 22px;
-    font-weight: 700;
+    font-weight: 900;
     text-decoration: none;
     cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
     font-size: 14px;
     transition: background 0.2s, transform 0.2s;
 }
@@ -513,7 +510,6 @@
 }
 
 
-/* UNIQUE IDENTIFIER: MY ACTIVITIES TAB NAVIGATION STYLE */
 .activity-page-tabs {
     width: fit-content;
     flex-shrink: 0; 
@@ -695,4 +691,14 @@
 .reg-activity-name {
   margin-top: 18px;
   margin-bottom: 8px;
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+.fade-in-up.show {
+  opacity: 1;
+  transform: translateY(0);
 }

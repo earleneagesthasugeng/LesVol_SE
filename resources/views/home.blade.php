@@ -13,6 +13,7 @@
   .hero-carousel {
     position: relative;
     width: 100%;
+    height: 500px;
   }
 
 
@@ -67,7 +68,21 @@
     left: 24px;
   }
 
+  .hero-banner {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+  }
 
+  .hero-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 1;
+  }
+  
   .hero-banner-content {
     padding-left: 90px;
     padding-right: 90px;
@@ -135,9 +150,17 @@
 <body>
 
 
-<nav class="{{ request()->is('home') ? 'transparent-nav' : 'solid-nav' }}">
+<nav class="{{ request()->is('home') ? 'transparent-nav' : 'solid-nav' }}" id="navbar">
     <a class="nav-brand" href="/home">
-      <img src="{{ asset('images/logo_lesvol.png') }}" alt="LesVol Logo" class="brand-logo">
+      <div class="logo">
+        <img 
+            src="images/Logo_LesVol_white.png" 
+            data-white="images/Logo_LesVol_white.png"
+            data-red="images/Logo_LesVol.png"
+            alt="LesVol Logo"
+            id="navbarLogo"
+        >
+    </div>
     </a>
     <div class="nav-links">
       <a href="/home" class="{{ request()->is('home') ? 'active' : '' }}">Home</a>      
@@ -282,7 +305,7 @@
                   </a>
                 @else
                   <a class="btn-see-more" href="{{ route('see-details', $heroActivity->id) }}?back={{ urlencode(request()->fullUrl()) }}" style="display:inline-flex; width:auto;">
-                    see more ▶
+                    See More ▶
                   </a>
 
 
@@ -329,8 +352,8 @@
         @endforeach
       </div>
     @else
-      <div class="hero-banner" style="background-color: #cfcfd4; display: flex; align-items: center; justify-content: center;">
-        <div style="color: white; font-size: 24px; font-weight: 700; text-align: center;">
+      <div class="hero-banner" style="background-color: #cfcfd4; display: flex; align-items: center; justify-content: center; height: 500px">
+        <div style="color: var(--red); font-size: 24px; font-weight: 700; text-align: center;">
           Belum ada activity
         </div>
       </div>
@@ -516,6 +539,18 @@
 
 <script src="{{ asset('js/home.js') }}"></script>
 <script src="{{ asset('js/dropdown_login.js') }}"></script>
+<script src="{{ asset('js/landing.js') }}"></script>
+<script>
+  window.addEventListener("scroll", function () {
+  const navbar = document.querySelector("nav");
+
+  if (window.scrollY > 20) {
+    navbar.classList.add("scrolled");
+  } else {
+    navbar.classList.remove("scrolled");
+  }
+});
+</script>
 </body>
 
 
