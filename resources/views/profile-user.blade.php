@@ -29,16 +29,22 @@
 
       <div class="dropdown-wrapper">
         <div class="nav-avatar" onclick="toggleDropdown('nav-dropdown')" id="avatar-trigger">
-          <svg width="20" height="20" viewBox="0 0 24 24">
-            <defs>
-                <linearGradient id="myRedGradient" x1="92%" y1="76%" x2="8%" y2="24%">
-                    <stop offset="0%" stop-color="var(--red)" />
-                    <stop offset="100%" stop-color="var(--red-light)" />
-                </linearGradient>
-            </defs>
-            <circle cx="12" cy="8" r="4" fill="url(#myRedGradient)" />
-            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="url(#myRedGradient)" />
-          </svg>
+          @if(session('user')?->profile_picture_path)
+            <img src="{{ asset('storage/' . session('user')->profile_picture_path) }}"
+                 alt="Profile"
+                 style="width:32px; height:32px; border-radius:50%; object-fit:cover; display:block;">
+          @else
+            <svg width="20" height="20" viewBox="0 0 24 24">
+              <defs>
+                  <linearGradient id="myRedGradient" x1="92%" y1="76%" x2="8%" y2="24%">
+                      <stop offset="0%" stop-color="var(--red)" />
+                      <stop offset="100%" stop-color="var(--red-light)" />
+                  </linearGradient>
+              </defs>
+              <circle cx="12" cy="8" r="4" fill="url(#myRedGradient)" />
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="url(#myRedGradient)" />
+            </svg>
+          @endif
         </div>
 
         <div class="dropdown-menu" id="nav-dropdown"
@@ -106,7 +112,14 @@
 </div>
 
 <div class="profile-photo-area">
-  <div class="profile-photo"></div>
+  @if($user->profile_picture_path)
+    <img src="{{ asset('storage/' . $user->profile_picture_path) }}"
+         alt="{{ $user->name }}"
+         class="profile-photo"
+         style="object-fit:cover;">
+  @else
+    <div class="profile-photo"></div>
+  @endif
 </div>
 <div class="profile-card">
   <div class="profile-name">John Doe</div>
