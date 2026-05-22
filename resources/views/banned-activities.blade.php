@@ -202,8 +202,8 @@
                       <svg style="width: 1.1em; height: 1.1em; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
                       </svg>
-                      {{ date('d F Y', strtotime($activity->activity_date)) }}
-                  </div>
+                     {{ \Carbon\Carbon::parse($activity->activity_date)->format('d/m/Y') }}
+                  </div> 
 
 
                 <div class="activity-card-actions">
