@@ -52,3 +52,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
   animatedElements.forEach(el => observer.observe(el));
 });
+
+// Intercept logout and show confirmation
+document.addEventListener('click', function(e) {
+    const logoutBtn = e.target.closest('a');
+    if (logoutBtn && logoutBtn.textContent.trim().toLowerCase().includes('log out')) {
+        if (!confirm('Apakah Anda yakin ingin keluar?')) {
+            e.preventDefault();
+        } else {
+            window.location.href = '/logout';
+            e.preventDefault();
+        }
+    }
+});

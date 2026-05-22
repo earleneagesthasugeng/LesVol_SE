@@ -189,5 +189,25 @@
 </footer>
 
 <script src="{{ asset('js/landing.js') }}"></script>
+@if(session('success'))
+<div id="success-toast" style="position: fixed; top: 20px; right: 20px; background: rgba(236, 253, 245, 0.95); border: 1.5px solid #a7f3d0; color: #065f46; padding: 16px 24px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 99999; display: flex; align-items: center; gap: 14px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight: 600; font-size: 14px; min-width: 320px; max-width: 450px; animation: slideInToast 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;">
+  <div style="background: #10b981; color: #ffffff; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.4);">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+  </div>
+  <div style="flex-grow: 1; line-height: 1.4;">
+    <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #10b981; margin-bottom: 2px; font-weight: 800;">Success</div>
+    <div>{{ session('success') }}</div>
+  </div>
+  <button onclick="document.getElementById('success-toast').remove()" style="background: none; border: none; color: #065f46; cursor: pointer; font-size: 22px; font-weight: 500; margin-left: 8px; padding: 0 4px; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">&times;</button>
+</div>
+<style>
+@keyframes slideInToast {
+  from { transform: translateY(-20px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+</style>
+@endif
 </body>
 </html>

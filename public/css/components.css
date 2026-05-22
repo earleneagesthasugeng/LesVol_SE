@@ -262,6 +262,12 @@
   color: rgba(81, 24, 24, 0.58);
   font-weight: 900;
 }
+button.dropdown-item {
+  background: none;
+  border: none;
+  width: 100%;
+  font-family: inherit;
+}
 
 .dropdown-item:hover, 
 .dropdown-item.active { 
