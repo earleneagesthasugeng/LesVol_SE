@@ -86,11 +86,13 @@
   text-decoration: none;
   transition: background 0.2s;
 }
-.btn-see-more:hover { background: #c9421f; }
+.btn-see-more:hover { 
+  background: var(--red-gradient);
+ }
 
 
 .btn-register-card {
-  background: #7a1010;
+  background: var(--red-light);
   color: white;
   border-radius: 8px;
   padding: 9px 18px;
@@ -106,7 +108,7 @@
   text-decoration: none;
   transition: background 0.2s;
 }
-.btn-register-card:hover { background: #631010; }
+.btn-register-card:hover { background: var(--red-gradient); }
 
 
 .card {
@@ -137,7 +139,7 @@
 }
 
 .activity-img-contain {
-  background-size: cover !important;
+  background-size: contain !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-color: #d9d9d9 !important;
@@ -691,6 +693,7 @@
 .reg-activity-name {
   margin-top: 18px;
   margin-bottom: 8px;
+}
 .fade-in-up {
   opacity: 0;
   transform: translateY(40px);

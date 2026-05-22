@@ -14,7 +14,7 @@ nav {
 
 nav.solid-nav {
   position: sticky; 
-  background-color: #fef9f9;  
+  background-color: #ffffff;  
   border-bottom: 1px solid rgba(139, 26, 26, 0.15); 
   box-shadow: none;
 }
@@ -113,9 +113,9 @@ nav.transparent-nav.scrolled {
 
 .solid-nav .nav-avatar {
   width: 38px; height: 38px;
-  border: 2px solid none;
+  border: 1px solid none;
   border-radius: 50%;
-  background-color: rgba(255, 0, 0, 0.089);
+  background: var(--red-gradient);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   text-decoration: none;
@@ -123,12 +123,16 @@ nav.transparent-nav.scrolled {
 
 .transparent-nav .nav-avatar {
   width: 38px; height: 38px;
-  border: 2px solid none;
+  border: 1px solid none;
   border-radius: 50%;
   background-color: rgb(255, 248, 248);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   text-decoration: none;
+}
+
+.transparent-nav.scrolled .nav-avatar {
+  background: var(--red-gradient);
 }
 
 .transparent-nav:not(.scrolled) .nav-avatar svg circle,

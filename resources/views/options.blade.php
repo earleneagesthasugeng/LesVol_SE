@@ -185,7 +185,7 @@
           @if(session('user')?->profile_picture_path)
             <img src="{{ asset('storage/' . session('user')->profile_picture_path) }}"
                  alt="Profile"
-                 style="width:32px; height:32px; border-radius:50%; object-fit:cover; display:block;">
+                 style="width:38px; height:38px; border-radius:50%; object-fit:cover; display:block;">
           @else
             <svg width="20" height="20" viewBox="0 0 24 24">
               <defs>
@@ -267,7 +267,7 @@
 
 
   <div class="activity-detail-card" style="margin-top:16px;">
-    <div style="height:200px; background: url('{{ asset('storage/' . $activity->image_path) }}') center/cover no-repeat;"></div>
+    <div style="height:200px; background: url('{{ asset('storage/' . $activity->image_path) }}') center/contain no-repeat; background-color: #d9d9d9"></div>
     <div class="activity-detail-body">
 
 
@@ -357,6 +357,11 @@
     <p style="font-size:14px; color:#4b5563; line-height:1.7; margin-bottom:28px;">
         {{ $activity->description }}
     </p>
+
+    <div style="font-weight:700; margin-bottom:10px;">Requirements:</div>
+      <p style="font-size:14px; color:#4b5563; line-height:1.7; margin-bottom:28px;">
+          {{ $activity->requirements }}
+      </p>
 
 
 

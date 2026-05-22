@@ -33,7 +33,7 @@
           @if(session('user')?->profile_picture_path)
             <img src="{{ asset('storage/' . session('user')->profile_picture_path) }}"
                  alt="Profile"
-                 style="width:32px; height:32px; border-radius:50%; object-fit:cover; display:block;">
+                 style="width:38px; height:38px; border-radius:50%; object-fit:cover; display:block;">
           @else
             <svg width="20" height="20" viewBox="0 0 24 24">
               <defs>
@@ -154,12 +154,8 @@
   <div class="activities-grid" id="joined-grid">
       @forelse ($activities as $activity)
           <div class="activity-card">
-              <div class="activity-card-img"
-                  style="background-image: url('{{ asset('storage/' . $activity->image_path) }}');
-                          background-size: cover;
-                          background-position: center;
-                          height: 180px;
-                          border-radius: 12px 12px 0 0;">
+              <div class="activity-card-img activity-img-contain"
+                  style="background-image: url('{{ asset('storage/' . $activity->image_path) }}');">
               </div>
 
 

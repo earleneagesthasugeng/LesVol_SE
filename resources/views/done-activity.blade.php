@@ -35,7 +35,7 @@
           @if(session('user')?->profile_picture_path)
             <img src="{{ asset('storage/' . session('user')->profile_picture_path) }}"
                  alt="Profile"
-                 style="width:32px; height:32px; border-radius:50%; object-fit:cover; display:block;">
+                 style="width:38px; height:38px; border-radius:50%; object-fit:cover; display:block;">
           @else
             <svg width="20" height="20" viewBox="0 0 24 24">
               <defs>

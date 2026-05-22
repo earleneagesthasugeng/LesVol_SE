@@ -37,25 +37,29 @@
     border: none;
     background: white;
     cursor: pointer;
-    z-index: 10;
+    z-index: 3;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: background 0.25s ease, transform 0.25s ease;
   }
-
 
   .hero-arrow:hover {
-    background: #fff7f5;
+    background: var(--red-gradient);
   }
-
 
   .hero-arrow-icon {
     width: 15px;
     height: 15px;
     fill: var(--red-btn);
     display: block;
+    transition: fill 0.25s ease;
+  }
+
+  .hero-arrow:hover .hero-arrow-icon {
+    fill: white;
   }
 
 
@@ -81,9 +85,11 @@
     inset: 0;
     background: rgba(0, 0, 0, 0.25);
     z-index: 1;
+    pointer-events: none
   }
   
   .hero-banner-content {
+    z-index: 2;
     padding-left: 90px;
     padding-right: 90px;
   }
@@ -182,7 +188,7 @@
           @if(session('user')?->profile_picture_path)
             <img src="{{ asset('storage/' . session('user')->profile_picture_path) }}"
                  alt="Profile"
-                 style="width:32px; height:32px; border-radius:50%; object-fit:cover; display:block;">
+                 style="width:38px; height:38px; border-radius:50%; object-fit:cover; display:block;">
           @else
             <svg width="20" height="20" viewBox="0 0 24 24">
               <defs>
@@ -327,7 +333,7 @@
             </div>
 
 
-            <div style="color:rgba(255,255,255,0.85); font-size:12px; line-height:1.7;">
+            <div style="color:rgb(255, 255, 255); font-size:12px; line-height:1.7; z-index: 2; position: relative;">
               {{ $heroActivity->description }}
             </div>
           </div>
